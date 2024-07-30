@@ -41,6 +41,7 @@ class HomeView extends StatelessWidget {
             label: "설정",
           ),
         ],
+        type: BottomNavigationBarType.fixed,
         currentIndex: _bottomNavigationModel.curPage,
         onTap: (index) => _bottomNavigationModel.setCurPage(index),
         selectedItemColor: Colors.blue,
