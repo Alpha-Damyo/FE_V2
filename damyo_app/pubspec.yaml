@@ -44,6 +44,9 @@ dependencies:
   geolocator: ^12.0.0
   geolocator_android: 4.5.5
 
+  # login packages
+  flutter_naver_login: ^1.8.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
