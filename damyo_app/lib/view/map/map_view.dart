@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_naver_map/flutter_naver_map.dart';
 
 class MapView extends StatefulWidget {
   const MapView({super.key});
@@ -10,6 +11,11 @@ class MapView extends StatefulWidget {
 class _MapViewState extends State<MapView> {
   @override
   Widget build(BuildContext context) {
-    return const Text("Map");
+    return Scaffold(
+      body: NaverMap(
+        options: const NaverMapViewOptions(),
+        onMapReady: (controller) {},
+      ),
+    );
   }
 }
