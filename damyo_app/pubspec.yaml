@@ -39,10 +39,16 @@ dependencies:
   provider: ^6.1.2
   flutter_dotenv: ^5.1.0
 
+  # service packages
+  http: ^1.2.1
+
   # map packages
   flutter_naver_map: ^1.2.3+1
   geolocator: ^12.0.0
   geolocator_android: 4.5.5
+
+  # login packages
+  flutter_naver_login: ^1.8.0
 
 dev_dependencies:
   flutter_test:
