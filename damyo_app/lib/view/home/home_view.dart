@@ -1,27 +1,33 @@
+import 'package:flutter/material.dart';
+import "package:provider/provider.dart";
 import 'package:damyo_app/view/favorites/favorites_view.dart';
 import 'package:damyo_app/view/map/map_view.dart';
 import 'package:damyo_app/view/setting/setting_view.dart';
 import 'package:damyo_app/view/statistics/statistics_view.dart';
-import 'package:flutter/material.dart';
-import "package:provider/provider.dart";
 import 'package:damyo_app/view_models/bottom_navigation_model.dart';
 
 // ignore: must_be_immutable
 class HomeView extends StatelessWidget {
   HomeView({super.key});
   late BottomNavigationModel _bottomNavigationModel;
+  final PageController _pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
     _bottomNavigationModel = Provider.of<BottomNavigationModel>(context);
     return Scaffold(
-      body: SafeArea(
-        child: [
-          const MapView(),
-          const FavoritesView(),
-          const StatisticsView(),
-          const SettingView(),
-        ].elementAt(_bottomNavigationModel.curPage),
+      body: PageView(
+        physics: const NeverScrollableScrollPhysics(),
+        controller: _pageController,
+        onPageChanged: (index) {
+          _bottomNavigationModel.setCurPage(index);
+        },
+        children: const [
+          MapView(),
+          FavoritesView(),
+          StatisticsView(),
+          SettingView(),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
@@ -44,7 +50,10 @@ class HomeView extends StatelessWidget {
         ],
         type: BottomNavigationBarType.fixed,
         currentIndex: _bottomNavigationModel.curPage,
-        onTap: (index) => _bottomNavigationModel.setCurPage(index),
+        onTap: (index) {
+          _bottomNavigationModel.setCurPage(index);
+          _pageController.jumpToPage(index);
+        },
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey,
       ),

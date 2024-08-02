@@ -21,9 +21,14 @@ class Damyo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        brightness: Brightness.light,
+        scaffoldBackgroundColor: Colors.white,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.white,
+          primary: const Color(0xFF0099FC),
+          secondary: const Color(0xFF6F767F),
+        ),
         useMaterial3: true,
       ),
       // Todo: Provider 적용
