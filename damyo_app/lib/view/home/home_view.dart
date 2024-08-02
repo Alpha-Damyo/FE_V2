@@ -6,8 +6,7 @@ import 'package:damyo_app/view/map/map_view.dart';
 import 'package:damyo_app/view/setting/setting_view.dart';
 import 'package:damyo_app/view/statistics/statistics_view.dart';
 
-import 'package:flutter/material.dart';
-
+// ignore: must_be_immutable
 class HomeView extends StatelessWidget {
   HomeView({super.key});
   late BottomNavigationModel _bottomNavigationModel;
