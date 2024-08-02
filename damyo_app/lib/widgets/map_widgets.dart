@@ -42,10 +42,10 @@ Widget mapSearchBar(BuildContext context) {
 }
 
 // 제보 버튼
-Widget informBtn(BuildContext context) {
+Widget informBtn(BuildContext context, Function onTap) {
   return InkWell(
     onTap: () {
-      // Todo: 제보페이지 연동
+      onTap();
     },
     child: Container(
       width: 50,
@@ -151,6 +151,34 @@ Widget reSearchBtn(BuildContext context) {
           ],
         ),
       ),
+    ),
+  );
+}
+
+// 제보 버튼을 누르면 가운데에 활성화되는 버튼
+Widget centerInformBtn(bool visible) {
+  return Visibility(
+    visible: visible,
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Icon(
+          Icons.add_location_alt,
+          color: Colors.red,
+          size: 50,
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        // 제보하기를 누르면 등장하는 '제보하기' 버튼
+        ElevatedButton(
+          onPressed: () {},
+          child: const Text(
+            "제보하기",
+          ),
+        ),
+      ],
     ),
   );
 }
