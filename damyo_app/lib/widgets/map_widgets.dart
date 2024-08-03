@@ -123,11 +123,13 @@ Widget tagListView(BuildContext context, List<String> tags) {
 }
 
 // "이 위치에서 재탐색" 버튼
-Widget reSearchBtn(BuildContext context) {
+Widget reSearchBtn(BuildContext context, Function onTap) {
   return Visibility(
     visible: true,
     child: InkWell(
-      onTap: () {},
+      onTap: () {
+        onTap();
+      },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
         decoration: BoxDecoration(

@@ -1,3 +1,4 @@
+import 'package:damyo_app/models/smoking_area/sa_search_model.dart';
 import 'package:damyo_app/view_models/map_models/map_view_model.dart';
 import 'package:damyo_app/widgets/map_widgets.dart';
 import 'package:flutter/material.dart';
@@ -24,14 +25,22 @@ class _MapViewState extends State<MapView> with AutomaticKeepAliveClientMixin {
     super.build(context);
 
     _mapViewModel = Provider.of<MapViewModel>(context);
+
     return Scaffold(
       body: Stack(
         children: [
           // 지도
           NaverMap(
-            options: const NaverMapViewOptions(),
+            options: const NaverMapViewOptions(
+              // initialCameraPosition: NCameraPosition(
+              //   target: NLatLng(userLatitude, userLongitude),
+              //   zoom: 14.0,
+              // ),
+              locationButtonEnable: true,
+            ),
             onMapReady: (controller) {
               mapController = controller;
+              updateSmokingAreas(mapController);
             },
           ),
 
@@ -56,7 +65,12 @@ class _MapViewState extends State<MapView> with AutomaticKeepAliveClientMixin {
                 const SizedBox(height: 10),
                 tagListView(context, ['개방', '폐쇄', '실외', '실내']),
                 const SizedBox(height: 10),
-                reSearchBtn(context)
+                reSearchBtn(
+                  context,
+                  () {
+                    updateSmokingAreas(mapController);
+                  },
+                )
               ],
             ),
           ),
@@ -70,5 +84,14 @@ class _MapViewState extends State<MapView> with AutomaticKeepAliveClientMixin {
         ],
       ),
     );
+  }
+
+  void updateSmokingAreas(NaverMapController mapController) {
+    _mapViewModel.updateSmokingAreas(
+        SaSearchModel(
+            latitude: mapController.nowCameraPosition.target.latitude,
+            longitude: mapController.nowCameraPosition.target.longitude,
+            range: 0.05),
+        mapController);
   }
 }
