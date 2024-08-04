@@ -10,6 +10,8 @@ Future<void> signInWithNaver() async {
     print('email = ${naverUser.account.email}');
     print('id = ${naverUser.account.id}');
 
+    print(naverToken);
+
     userInfo = await login({
       "token": naverToken.accessToken,
     }, "naver");
