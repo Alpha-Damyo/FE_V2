@@ -1,3 +1,7 @@
+import "dart:ui";
+
+import "package:damyo_app/style.dart";
+import "package:damyo_app/view_models/map_models/map_view_model.dart";
 import "package:flutter/material.dart";
 
 // 버튼 그림자
@@ -7,6 +11,35 @@ BoxShadow btnBoxShadow() {
     spreadRadius: 0,
     blurRadius: 2.0,
     offset: const Offset(0, 3), // changes position of shadow
+  );
+}
+
+// 그림자가 적용된 Inkwell의 부모
+Widget shadowMaterial(BuildContext context, double borderRadius, Widget child) {
+  return Container(
+    decoration: BoxDecoration(
+      boxShadow: [
+        btnBoxShadow(),
+      ],
+      borderRadius: BorderRadius.circular(borderRadius),
+    ),
+    child: Material(
+      color: Colors.transparent,
+      child: child,
+    ),
+  );
+}
+
+// 그림자가 없는 Inkwell의 부모
+Widget normalMaterial(BuildContext context, double borderRadius, Widget child) {
+  return Container(
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(borderRadius),
+    ),
+    child: Material(
+      color: Colors.transparent,
+      child: child,
+    ),
   );
 }
 
@@ -43,48 +76,53 @@ Widget mapSearchBar(BuildContext context) {
 
 // 제보 버튼
 Widget informBtn(BuildContext context, Function onTap) {
-  return InkWell(
-    onTap: () {
-      onTap();
-    },
-    child: Container(
-      width: 50,
-      height: 50,
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primary,
-        border: Border.all(color: const Color(0xFFD2D7DD)),
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          btnBoxShadow(),
-        ],
-      ),
-      child: const Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.add_location_alt_outlined,
-            size: 20,
-            color: Colors.white,
-          ),
-          Text(
-            "제보",
-            style: TextStyle(
-              fontSize: 12,
+  return shadowMaterial(
+    context,
+    16,
+    InkWell(
+      onTap: () {
+        onTap();
+      },
+      borderRadius: BorderRadius.circular(16),
+      child: Ink(
+        width: 50,
+        height: 50,
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.primary,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: const Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.add_location_alt_outlined,
+              size: 25,
               color: Colors.white,
             ),
-          ),
-        ],
+            Text(
+              "제보",
+              style: TextStyle(
+                fontSize: 10,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
       ),
     ),
   );
 }
 
 // 태그 버튼
-Widget tagListView(BuildContext context, List<String> tags) {
-  return Container(
+Widget tagListView(
+  BuildContext context,
+  List<String> tags,
+  int tagIndex,
+  Function(int) onTap,
+) {
+  return SizedBox(
     width: MediaQuery.of(context).size.width - 30,
-    height: 35,
-    alignment: Alignment.centerLeft,
+    height: 30,
     child: ListView.builder(
       itemCount: tags.length,
       scrollDirection: Axis.horizontal,
@@ -92,27 +130,33 @@ Widget tagListView(BuildContext context, List<String> tags) {
         return Padding(
           padding: EdgeInsets.only(
             right: index == tags.length - 1 ? 5 : 10,
-            bottom: 5,
           ), // 마지막 아이템에는 패딩을 적용하지 않음.
-          child: GestureDetector(
-            onTap: () {
-              // Todo: 태그 버튼 터치 적용
-            },
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(
-                  color: const Color(0xffE4E7EB),
+          child: shadowMaterial(
+            context,
+            16,
+            InkWell(
+              onTap: () {
+                onTap(index);
+              },
+              borderRadius: BorderRadius.circular(16),
+              child: Ink(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                decoration: BoxDecoration(
+                  color: tagIndex == index
+                      ? Theme.of(context).colorScheme.secondary
+                      : Colors.white,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(
+                      color: tagIndex == index
+                          ? Theme.of(context).colorScheme.primary
+                          : Colors.white,
+                      width: 1),
                 ),
-                boxShadow: [
-                  btnBoxShadow(),
-                ],
-              ),
-              child: Align(
-                alignment: Alignment.center,
-                child: Text(tags[index]),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: textFormat(
+                      text: tags[index], fontWeight: FontWeight.w500),
+                ),
               ),
             ),
           ),
@@ -123,34 +167,42 @@ Widget tagListView(BuildContext context, List<String> tags) {
 }
 
 // "이 위치에서 재탐색" 버튼
-Widget reSearchBtn(BuildContext context, Function onTap) {
+Widget reSearchBtn(BuildContext context, bool visible, Function onTap) {
   return Visibility(
-    visible: true,
-    child: InkWell(
-      onTap: () {
-        onTap();
-      },
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(color: const Color(0xFFD2D7DD)),
-          borderRadius: BorderRadius.circular(36),
-          boxShadow: [
-            btnBoxShadow(),
-          ],
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              Icons.refresh_rounded,
-              color: Theme.of(context).colorScheme.primary,
-              size: 20,
+    visible: visible,
+    child: shadowMaterial(
+      context,
+      36,
+      InkWell(
+        onTap: () {
+          onTap();
+        },
+        borderRadius: BorderRadius.circular(36),
+        child: Ink(
+          padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 15),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(
+              color: const Color(0xFFD2D7DD),
+              width: 0.5,
             ),
-            const SizedBox(width: 5),
-            const Text("이 위치에서 재탐색"),
-          ],
+            borderRadius: BorderRadius.circular(36),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.refresh_rounded,
+                color: Theme.of(context).colorScheme.primary,
+                size: 20,
+              ),
+              const SizedBox(width: 5),
+              textFormat(
+                text: "이 위치에서 재탐색",
+              ),
+              const SizedBox(width: 4),
+            ],
+          ),
         ),
       ),
     ),
@@ -158,7 +210,7 @@ Widget reSearchBtn(BuildContext context, Function onTap) {
 }
 
 // 제보 버튼을 누르면 가운데에 활성화되는 버튼
-Widget centerInformBtn(bool visible) {
+Widget centerInformBtn(BuildContext context, bool visible) {
   return Visibility(
     visible: visible,
     child: Column(
@@ -168,19 +220,134 @@ Widget centerInformBtn(bool visible) {
         const Icon(
           Icons.add_location_alt,
           color: Colors.red,
-          size: 50,
+          size: 40,
         ),
         const SizedBox(
           height: 10,
         ),
         // 제보하기를 누르면 등장하는 '제보하기' 버튼
-        ElevatedButton(
-          onPressed: () {},
-          child: const Text(
-            "제보하기",
+        shadowMaterial(
+          context,
+          36,
+          InkWell(
+            onTap: () {},
+            borderRadius: BorderRadius.circular(36),
+            child: Ink(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(36),
+              ),
+              child: textFormat(text: "제보하기"),
+            ),
           ),
         ),
       ],
+    ),
+  );
+}
+
+// 흡연구역 정보 카드
+Widget smokingAreaCard(
+  BuildContext context,
+  MapViewModel mapViewModel,
+  Function onTapAddFavorites,
+  Function onTapCompleteSmoking,
+) {
+  return Visibility(
+    visible: mapViewModel.showSmokingAreaCard,
+    child: Container(
+      height: 150,
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(color: const Color(0xFFD2D7DD)),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  const Icon(
+                    Icons.location_on_sharp,
+                    size: 24,
+                  ),
+                  textFormat(
+                    text: " ${mapViewModel.smokingAreawCardInfo.name}",
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ],
+              ),
+              textFormat(
+                text: "상세주소: ${mapViewModel.smokingAreawCardInfo.address}",
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Row(
+                children: [
+                  const Icon(
+                    Icons.star_rounded,
+                    color: Colors.yellow,
+                    size: 24,
+                  ),
+                  textFormat(
+                    text: mapViewModel.smokingAreawCardInfo.score.toString(),
+                    fontSize: 16,
+                  )
+                ],
+              ),
+              Row(
+                children: [
+                  simpleBtn(context, "즐겨찾기 추가", onTapAddFavorites),
+                  const SizedBox(width: 10),
+                  simpleBtn(context, "흡연 완료", onTapCompleteSmoking),
+                ],
+              )
+            ],
+          )
+        ],
+      ),
+    ),
+  );
+}
+
+Widget simpleBtn(BuildContext context, String text, Function onTap) {
+  return normalMaterial(
+    context,
+    36,
+    InkWell(
+      onTap: () {
+        onTap();
+      },
+      borderRadius: BorderRadius.circular(36),
+      child: Ink(
+        decoration: BoxDecoration(
+          color: Theme.of(context).primaryColor,
+          borderRadius: BorderRadius.circular(36),
+        ),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 20,
+          vertical: 6,
+        ),
+        child: textFormat(
+          text: text,
+          color: Colors.white,
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
     ),
   );
 }
