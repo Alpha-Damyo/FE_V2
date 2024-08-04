@@ -10,17 +10,58 @@ class MapViewModel extends ChangeNotifier {
   List<SaBasicModel> _smokingAreas = [];
   List<SaBasicModel> get smokingAreas => _smokingAreas;
 
+  // 흡연구역 검색 모델
+  final SaSearchModel _saSearchModel = SaSearchModel(
+    latitude: 37.5666,
+    longitude: 126.979,
+    range: 0.005,
+  );
+  SaSearchModel get saSearchModel => _saSearchModel;
+
+  updateSaSearchModel(double lat, double lng) {
+    _saSearchModel.latitude = lat;
+    _saSearchModel.longitude = lng;
+    _saSearchModel.opened = null;
+    _saSearchModel.closed = null;
+    _saSearchModel.indoor = null;
+    _saSearchModel.outdoor = null;
+    switch (tagIndex) {
+      case 0:
+        _saSearchModel.opened = true;
+      case 1:
+        _saSearchModel.closed = true;
+      case 2:
+        _saSearchModel.outdoor = true;
+      case 3:
+        _saSearchModel.indoor = true;
+    }
+    notifyListeners();
+  }
+
+  // 태그 (개방, 폐쇄, 실외, 실내) 관리
+  int _tagIndex = -1;
+  int get tagIndex => _tagIndex;
+  updateTagIndex(index) {
+    _researchBtnVisible = false;
+    if (_tagIndex == index) {
+      _tagIndex = -1;
+    } else {
+      _tagIndex = index;
+    }
+    notifyListeners();
+  }
+
   // 흡연구역 정보 카드
   bool _showSmokingAreaCard = false;
-  late SaBasicModel _smokingAreaCardInfo;
+  SaBasicModel _smokingAreaCardInfo =
+      SaBasicModel("-1", "null", 0, 0, "null", 0);
 
   bool get showSmokingAreaCard => _showSmokingAreaCard;
   SaBasicModel get smokingAreawCardInfo => _smokingAreaCardInfo;
 
   // 흡연구역 업데이트
-  updateSmokingAreas(
-      SaSearchModel saSearchModel, NaverMapController mapController) async {
-    _smokingAreas = await SmokingAreaService.searchSmokingArea(saSearchModel);
+  updateSmokingAreas(NaverMapController mapController) async {
+    _smokingAreas = await SmokingAreaService.searchSmokingArea(_saSearchModel);
     mapController.clearOverlays();
     for (int i = 0; i < _smokingAreas.length; i++) {
       final NMarker marker = NMarker(
@@ -33,6 +74,7 @@ class MapViewModel extends ChangeNotifier {
       marker.setOnTapListener((overlay) {
         _smokingAreaCardInfo = _smokingAreas[i];
         _showSmokingAreaCard = true;
+        notifyListeners();
       });
 
       mapController.addOverlay(marker);
@@ -42,6 +84,21 @@ class MapViewModel extends ChangeNotifier {
 
   closeSmokingAreaCard() {
     _showSmokingAreaCard = false;
+    notifyListeners();
+  }
+
+  // 지도 카메라 이동 여부 관리 (이 위치에서 재탐색 버튼 보여주기용)
+  bool _researchBtnVisible = false;
+  bool get researchBtnVisible => _researchBtnVisible;
+
+  trueResearchBtnVisible() {
+    _researchBtnVisible = true;
+    notifyListeners();
+  }
+
+  falseResearchBtnVisible() {
+    _researchBtnVisible = false;
+    notifyListeners();
   }
 
   // 제보 버튼
