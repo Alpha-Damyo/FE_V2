@@ -1,10 +1,14 @@
 PODS:
   - Flutter (1.0.0)
+  - flutter_naver_login (0.0.1):
+    - Flutter
+    - naveridlogin-sdk-ios (~> 4.1.0)
   - flutter_naver_map (1.2.3):
     - Flutter
     - NMapsMap (= 3.18.1)
   - geolocator_apple (1.2.0):
     - Flutter
+  - naveridlogin-sdk-ios (4.1.6)
   - NMapsGeometry (1.0.2)
   - NMapsMap (3.18.1):
     - NMapsGeometry
@@ -14,18 +18,22 @@ PODS:
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
+  - flutter_naver_login (from `.symlinks/plugins/flutter_naver_login/ios`)
   - flutter_naver_map (from `.symlinks/plugins/flutter_naver_map/ios`)
   - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
 
 SPEC REPOS:
   trunk:
+    - naveridlogin-sdk-ios
     - NMapsGeometry
     - NMapsMap
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
+  flutter_naver_login:
+    :path: ".symlinks/plugins/flutter_naver_login/ios"
   flutter_naver_map:
     :path: ".symlinks/plugins/flutter_naver_map/ios"
   geolocator_apple:
@@ -35,8 +43,10 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  flutter_naver_login: 1dbf6d21aae5235cdf76a28ac79cf6871899282f
   flutter_naver_map: 9b36cee8e83421f40782af8a4e7afbdf63ee5f92
   geolocator_apple: 6cbaf322953988e009e5ecb481f07efece75c450
+  naveridlogin-sdk-ios: cdd34e3585a3d5aaf37c1d84c1f41faba4a25d1a
   NMapsGeometry: 4e02554fa9880ef02ed96b075dc84355d6352479
   NMapsMap: e879088eeee2d1e3b97f0a609076e1824dce2cad
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46

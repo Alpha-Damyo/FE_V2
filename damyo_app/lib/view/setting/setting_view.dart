@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:damyo_app/widgets/setting_widgets.dart';
 
 class SettingView extends StatefulWidget {
   const SettingView({super.key});
@@ -8,8 +9,18 @@ class SettingView extends StatefulWidget {
 }
 
 class _SettingViewState extends State<SettingView> {
+  
   @override
   Widget build(BuildContext context) {
-    return const Text("Setting");
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            loginBtn(context),
+          ],
+        ),
+      ),
+    );
   }
 }
