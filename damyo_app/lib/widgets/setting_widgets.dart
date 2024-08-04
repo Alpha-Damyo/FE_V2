@@ -1,27 +1,40 @@
+import "package:damyo_app/view/login/login_view.dart";
 import "package:flutter/material.dart";
+import "package:damyo_app/style.dart";
 
 // 로그인 버튼
 Widget loginBtn(BuildContext context) {
   return InkWell(
     onTap: () {
-      print('push');
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginView()),
+      );
     },
     child: Container(
       width: 360,
-      height: 70,
-      child: const Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+      height: 60,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            '로그인/회원가입 하러 가기',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 14,
-              fontFamily: 'Pretendard',
-              fontWeight: FontWeight.w600,
-            ),
-            textAlign: TextAlign.center,
-          )
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              textFormat(
+                  text: '로그인 / 회원가입',
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700),
+              const SizedBox(height: 6),
+              textFormat(
+                text: '담요와 함께 바른 문화를 만들어봐요 ! ',
+                color: Color(0xFF6E767F),
+              ),
+            ],
+          ),
         ],
       ),
     ),
