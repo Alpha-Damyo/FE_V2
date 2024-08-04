@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:damyo_app/view/home/home_view.dart';
 import 'package:damyo_app/view_models/bottom_navigation_model.dart';
+import 'package:damyo_app/view_models/map_models/map_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
@@ -11,7 +12,15 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await loadDotEnv();
   await initializeMap();
-  runApp(const Damyo());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => BottomNavigationModel()),
+        ChangeNotifierProvider(create: (context) => MapViewModel()),
+      ],
+      child: const Damyo(),
+    ),
+  );
 }
 
 class Damyo extends StatelessWidget {
@@ -21,16 +30,18 @@ class Damyo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        brightness: Brightness.light,
+        scaffoldBackgroundColor: Colors.white,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.white,
+          primary: const Color(0xFF0099FC),
+          secondary: const Color(0xFF6F767F),
+        ),
         useMaterial3: true,
       ),
       // Todo: Provider 적용
-      home: ChangeNotifierProvider<BottomNavigationModel>(
-        create: (context) => BottomNavigationModel(),
-        child: HomeView(),
-      ),
+      home: HomeView(),
     );
   }
 }
