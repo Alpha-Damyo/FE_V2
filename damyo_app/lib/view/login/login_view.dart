@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:damyo_app/widgets/setting_widgets.dart';
+import 'package:damyo_app/widgets/login_widgets.dart';
 
-class SettingView extends StatefulWidget {
-  const SettingView({super.key});
+class LoginView extends StatefulWidget {
+  const LoginView({super.key});
 
   @override
-  State<SettingView> createState() => _SettingViewState();
+  State<LoginView> createState() => _LoginViewState();
 }
 
-class _SettingViewState extends State<SettingView> {
+class _LoginViewState extends State<LoginView> {
   
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            loginBtn(context),
+            naverLoginBtn(context),
           ],
         ),
       ),
