@@ -1,3 +1,4 @@
+import 'package:damyo_app/models/smoking_area/sa_search_model.dart';
 import 'package:damyo_app/view_models/map_models/map_view_model.dart';
 import 'package:damyo_app/widgets/map_widgets.dart';
 import 'package:flutter/material.dart';
@@ -18,20 +19,35 @@ class _MapViewState extends State<MapView> with AutomaticKeepAliveClientMixin {
 
   late MapViewModel _mapViewModel;
   late NaverMapController mapController;
+  List<String> tags = ['개방', '폐쇄', '실외', '실내'];
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
 
     _mapViewModel = Provider.of<MapViewModel>(context);
+
     return Scaffold(
       body: Stack(
         children: [
           // 지도
           NaverMap(
-            options: const NaverMapViewOptions(),
+            options: const NaverMapViewOptions(
+              // initialCameraPosition: NCameraPosition(
+              //   target: NLatLng(userLatitude, userLongitude),
+              //   zoom: 14.0,
+              // ),
+              locationButtonEnable: true,
+            ),
             onMapReady: (controller) {
               mapController = controller;
+              updateSmokingAreas(mapController);
+            },
+            onCameraIdle: () {
+              _mapViewModel.trueResearchBtnVisible();
+            },
+            onMapTapped: (point, latLng) {
+              _mapViewModel.closeSmokingAreaCard();
             },
           ),
 
@@ -54,9 +70,18 @@ class _MapViewState extends State<MapView> with AutomaticKeepAliveClientMixin {
                   ],
                 ),
                 const SizedBox(height: 10),
-                tagListView(context, ['개방', '폐쇄', '실외', '실내']),
+                tagListView(context, tags, _mapViewModel.tagIndex, (index) {
+                  _mapViewModel.updateTagIndex(index);
+                  updateSmokingAreas(mapController);
+                }),
                 const SizedBox(height: 10),
-                reSearchBtn(context)
+                reSearchBtn(
+                  context,
+                  _mapViewModel.researchBtnVisible,
+                  () {
+                    updateSmokingAreas(mapController);
+                  },
+                )
               ],
             ),
           ),
@@ -65,10 +90,33 @@ class _MapViewState extends State<MapView> with AutomaticKeepAliveClientMixin {
             right: 0,
             top: 0,
             bottom: 0,
-            child: centerInformBtn(_mapViewModel.informBtnVisible),
+            child: centerInformBtn(context, _mapViewModel.informBtnVisible),
+          ),
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 15,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              child: smokingAreaCard(
+                context,
+                _mapViewModel,
+                () {},
+                () {},
+              ),
+            ),
           )
         ],
       ),
     );
+  }
+
+  void updateSmokingAreas(NaverMapController mapController) {
+    _mapViewModel.updateSaSearchModel(
+      mapController.nowCameraPosition.target.latitude,
+      mapController.nowCameraPosition.target.longitude,
+    );
+    _mapViewModel.updateSmokingAreas(mapController);
+    _mapViewModel.falseResearchBtnVisible();
   }
 }
