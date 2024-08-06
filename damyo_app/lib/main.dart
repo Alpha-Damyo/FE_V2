@@ -41,9 +41,9 @@ class Damyo extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
         colorScheme: const ColorScheme.light(
-          primary: Color(0xFF0099FC),
-          secondary: Color(0xFFD6ECFA),
-        ),
+            primary: Color(0xFF0099FC),
+            secondary: Color(0xFFD6ECFA),
+            secondaryContainer: Color(0xFFEEF1F5)),
       ),
       // Todo: Provider 적용
       routerConfig: router,
