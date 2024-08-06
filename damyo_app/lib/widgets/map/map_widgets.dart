@@ -1,8 +1,7 @@
-import "dart:ui";
-
 import "package:damyo_app/style.dart";
 import "package:damyo_app/view_models/map_models/map_view_model.dart";
 import "package:flutter/material.dart";
+import "package:go_router/go_router.dart";
 
 // 버튼 그림자
 BoxShadow btnBoxShadow() {
@@ -256,68 +255,74 @@ Widget smokingAreaCard(
 ) {
   return Visibility(
     visible: mapViewModel.showSmokingAreaCard,
-    child: Container(
-      height: 150,
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: const Color(0xFFD2D7DD)),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  const Icon(
-                    Icons.location_on_sharp,
-                    size: 24,
-                  ),
-                  textFormat(
-                    text: " ${mapViewModel.smokingAreawCardInfo.name}",
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ],
-              ),
-              textFormat(
-                text: "상세주소: ${mapViewModel.smokingAreawCardInfo.address}",
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Row(
-                children: [
-                  const Icon(
-                    Icons.star_rounded,
-                    color: Colors.yellow,
-                    size: 24,
-                  ),
-                  textFormat(
-                    text: mapViewModel.smokingAreawCardInfo.score.toString(),
-                    fontSize: 16,
-                  )
-                ],
-              ),
-              Row(
-                children: [
-                  simpleBtn(context, "즐겨찾기 추가", onTapAddFavorites),
-                  const SizedBox(width: 10),
-                  simpleBtn(context, "흡연 완료", onTapCompleteSmoking),
-                ],
-              )
-            ],
-          )
-        ],
+    child: GestureDetector(
+      onTap: () {
+        GoRouter.of(context)
+            .push('/sa/detail/${mapViewModel.smokingAreawCardInfo.areaId}');
+      },
+      child: Container(
+        height: 150,
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(color: const Color(0xFFD2D7DD)),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.location_on_sharp,
+                      size: 24,
+                    ),
+                    textFormat(
+                      text: " ${mapViewModel.smokingAreawCardInfo.name}",
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ],
+                ),
+                textFormat(
+                  text: "상세주소: ${mapViewModel.smokingAreawCardInfo.address}",
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.star_rounded,
+                      color: Colors.yellow,
+                      size: 24,
+                    ),
+                    textFormat(
+                      text: mapViewModel.smokingAreawCardInfo.score.toString(),
+                      fontSize: 16,
+                    )
+                  ],
+                ),
+                Row(
+                  children: [
+                    simpleBtn(context, "즐겨찾기 추가", onTapAddFavorites),
+                    const SizedBox(width: 10),
+                    simpleBtn(context, "흡연 완료", onTapCompleteSmoking),
+                  ],
+                )
+              ],
+            )
+          ],
+        ),
       ),
     ),
   );
