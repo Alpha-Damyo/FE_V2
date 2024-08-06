@@ -50,6 +50,9 @@ dependencies:
   # login packages
   flutter_naver_login: ^1.8.0
 
+  # convenience packages
+  go_router: ^14.2.3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

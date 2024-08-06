@@ -1,4 +1,3 @@
-import 'package:damyo_app/models/smoking_area/sa_search_model.dart';
 import 'package:damyo_app/view_models/map_models/map_view_model.dart';
 import 'package:damyo_app/widgets/map_widgets.dart';
 import 'package:flutter/material.dart';
