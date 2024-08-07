@@ -116,21 +116,26 @@ Widget saDetailInfo(
       Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.location_on_sharp),
+          const Icon(Icons.location_on_outlined),
           const SizedBox(width: 5),
           Flexible(
-            child: textFormat(
-              text: address,
-              fontSize: 16,
-              textOverflow: TextOverflow.clip,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                textFormat(
+                  text: address,
+                  fontSize: 16,
+                  textOverflow: TextOverflow.clip,
+                ),
+                const SizedBox(height: 5),
+                textFormat(
+                  text: description,
+                  textOverflow: TextOverflow.clip,
+                ),
+              ],
             ),
           ),
         ],
-      ),
-      const SizedBox(height: 5),
-      textFormat(
-        text: description,
-        textOverflow: TextOverflow.clip,
       ),
     ],
   );
