@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:damyo_app/view/home/home_view.dart';
+import 'package:damyo_app/utils/go_router.dart';
 import 'package:damyo_app/view_models/bottom_navigation_model.dart';
 import 'package:damyo_app/view_models/map_models/map_view_model.dart';
 import 'package:flutter/material.dart';
@@ -36,18 +36,17 @@ class Damyo extends StatelessWidget {
         statusBarIconBrightness: Brightness.dark,
       ),
     );
-    return MaterialApp(
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.white,
-          primary: const Color(0xFF0099FC),
-          secondary: const Color(0xFFD6ECFA),
-        ),
-        useMaterial3: true,
+        colorScheme: const ColorScheme.light(
+            primary: Color(0xFF0099FC),
+            secondary: Color(0xFFD6ECFA),
+            secondaryContainer: Color(0xFFEEF1F5)),
       ),
       // Todo: Provider 적용
-      home: HomeView(),
+      routerConfig: router,
     );
   }
 }
