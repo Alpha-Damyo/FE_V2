@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 
-class SaIamgeScreen extends StatelessWidget {
-  const SaIamgeScreen(this.photoPath, {super.key});
+class SaImageScreen extends StatelessWidget {
+  const SaImageScreen(this.photoPath, {super.key});
   final String? photoPath;
 
   @override
