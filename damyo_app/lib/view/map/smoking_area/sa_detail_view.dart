@@ -52,6 +52,7 @@ class _SaDetailViewState extends State<SaDetailView> {
                         horizontal: 30, vertical: 15),
                     child: saDetailNameScoreBtns(
                       context,
+                      saDetailModel.areaId,
                       saDetailModel.name,
                       saDetailModel.score,
                     ),

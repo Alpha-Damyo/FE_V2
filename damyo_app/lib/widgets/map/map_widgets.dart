@@ -218,7 +218,8 @@ Widget smokingAreaCard(
     visible: mapViewModel.showSmokingAreaCard,
     child: GestureDetector(
       onTap: () {
-        context.push('/sa/detail/${mapViewModel.smokingAreawCardInfo.areaId}');
+        context
+            .push('/smokingarea/${mapViewModel.smokingAreawCardInfo.areaId}');
       },
       child: Container(
         height: 150,

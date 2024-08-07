@@ -1,8 +1,9 @@
 import 'package:damyo_app/style.dart';
-import 'package:damyo_app/widgets/map/smoking_area/sa_gallery_screen.dart';
-import 'package:damyo_app/widgets/map/smoking_area/sa_iamge_screen.dart';
+import 'package:damyo_app/view/map/smoking_area/sa_gallery_screen.dart';
+import 'package:damyo_app/view/map/smoking_area/sa_image_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
+import 'package:go_router/go_router.dart';
 
 // 흡연구역 대표 이미지
 Widget saDetailRepresentativeImage(
@@ -16,7 +17,7 @@ Widget saDetailRepresentativeImage(
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => SaIamgeScreen(photoUrl),
+          builder: (context) => SaImageScreen(photoUrl),
         ),
       );
     },
@@ -37,7 +38,12 @@ Widget saDetailRepresentativeImage(
 }
 
 // 흡연구역 이름, 별점, 버튼(즐겨찾기, 공유, 리뷰작성, 흡연완료)
-Widget saDetailNameScoreBtns(BuildContext context, String name, double score) {
+Widget saDetailNameScoreBtns(
+  BuildContext context,
+  String areaId,
+  String name,
+  double score,
+) {
   return Column(
     children: [
       textFormat(
@@ -64,7 +70,14 @@ Widget saDetailNameScoreBtns(BuildContext context, String name, double score) {
         children: [
           saDetailBtn(context, (Icons.bookmark_add), "즐겨찾기", () {}),
           saDetailBtn(context, (Icons.share_rounded), "공유", () {}),
-          saDetailBtn(context, (Icons.message), "리뷰작성", () {}),
+          saDetailBtn(
+            context,
+            (Icons.message),
+            "리뷰작성",
+            () {
+              context.push('/smokingarea/$areaId/review', extra: name);
+            },
+          ),
           saDetailBtn(context, (Icons.check_box), "흡연완료", () {}),
         ],
       ),
