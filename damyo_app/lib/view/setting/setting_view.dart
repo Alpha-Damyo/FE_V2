@@ -9,17 +9,21 @@ class SettingView extends StatefulWidget {
 }
 
 class _SettingViewState extends State<SettingView> {
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            loginBtn(context),
-          ],
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          loginBtn(context),
+          toolBax(context, '즐겨찾기 관리'),
+          toolBax(context, '흡연구역 업데이트'),
+          toolBax(context, '업적'),
+          toolBax(context, '흡연데이터 초기화'),
+          toolBax(context, '푸쉬 알림'),
+          toolBax(context, '앱버전'),
+        ],
       ),
     );
   }
