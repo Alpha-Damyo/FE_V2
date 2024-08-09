@@ -55,6 +55,9 @@ dependencies:
   flutter_rating_stars: ^1.1.0
   photo_view: ^0.15.0
 
+  # statistics packages
+  fl_chart: ^0.67.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
