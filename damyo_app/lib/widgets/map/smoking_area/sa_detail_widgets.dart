@@ -59,6 +59,8 @@ Widget saDetailNameScoreBtns(
           RatingStars(
             value: score,
             valueLabelVisibility: false,
+            starColor: Theme.of(context).colorScheme.primary,
+            starSize: 18,
           ),
           const SizedBox(width: 10),
           textFormat(text: "(3건)")

@@ -170,7 +170,8 @@ Widget reSearchBtn(BuildContext context, bool visible, Function onTap) {
 }
 
 // 제보 버튼을 누르면 가운데에 활성화되는 버튼
-Widget centerInformBtn(BuildContext context, bool visible) {
+Widget centerInformBtn(
+    BuildContext context, bool visible, Map<String, double> coord) {
   return Visibility(
     visible: visible,
     child: Column(
@@ -190,7 +191,9 @@ Widget centerInformBtn(BuildContext context, bool visible) {
           context,
           36,
           InkWell(
-            onTap: () {},
+            onTap: () {
+              context.push("/smokingarea/inform", extra: coord);
+            },
             borderRadius: BorderRadius.circular(36),
             child: Ink(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
@@ -262,9 +265,9 @@ Widget smokingAreaCard(
               children: [
                 Row(
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.star_rounded,
-                      color: Colors.yellow,
+                      color: Theme.of(context).colorScheme.primary,
                       size: 24,
                     ),
                     textFormat(
