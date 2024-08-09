@@ -18,6 +18,7 @@ class _MapViewState extends State<MapView> with AutomaticKeepAliveClientMixin {
 
   late MapViewModel _mapViewModel;
   late NaverMapController mapController;
+  bool isMapControllerLoaded = false;
   List<String> tags = ['개방', '폐쇄', '실외', '실내'];
 
   @override
@@ -40,6 +41,7 @@ class _MapViewState extends State<MapView> with AutomaticKeepAliveClientMixin {
             ),
             onMapReady: (controller) {
               mapController = controller;
+              isMapControllerLoaded = true;
               updateSmokingAreas(mapController);
             },
             onCameraIdle: () {
@@ -84,13 +86,16 @@ class _MapViewState extends State<MapView> with AutomaticKeepAliveClientMixin {
               ],
             ),
           ),
+          // 제보 버튼을 누르면 활성화되는 제보하기 버튼
           Positioned(
             left: 0,
             right: 0,
             top: 0,
             bottom: 0,
-            child: centerInformBtn(context, _mapViewModel.informBtnVisible),
+            child: centerInformBtn(
+                context, _mapViewModel.informBtnVisible, getNowCamerPosition()),
           ),
+          // 마커를 누르면 나오는 정보 카드
           Positioned(
             left: 0,
             right: 0,
@@ -108,6 +113,22 @@ class _MapViewState extends State<MapView> with AutomaticKeepAliveClientMixin {
         ],
       ),
     );
+  }
+
+  Map<String, double> getNowCamerPosition() {
+    if (isMapControllerLoaded) {
+      return {
+        "lat": double.parse(
+            mapController.nowCameraPosition.target.latitude.toStringAsFixed(8)),
+        "lng": double.parse(mapController.nowCameraPosition.target.longitude
+            .toStringAsFixed(8)),
+      };
+    } else {
+      return {
+        "lat": 0.0,
+        "lng": 0.0,
+      };
+    }
   }
 
   void updateSmokingAreas(NaverMapController mapController) {
