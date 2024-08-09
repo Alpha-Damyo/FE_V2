@@ -6,14 +6,16 @@ Future<Map<String, dynamic>> login(
     Map<String, String> loginInfo, String provider) async {
   final baseUrl = dotenv.get('BASE_URL');
   var url =
-      Uri.parse('$baseUrl/auth/login/$provider?token=${loginInfo['token']}');
+      Uri.parse('$baseUrl/auth/login/$provider');
 
   var body = json.encode(loginInfo);
+  String token = loginInfo['token']!;
 
   var response = await http.post(
     url,
     headers: {
       'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token',
     },
     body: body,
   );
