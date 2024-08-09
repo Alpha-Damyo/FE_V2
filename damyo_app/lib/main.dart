@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:damyo_app/utils/go_router.dart';
 import 'package:damyo_app/view_models/bottom_navigation_model.dart';
 import 'package:damyo_app/view_models/map_models/map_view_model.dart';
+import 'package:damyo_app/view_models/map_models/smoking_area/sa_inform_model.dart';
+import 'package:damyo_app/view_models/map_models/smoking_area/sa_review_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
@@ -18,6 +20,8 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (context) => BottomNavigationModel()),
         ChangeNotifierProvider(create: (context) => MapViewModel()),
+        ChangeNotifierProvider(create: (context) => SaReviewModel()),
+        ChangeNotifierProvider(create: (context) => SaInformModel()),
       ],
       child: const Damyo(),
     ),
@@ -41,9 +45,11 @@ class Damyo extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
         colorScheme: const ColorScheme.light(
-            primary: Color(0xFF0099FC),
-            secondary: Color(0xFFD6ECFA),
-            secondaryContainer: Color(0xFFEEF1F5)),
+          primary: Color(0xFF0099FC),
+          secondary: Color(0xFFD6ECFA),
+          secondaryContainer: Color(0xFFEEF1F5),
+          onSecondaryContainer: Color(0xFFD2D7DD),
+        ),
       ),
       // Todo: Provider 적용
       routerConfig: router,

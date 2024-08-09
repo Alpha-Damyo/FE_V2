@@ -24,7 +24,7 @@ Text textFormat({
 
 Text appbarTitleFormat({
   required String text,
-  double fontSize = 18,
+  double fontSize = 20,
   Color? color = Colors.black,
   FontWeight fontWeight = FontWeight.w600,
   TextOverflow? textOverflow = TextOverflow.ellipsis,
