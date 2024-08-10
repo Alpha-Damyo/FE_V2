@@ -1,5 +1,5 @@
 import 'package:damyo_app/style.dart';
-import 'package:damyo_app/view_models/map_models/smoking_area/sa_review_model.dart';
+import 'package:damyo_app/view_models/map_models/smoking_area/sa_review_view_model.dart';
 import 'package:damyo_app/widgets/common/image_select_widget.dart';
 import 'package:damyo_app/widgets/map/smoking_area/sa_review_widgets.dart';
 import 'package:flutter/material.dart';
@@ -19,11 +19,11 @@ class _SaReviewViewState extends State<SaReviewView> {
   // String get _areaId => widget.areaId;
   String get _name => widget.name;
   final ImagePicker _imagePicker = ImagePicker();
-  late SaReviewModel _saReviewModel;
+  late SaReviewViewModel _saReviewModel;
 
   @override
   Widget build(BuildContext context) {
-    _saReviewModel = Provider.of<SaReviewModel>(context);
+    _saReviewModel = Provider.of<SaReviewViewModel>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -58,7 +58,7 @@ class _SaReviewViewState extends State<SaReviewView> {
                 ),
               ),
             ),
-            reviewWrite(context, _saReviewModel.canReview),
+            reviewComplete(context, _saReviewModel.canReview),
           ],
         ),
       ),

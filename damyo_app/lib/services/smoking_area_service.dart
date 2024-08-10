@@ -1,10 +1,15 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:damyo_app/models/smoking_area/sa_basic_model.dart';
 import 'package:damyo_app/models/smoking_area/sa_detail_model.dart';
+import 'package:damyo_app/models/smoking_area/sa_inform_model.dart';
 import 'package:damyo_app/models/smoking_area/sa_search_model.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
+import 'package:image_picker/image_picker.dart';
 
 class SmokingAreaService {
   static final baseUrl = dotenv.get('BASE_URL');
@@ -44,6 +49,51 @@ class SmokingAreaService {
       return SaDetailModel.fromJson(responseDecode);
     } else {
       throw Exception("Fail to Get Detail");
+    }
+  }
+
+  static Future<bool> informSmokingArea(
+      XFile? image, SaInformModel saInformModel) async {
+    final baseUrl = dotenv.get('BASE_URL');
+    var url = Uri.parse('$baseUrl/area/postArea');
+
+    var request = http.MultipartRequest('POST', url);
+
+    // 이미지 추가
+    if (image != null) {
+      var imageFile = File(image.path);
+      var stream = http.ByteStream(imageFile.openRead());
+      var length = await imageFile.length();
+      var multipartFile = await http.MultipartFile.fromPath(
+        'imgFile',
+        image.path,
+        filename: 'image.png',
+      );
+      request.files.add(multipartFile);
+    }
+
+    // 데이터 추가
+    var data = saInformModel.toJson();
+    List<int> jsonData = utf8.encode(jsonEncode(data));
+    request.files.add(http.MultipartFile.fromBytes(
+      'areaRequest',
+      jsonData,
+      contentType: MediaType(
+        'application',
+        'json',
+        {'charset': 'utf-8'},
+      ),
+    ));
+
+    var response = await request.send();
+    var jsonBody = await response.stream.bytesToString();
+
+    if (response.statusCode == 200) {
+      debugPrint(jsonBody);
+      return true;
+    } else {
+      debugPrint(jsonBody);
+      return false;
     }
   }
 }

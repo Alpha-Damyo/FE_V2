@@ -54,19 +54,23 @@ Widget saDetailNameScoreBtns(
       const SizedBox(height: 5),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          textFormat(text: "$score", color: Colors.red),
+          const SizedBox(width: 5),
           RatingStars(
             value: score,
             valueLabelVisibility: false,
-            starColor: Theme.of(context).colorScheme.primary,
+            starColor: Colors.red,
             starSize: 18,
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: 5),
           textFormat(text: "(3건)")
         ],
       ),
-      const SizedBox(height: 30),
+      const SizedBox(height: 10),
+      textFormat(text: "#개방형 #실내"),
+      const SizedBox(height: 20),
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
