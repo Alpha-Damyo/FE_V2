@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class SaReviewModel extends ChangeNotifier {
+class SaReviewViewModel extends ChangeNotifier {
   // 리뷰 이미지
   XFile? _reviewImage;
   XFile? get reviewImage => _reviewImage;

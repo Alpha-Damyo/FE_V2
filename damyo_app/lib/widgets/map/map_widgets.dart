@@ -265,9 +265,9 @@ Widget smokingAreaCard(
               children: [
                 Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.star_rounded,
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Colors.red,
                       size: 24,
                     ),
                     textFormat(

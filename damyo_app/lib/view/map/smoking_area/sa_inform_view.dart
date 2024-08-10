@@ -1,6 +1,7 @@
 import 'package:damyo_app/style.dart';
-import 'package:damyo_app/view_models/map_models/smoking_area/sa_inform_model.dart';
+import 'package:damyo_app/view_models/map_models/smoking_area/sa_inform_view_model.dart';
 import 'package:damyo_app/widgets/common/image_select_widget.dart';
+import 'package:damyo_app/widgets/map/smoking_area/sa_inform_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -18,11 +19,11 @@ class _SaInformViewState extends State<SaInformView> {
   double get _lat => widget.lat;
   double get _lng => widget.lng;
   final ImagePicker _imagePicker = ImagePicker();
-  late SaInformModel _saInformModel;
+  late SaInformViewModel _saInformModel;
 
   @override
   Widget build(BuildContext context) {
-    _saInformModel = Provider.of<SaInformModel>(context);
+    _saInformModel = Provider.of<SaInformViewModel>(context);
     return Scaffold(
       appBar: AppBar(
         scrolledUnderElevation: 0,
@@ -45,11 +46,53 @@ class _SaInformViewState extends State<SaInformView> {
                         _saInformModel.setInformImage(xFile);
                       },
                     ),
-                    Text("$_lat / $_lng "),
+                    const SizedBox(height: 20),
+                    informName(
+                      context,
+                      _saInformModel.nameController,
+                      _saInformModel.checkCanInform,
+                    ),
+                    const SizedBox(height: 20),
+                    informAddress(context, _lat, _lng,
+                        _saInformModel.descriptionController, (val) {
+                      _saInformModel.setAddress(val);
+                    }),
+                    const SizedBox(height: 20),
+                    informRating(
+                      context,
+                      _saInformModel.starValue,
+                      (val) {
+                        _saInformModel.setStarValue(val);
+                      },
+                    ),
+                    const SizedBox(height: 15),
+                    informInOut(
+                      context,
+                      [_saInformModel.inside, _saInformModel.outside],
+                      (index) {
+                        _saInformModel.setInOut(index);
+                      },
+                    ),
+                    const SizedBox(height: 10),
+                    informOpenClose(
+                      context,
+                      [_saInformModel.open, _saInformModel.close],
+                      (index) {
+                        _saInformModel.setOpenClose(index);
+                      },
+                    ),
                   ],
                 ),
               ),
             ),
+            const SizedBox(height: 15),
+            informComplete(
+              context,
+              _saInformModel.canInform,
+              _saInformModel,
+              _lat,
+              _lng,
+            )
           ],
         ),
       ),

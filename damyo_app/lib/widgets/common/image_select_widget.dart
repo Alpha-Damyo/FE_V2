@@ -50,7 +50,7 @@ Future getImage(ImageSource imageSource, ImagePicker imagePicker, XFile? image,
   }
 }
 
-// 이미지를 입력받는 위젯
+// 이미지를 띄우는 컨테이너
 Widget imageGetter(BuildContext context, XFile? image) {
   return Container(
     width: double.infinity,
@@ -79,38 +79,4 @@ Widget imageGetter(BuildContext context, XFile? image) {
           )
         : Image.file(File(image.path)),
   );
-  // image != null
-  // ? Container(
-  //     alignment: Alignment.center,
-  //     width: double.infinity,
-  //     decoration: const BoxDecoration(
-  //       color: Colors.white,
-  //       borderRadius: BorderRadius.all(Radius.circular(16)),
-  //     ),
-  //     child: Image.file(
-  //       File(image.path),
-  //     ),
-  //   )
-  // : Container(
-  //     alignment: Alignment.center,
-  //     decoration: const BoxDecoration(
-  //       color: Color(0xffeef1f5),
-  //       borderRadius: BorderRadius.all(Radius.circular(16)),
-  //     ),
-  //     child: Column(
-  //       mainAxisAlignment: MainAxisAlignment.center,
-  //       children: [
-  //         const Icon(
-  //           Icons.camera_alt_rounded,
-  //           size: 60,
-  //           color: Color(0xffa9afb7),
-  //         ),
-  //         textFormat(
-  //           text: '사진을 추가해주세요! (선택)',
-  //           color: const Color(0xff464D57),
-  //           fontSize: 12,
-  //         ),
-  //       ],
-  //     ),
-  //   );
 }
