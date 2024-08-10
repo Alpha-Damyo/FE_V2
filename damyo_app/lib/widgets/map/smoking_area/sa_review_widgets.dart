@@ -47,13 +47,13 @@ Widget reviewRating(
           fontWeight: FontWeight.w600,
         ),
         const SizedBox(height: 10),
-        ratingStars(context, starValue, setStarValue),
+        ratingStars(context, 40, starValue, setStarValue),
       ],
     ),
   );
 }
 
-Widget reviewWrite(BuildContext context, bool canReview) {
+Widget reviewComplete(BuildContext context, bool canReview) {
   return InkWell(
     borderRadius: const BorderRadius.all(Radius.circular(16)),
     onTap: () {
@@ -71,7 +71,7 @@ Widget reviewWrite(BuildContext context, bool canReview) {
       child: Align(
         alignment: Alignment.center,
         child: textFormat(
-          text: '리뷰 작성',
+          text: '리뷰 완료',
           fontSize: 20,
           fontWeight: FontWeight.w600,
           color: Colors.white,

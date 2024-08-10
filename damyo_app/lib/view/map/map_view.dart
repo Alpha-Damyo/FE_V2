@@ -119,9 +119,9 @@ class _MapViewState extends State<MapView> with AutomaticKeepAliveClientMixin {
     if (isMapControllerLoaded) {
       return {
         "lat": double.parse(
-            mapController.nowCameraPosition.target.latitude.toStringAsFixed(8)),
+            mapController.nowCameraPosition.target.latitude.toStringAsFixed(6)),
         "lng": double.parse(mapController.nowCameraPosition.target.longitude
-            .toStringAsFixed(8)),
+            .toStringAsFixed(6)),
       };
     } else {
       return {
