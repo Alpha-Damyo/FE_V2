@@ -1,5 +1,5 @@
 import 'package:damyo_app/style.dart';
-import 'package:damyo_app/view_models/map_models/smoking_area/sa_review_model.dart';
+import 'package:damyo_app/view_models/map_models/smoking_area/sa_review_view_model.dart';
 import 'package:damyo_app/widgets/common/image_select_widget.dart';
 import 'package:damyo_app/widgets/map/smoking_area/sa_review_widgets.dart';
 import 'package:flutter/material.dart';
@@ -16,14 +16,14 @@ class SaReviewView extends StatefulWidget {
 }
 
 class _SaReviewViewState extends State<SaReviewView> {
-  // String get _areaId => widget.areaId;
+  String get _areaId => widget.areaId;
   String get _name => widget.name;
   final ImagePicker _imagePicker = ImagePicker();
-  late SaReviewModel _saReviewModel;
+  late SaReviewViewModel _saReviewViewModel;
 
   @override
   Widget build(BuildContext context) {
-    _saReviewModel = Provider.of<SaReviewModel>(context);
+    _saReviewViewModel = Provider.of<SaReviewViewModel>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -45,20 +45,21 @@ class _SaReviewViewState extends State<SaReviewView> {
                     imageSelector(
                       context,
                       _imagePicker,
-                      _saReviewModel.reviewImage,
+                      _saReviewViewModel.reviewImage,
                       (xfile) {
-                        _saReviewModel.setReviewImage(xfile);
+                        _saReviewViewModel.setReviewImage(xfile);
                       },
                     ),
                     const SizedBox(height: 20),
-                    reviewRating(context, _saReviewModel.starValue, (val) {
-                      _saReviewModel.setStarValue(val);
+                    reviewRating(context, _saReviewViewModel.starValue, (val) {
+                      _saReviewViewModel.setStarValue(val);
                     })
                   ],
                 ),
               ),
             ),
-            reviewWrite(context, _saReviewModel.canReview),
+            reviewComplete(context, _saReviewViewModel.canReview, _areaId,
+                _saReviewViewModel),
           ],
         ),
       ),
@@ -67,7 +68,7 @@ class _SaReviewViewState extends State<SaReviewView> {
 
   @override
   void dispose() {
-    _saReviewModel.resetAll();
+    _saReviewViewModel.resetAll();
     super.dispose();
   }
 }
