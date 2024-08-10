@@ -1,6 +1,10 @@
+import 'package:damyo_app/models/smoking_area/sa_review_model.dart';
+import 'package:damyo_app/services/smoking_area_service.dart';
 import 'package:damyo_app/style.dart';
+import 'package:damyo_app/view_models/map_models/smoking_area/sa_review_view_model.dart';
 import 'package:damyo_app/widgets/common/ratingstar_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 Widget reviewSaName(BuildContext context, String name) {
   return RichText(
@@ -53,11 +57,28 @@ Widget reviewRating(
   );
 }
 
-Widget reviewComplete(BuildContext context, bool canReview) {
+Widget reviewComplete(BuildContext context, bool canReview, String areaId,
+    SaReviewViewModel model) {
   return InkWell(
     borderRadius: const BorderRadius.all(Radius.circular(16)),
-    onTap: () {
-      // canReview ?
+    onTap: () async {
+      if (canReview) {
+        SaReviewModel saReviewModel = SaReviewModel.fromJson({
+          "smokingAreaId": areaId,
+          "score": model.starValue,
+        });
+
+        bool success = await SmokingAreaService.reviewSmokingArea(
+            model.reviewImage, saReviewModel);
+
+        if (success) {
+          Fluttertoast.showToast(msg: "리뷰 작성이 완료되었습니다");
+          // ignore: use_build_context_synchronously
+          Navigator.pop(context);
+        } else {
+          Fluttertoast.showToast(msg: "리뷰 작성에 실패하였습니다");
+        }
+      }
     },
     child: Ink(
       width: double.infinity,

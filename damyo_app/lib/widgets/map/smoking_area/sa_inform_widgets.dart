@@ -116,7 +116,7 @@ Widget informComplete(BuildContext context, bool canReview,
 
         if (success) {
           Fluttertoast.showToast(msg: "제보가 완료되었습니다");
-          // ignore: use_build_context_synchronously
+
           Navigator.pop(context);
         } else {
           Fluttertoast.showToast(msg: "제보에 실패하였습니다");
