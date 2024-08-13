@@ -64,6 +64,7 @@ dependencies:
   # storage packages
   sqflite: ^2.3.3+1
   path: ^1.9.0
+  flutter_secure_storage: ^9.0.0
 
   # util packages
   intl: ^0.17.0
