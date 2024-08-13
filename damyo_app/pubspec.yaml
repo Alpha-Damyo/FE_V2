@@ -61,6 +61,13 @@ dependencies:
   # statistics packages
   fl_chart: ^0.67.0
 
+  # storage packages
+  sqflite: ^2.3.3+1
+  path: ^1.9.0
+
+  # util packages
+  intl: ^0.17.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
