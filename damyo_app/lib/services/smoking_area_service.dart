@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:damyo_app/models/smoking_area/sa_basic_model.dart';
 import 'package:damyo_app/models/smoking_area/sa_detail_model.dart';
@@ -15,10 +14,41 @@ import 'package:image_picker/image_picker.dart';
 class SmokingAreaService {
   static final baseUrl = dotenv.get('BASE_URL');
 
-  static Future<List<SaBasicModel>> searchSmokingArea(
+  static Future<List<SaBasicModel>> searchSmokingAreaByTag(
       SaSearchModel saSearchModel) async {
     var url = Uri.parse("$baseUrl/area/locateSearch");
     var body = json.encode(saSearchModel.toJson());
+
+    var response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: body,
+    );
+    var responseDecode = jsonDecode(utf8.decode(response.bodyBytes));
+    if (response.statusCode == 200) {
+      List<SaBasicModel> smokingAreas = [];
+      List<dynamic> results = responseDecode['smokingAreas'];
+      for (int i = 0; i < results.length; i++) {
+        smokingAreas.add(SaBasicModel.fromJson(results[i]));
+      }
+      return smokingAreas;
+    } else {
+      throw Exception("Fail to Search");
+    }
+  }
+
+  static Future<List<SaBasicModel>> searchSmokingAreaByName(String name) async {
+    var url = Uri.parse("$baseUrl/area/querySearch");
+    var body = json.encode({
+      "word": name,
+      "status": null,
+      "opened": null,
+      "closed": null,
+      "indoor": null,
+      "outdoor": null,
+    });
 
     var response = await http.post(
       url,

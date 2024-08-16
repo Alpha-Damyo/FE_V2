@@ -61,7 +61,8 @@ class MapViewModel extends ChangeNotifier {
 
   // 흡연구역 업데이트
   updateSmokingAreas(NaverMapController mapController) async {
-    _smokingAreas = await SmokingAreaService.searchSmokingArea(_saSearchModel);
+    _smokingAreas =
+        await SmokingAreaService.searchSmokingAreaByTag(_saSearchModel);
     mapController.clearOverlays();
     for (int i = 0; i < _smokingAreas.length; i++) {
       final NMarker marker = NMarker(

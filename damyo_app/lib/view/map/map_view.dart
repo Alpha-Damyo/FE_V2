@@ -52,7 +52,7 @@ class _MapViewState extends State<MapView> with AutomaticKeepAliveClientMixin {
             },
           ),
 
-          // 이외 버튼
+          // 검색
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0),
             child: Column(

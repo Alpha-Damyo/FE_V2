@@ -1,4 +1,6 @@
 import 'package:damyo_app/view/home/home_view.dart';
+import 'package:damyo_app/view/map/search/sa_search_complete_view.dart';
+import 'package:damyo_app/view/map/search/sa_search_view.dart';
 import 'package:damyo_app/view/map/smoking_area/sa_detail_view.dart';
 import 'package:damyo_app/view/map/smoking_area/sa_inform_view.dart';
 import 'package:damyo_app/view/map/smoking_area/sa_review_view.dart';
@@ -43,6 +45,20 @@ final GoRouter router = GoRouter(
             )
           ],
         ),
+        GoRoute(
+            path: 'search',
+            builder: (BuildContext context, GoRouterState state) {
+              return const SaSearchView();
+            },
+            routes: <RouteBase>[
+              GoRoute(
+                  path: ':searchWord',
+                  builder: (BuildContext context, GoRouterState state) {
+                    return SaSearchCompleteView(
+                      searchWord: state.pathParameters['searchWord']!,
+                    );
+                  })
+            ]),
       ],
     ),
   ],
