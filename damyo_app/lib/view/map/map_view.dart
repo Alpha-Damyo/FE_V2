@@ -1,4 +1,5 @@
 import 'package:damyo_app/view_models/map_models/map_view_model.dart';
+import 'package:damyo_app/view_models/map_models/search/sa_search_view_model.dart';
 import 'package:damyo_app/widgets/map/map_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
@@ -17,6 +18,7 @@ class _MapViewState extends State<MapView> with AutomaticKeepAliveClientMixin {
   bool get wantKeepAlive => true;
 
   late MapViewModel _mapViewModel;
+  late SaSearchViewModel _saSearchViewModel;
   late NaverMapController mapController;
   bool isMapControllerLoaded = false;
   List<String> tags = ['개방', '폐쇄', '실외', '실내'];
@@ -26,6 +28,8 @@ class _MapViewState extends State<MapView> with AutomaticKeepAliveClientMixin {
     super.build(context);
 
     _mapViewModel = Provider.of<MapViewModel>(context);
+    _saSearchViewModel = Provider.of<SaSearchViewModel>(context);
+    _saSearchViewModel.readRecentSearchWords();
 
     return Scaffold(
       body: Stack(

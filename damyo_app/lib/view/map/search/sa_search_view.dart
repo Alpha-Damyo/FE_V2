@@ -27,6 +27,7 @@ class _SaSearchViewState extends State<SaSearchView> {
             children: [
               const SizedBox(height: 35),
               saSearchBar(context, _saSearchViewModel),
+              recentSearchWordsList(context, _saSearchViewModel),
             ],
           ),
         ),
