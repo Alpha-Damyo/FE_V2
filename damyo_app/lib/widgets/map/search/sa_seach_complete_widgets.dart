@@ -1,6 +1,7 @@
 // 검색 창
 import 'package:damyo_app/style.dart';
 import 'package:damyo_app/utils/cal_distance.dart';
+import 'package:damyo_app/view/map/search/sa_search_map_view.dart';
 import 'package:damyo_app/view_models/map_models/search/sa_search_view_model.dart';
 import 'package:flutter/material.dart';
 
@@ -42,15 +43,27 @@ Widget searchedSaListView(BuildContext context,
       );
     } else {
       return Expanded(
-        child: ListView.separated(
+        child: ListView.builder(
+          padding: EdgeInsets.zero,
           itemCount: saSearchViewModel.searchedSaList.length,
           itemBuilder: (BuildContext context, int index) {
             return InkWell(
               onTap: () {
                 // Todo: 터치 시 흡연구역이 위치한 지도 화면 보여주기
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SaSearchMapView(
+                            searchedSa:
+                                saSearchViewModel.searchedSaList[index])));
               },
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
+              child: Container(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                decoration: const BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(color: Color(0xFFEEF1F5), width: 1.5),
+                  ),
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -96,6 +109,7 @@ Widget searchedSaListView(BuildContext context,
                         textFormat(
                           text: mKm(
                             calculateDistance(
+                              // Todo: 유저 위치로 설정
                               37.5666,
                               126.979,
                               saSearchViewModel.searchedSaList[index].latitude,
@@ -108,11 +122,6 @@ Widget searchedSaListView(BuildContext context,
                   ],
                 ),
               ),
-            );
-          },
-          separatorBuilder: (BuildContext context, int index) {
-            return const Divider(
-              color: Color(0xFFEEF1F5),
             );
           },
         ),

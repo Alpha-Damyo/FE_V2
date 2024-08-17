@@ -12,6 +12,7 @@ class SaSearchView extends StatefulWidget {
 
 class _SaSearchViewState extends State<SaSearchView> {
   late SaSearchViewModel _saSearchViewModel;
+  final FocusNode _focusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
@@ -26,12 +27,22 @@ class _SaSearchViewState extends State<SaSearchView> {
           child: Column(
             children: [
               const SizedBox(height: 35),
-              saSearchBar(context, _saSearchViewModel),
+              saSearchBar(context, _saSearchViewModel, _focusNode),
+              const SizedBox(height: 10),
               recentSearchWordsList(context, _saSearchViewModel),
             ],
           ),
         ),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      FocusScope.of(context).requestFocus(_focusNode);
+    });
   }
 }

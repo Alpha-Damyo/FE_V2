@@ -44,19 +44,13 @@ class SaSearchViewModel extends ChangeNotifier {
       if (strWords == null) {
         _recentSearchWords = [];
       } else {
-        _recentSearchWords = jsonDecode(strWords).map((item) {
-          return item
-              .map((key, value) => MapEntry(key.toString(), value.toString()));
-        }).toList();
+        _recentSearchWords = List<String>.from(jsonDecode(strWords));
       }
       String? strDates = await storage.read(key: "recentSearchDates");
       if (strDates == null) {
         _recentSearchDates = [];
       } else {
-        _recentSearchDates = jsonDecode(strDates).map((item) {
-          return item
-              .map((key, value) => MapEntry(key.toString(), value.toString()));
-        }).toList();
+        _recentSearchDates = List<String>.from(jsonDecode(strDates));
       }
 
       _updateRecentWords = true;
@@ -64,15 +58,32 @@ class SaSearchViewModel extends ChangeNotifier {
   }
 
   updateRecentSearchWord(String word) async {
-    if (_recentSearchWords.contains(word)) {}
-    _recentSearchWords.add(word);
-    _recentSearchDates.add(DateTime.now().toString().substring(5, 10));
+    if (_recentSearchWords.contains(word)) {
+      int idx = _recentSearchWords.indexOf(word);
+      _recentSearchWords.removeAt(idx);
+      _recentSearchDates.removeAt(idx);
+      _recentSearchWords.insert(0, word);
+      _recentSearchDates.insert(0, DateTime.now().toString().substring(5, 10));
+    } else {
+      _recentSearchWords.insert(0, word);
+      _recentSearchDates.insert(0, DateTime.now().toString().substring(5, 10));
+    }
     FlutterSecureStorage storage = const FlutterSecureStorage();
     await storage.write(
         key: "recentSearchWords", value: jsonEncode(_recentSearchWords));
     await storage.write(
         key: "recentSearchDates", value: jsonEncode(_recentSearchDates));
+    notifyListeners();
+  }
 
+  deleteRecentSearchWord(int index) async {
+    _recentSearchWords.removeAt(index);
+    _recentSearchDates.removeAt(index);
+    FlutterSecureStorage storage = const FlutterSecureStorage();
+    await storage.write(
+        key: "recentSearchWords", value: jsonEncode(_recentSearchWords));
+    await storage.write(
+        key: "recentSearchDates", value: jsonEncode(_recentSearchDates));
     notifyListeners();
   }
 
