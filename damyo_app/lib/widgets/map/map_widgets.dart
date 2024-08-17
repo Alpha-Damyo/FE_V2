@@ -7,7 +7,7 @@ import "package:go_router/go_router.dart";
 Widget mapSearchBar(BuildContext context) {
   return GestureDetector(
     onTap: () {
-      // Todo: 검색페이지 연동
+      context.push("/search");
     },
     child: Container(
       width: MediaQuery.of(context).size.width - 50 - 30 - 10,
@@ -20,14 +20,15 @@ Widget mapSearchBar(BuildContext context) {
         ],
       ),
       padding: const EdgeInsets.only(left: 10),
-      child: const Row(
+      child: Row(
         children: [
-          Icon(
+          const Icon(
             Icons.search,
             size: 25,
           ),
-          SizedBox(width: 10),
-          Text("흡연구역 검색")
+          const SizedBox(width: 10),
+          textFormat(
+              text: "흡연구역 검색", fontSize: 16, color: const Color(0xFF666666)),
         ],
       ),
     ),
