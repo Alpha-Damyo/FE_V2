@@ -3,10 +3,12 @@ import 'package:damyo_app/services/smoking_area_service.dart';
 import 'package:damyo_app/style.dart';
 import 'package:damyo_app/view_models/map_models/search/sa_search_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 
 // 검색 창
-Widget saSearchBar(BuildContext context, SaSearchViewModel saSearchViewModel) {
+Widget saSearchBar(BuildContext context, SaSearchViewModel saSearchViewModel,
+    FocusNode focusNode) {
   return Container(
     width: double.infinity,
     height: 50,
@@ -33,6 +35,7 @@ Widget saSearchBar(BuildContext context, SaSearchViewModel saSearchViewModel) {
         Expanded(
           child: TextField(
             controller: saSearchViewModel.searchWordController,
+            focusNode: focusNode,
             decoration: const InputDecoration(
                 contentPadding:
                     EdgeInsets.symmetric(vertical: 5, horizontal: 10),
@@ -41,16 +44,9 @@ Widget saSearchBar(BuildContext context, SaSearchViewModel saSearchViewModel) {
                 hintStyle: TextStyle(fontSize: 16)),
             style: const TextStyle(fontSize: 16),
             // 입력 완료 되었을 때 처리
-            onSubmitted: (value) async {
-              String searchWord = saSearchViewModel.searchWordController.text;
-              context.push('/search/$searchWord');
-              saSearchViewModel.setSearchState(1);
-              List<SaBasicModel> newList =
-                  await SmokingAreaService.searchSmokingAreaByName(searchWord);
-              saSearchViewModel.setSearchedSaList(newList);
-              saSearchViewModel.setSearchState(2);
-              saSearchViewModel.updateRecentSearchWord(searchWord);
-              saSearchViewModel.searchWordController.clear();
+            onSubmitted: (value) {
+              searchByWord(context, saSearchViewModel,
+                  saSearchViewModel.searchWordController.text);
             },
           ),
         ),
@@ -72,36 +68,49 @@ Widget saSearchBar(BuildContext context, SaSearchViewModel saSearchViewModel) {
 Widget recentSearchWordsList(
     BuildContext context, SaSearchViewModel saSearchViewModel) {
   return Expanded(
-    child: ListView.separated(
+    child: ListView.builder(
+      padding: EdgeInsets.zero,
       itemCount: saSearchViewModel.recentSearchWords.length,
       itemBuilder: (BuildContext context, int index) {
         return InkWell(
           onTap: () {
-            // Todo: 터치 시 흡연구역이 위치한 지도 화면 보여주기
+            searchByWord(context, saSearchViewModel,
+                saSearchViewModel.recentSearchWords[index]);
           },
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 5),
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            decoration: const BoxDecoration(
+              border: Border(
+                bottom: BorderSide(color: Color(0xFFEEF1F5), width: 1.5),
+              ),
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                textFormat(
+                  text: saSearchViewModel.recentSearchWords[index],
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                ),
+                Row(
                   children: [
-                    Container(
-                      child: textFormat(
-                        text: saSearchViewModel.recentSearchWords[index],
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
+                    textFormat(
+                      text: saSearchViewModel.recentSearchDates[index],
+                      color: const Color(0xFF6F767F),
+                      fontWeight: FontWeight.w500,
+                      fontSize: 13,
+                    ),
+                    const SizedBox(width: 5),
+                    InkWell(
+                      onTap: () {
+                        saSearchViewModel.deleteRecentSearchWord(index);
+                      },
+                      child: const Icon(
+                        Icons.close,
+                        color: Color(0xFF6F767F),
+                        size: 20,
                       ),
                     ),
-                    Container(
-                      child: textFormat(
-                        text: saSearchViewModel.recentSearchDates[index],
-                        color: const Color(0xFF6F767F),
-                        fontWeight: FontWeight.w500,
-                        fontSize: 13,
-                      ),
-                    )
                   ],
                 ),
               ],
@@ -109,11 +118,23 @@ Widget recentSearchWordsList(
           ),
         );
       },
-      separatorBuilder: (BuildContext context, int index) {
-        return const Divider(
-          color: Color(0xFFEEF1F5),
-        );
-      },
     ),
   );
+}
+
+void searchByWord(BuildContext context, SaSearchViewModel saSearchViewModel,
+    String word) async {
+  String searchWord = word;
+  if (searchWord.isEmpty) {
+    Fluttertoast.showToast(msg: "1글자 이상의 검색어를 입력해주세요");
+    return;
+  }
+  context.push('/search/$searchWord');
+  saSearchViewModel.setSearchState(1);
+  List<SaBasicModel> newList =
+      await SmokingAreaService.searchSmokingAreaByName(searchWord);
+  saSearchViewModel.setSearchedSaList(newList);
+  saSearchViewModel.setSearchState(2);
+  saSearchViewModel.updateRecentSearchWord(searchWord);
+  saSearchViewModel.searchWordController.clear();
 }
