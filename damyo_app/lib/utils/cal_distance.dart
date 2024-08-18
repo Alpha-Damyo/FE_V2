@@ -33,7 +33,7 @@ double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
 
 String mKm(double distance) {
   if (distance > 1000) {
-    return '${(distance / 1000).toInt().toString()}km';
+    return '${(distance / 1000).toStringAsFixed(1)}km';
   } else {
     return '${(distance.toInt().toString())}m';
   }
