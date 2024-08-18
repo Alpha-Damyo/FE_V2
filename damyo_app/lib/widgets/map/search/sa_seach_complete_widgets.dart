@@ -1,7 +1,7 @@
 // 검색 창
 import 'package:damyo_app/style.dart';
 import 'package:damyo_app/utils/cal_distance.dart';
-import 'package:damyo_app/view/map/search/sa_search_map_view.dart';
+import 'package:damyo_app/view_models/bottom_navigation_model.dart';
 import 'package:damyo_app/view_models/map_models/search/sa_search_view_model.dart';
 import 'package:flutter/material.dart';
 
@@ -31,15 +31,18 @@ Widget saSearchCompleteBar(BuildContext context, String searchWord) {
   );
 }
 
-Widget searchedSaListView(BuildContext context,
-    SaSearchViewModel saSearchViewModel, String searchWord) {
+Widget searchedSaListView(
+    BuildContext context,
+    SaSearchViewModel saSearchViewModel,
+    String searchWord,
+    BottomNavigationModel bottomNavigationModel) {
   if (saSearchViewModel.searchState == 1) {
     return const CircularProgressIndicator();
   } else {
     if (saSearchViewModel.searchedSaList.isEmpty) {
       return textFormat(
         text: "\"$searchWord\" 에 대한 검색 결과가 없습니다",
-        fontSize: 16,
+        fontSize: 18,
       );
     } else {
       return Expanded(
@@ -49,13 +52,10 @@ Widget searchedSaListView(BuildContext context,
           itemBuilder: (BuildContext context, int index) {
             return InkWell(
               onTap: () {
-                // Todo: 터치 시 흡연구역이 위치한 지도 화면 보여주기
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => SaSearchMapView(
-                            searchedSa:
-                                saSearchViewModel.searchedSaList[index])));
+                saSearchViewModel.updateSearchSelectedSa(
+                    saSearchViewModel.searchedSaList[index]);
+                saSearchViewModel.moveMapCamera();
+                bottomNavigationModel.setSearchPage(2);
               },
               child: Container(
                 padding: const EdgeInsets.symmetric(vertical: 10),
