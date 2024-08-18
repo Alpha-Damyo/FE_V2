@@ -1,5 +1,5 @@
 class UserInfoModel{
-  String? name;
+  String name;
   String? nickname;
   int? age;
   int? contribution;
@@ -7,7 +7,7 @@ class UserInfoModel{
   bool? gender;
   
   UserInfoModel({
-    this.name,
+    required this.name,
     this.nickname,
     this.age,
     this.contribution,
