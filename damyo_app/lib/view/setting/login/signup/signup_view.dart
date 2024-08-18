@@ -19,6 +19,7 @@ class SignupView extends StatefulWidget {
 class _SignupViewState extends State<SignupView> {
   
   late UserInfoViewModel _userInfoViewModel;
+  late IsloginViewModel _isloginViewModel;
   late TextEditingController nameController;
   late TextEditingController ageController;
 
@@ -39,6 +40,7 @@ class _SignupViewState extends State<SignupView> {
   @override
   Widget build(BuildContext context) {
     _userInfoViewModel = Provider.of<UserInfoViewModel>(context);
+    _isloginViewModel = Provider.of<IsloginViewModel>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -87,7 +89,7 @@ class _SignupViewState extends State<SignupView> {
           ),
           testbtn(_userInfoViewModel),
           Expanded(child: Container()),
-          signupCompleteBtn(context, _userInfoViewModel, nameController, ageController),
+          signupCompleteBtn(context, _userInfoViewModel, _isloginViewModel,nameController, ageController),
           const SizedBox(
             height: 40,
           ),

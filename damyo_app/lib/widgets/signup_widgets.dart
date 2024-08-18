@@ -1,4 +1,5 @@
 import 'package:damyo_app/style.dart';
+import 'package:damyo_app/view_models/login_models/islogin_view_model.dart';
 import 'package:damyo_app/view_models/login_models/user_info_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -150,6 +151,7 @@ Widget signupGender(BuildContext context, UserInfoViewModel userInfoViewModel) {
 Widget signupCompleteBtn(
     BuildContext context,
     UserInfoViewModel userInfoViewModel,
+    IsloginViewModel isloginViewModel,
     TextEditingController nameController,
     TextEditingController ageController) {
   return Padding(
@@ -158,6 +160,7 @@ Widget signupCompleteBtn(
       onPressed: () async {
         userInfoViewModel.setName(nameController.text);
         userInfoViewModel.setAge(int.parse(ageController.text));
+        isloginViewModel.login();
         Navigator.popUntil(context, (route) => route.isFirst);
       },
       style: ElevatedButton.styleFrom(
