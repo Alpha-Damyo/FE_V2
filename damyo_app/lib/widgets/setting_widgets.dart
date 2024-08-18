@@ -1,4 +1,4 @@
-import "package:damyo_app/view/login/login_view.dart";
+import "package:damyo_app/view/setting/login/login_view.dart";
 import "package:flutter/material.dart";
 import "package:damyo_app/style.dart";
 
