@@ -32,7 +32,7 @@ class _LoginViewState extends State<LoginView> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             naverLoginBtn(context, _isloginViewModel, _tokenViewModel, _userInfoViewModel),
-            testBtn(context),
+            testBtn(context, _userInfoViewModel),
           ],
         ),
       ),

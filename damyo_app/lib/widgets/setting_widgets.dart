@@ -1,13 +1,14 @@
 import "package:damyo_app/view/setting/login/login_view.dart";
 import "package:flutter/material.dart";
 import "package:damyo_app/style.dart";
+import "package:flutter_secure_storage/flutter_secure_storage.dart";
 
 // 로그인 버튼
 Widget loginBtn(BuildContext context) {
   return Padding(
     padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 50.0),
     child: InkWell(
-      onTap: () {
+      onTap: () async{
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const LoginView()),

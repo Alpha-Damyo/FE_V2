@@ -1,3 +1,4 @@
+import "package:damyo_app/models/login/user_info_model.dart";
 import "package:damyo_app/style.dart";
 import "package:damyo_app/view/setting/login/signup/signup_view.dart";
 import "package:damyo_app/view_models/login_models/islogin_view_model.dart";
@@ -86,14 +87,14 @@ Widget naverLoginBtn(BuildContext context, IsloginViewModel isloginViewModel,
   );
 }
 
-Widget testBtn(BuildContext context) {
+Widget testBtn(BuildContext context, UserInfoViewModel userInfoViewModel) {
   return Padding(
     padding: const EdgeInsets.only(top: 10.0),
     child: InkWell(
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const SignupView()),
+          MaterialPageRoute(builder: (context) => SignupView()),
         );
       },
       child: Container(
