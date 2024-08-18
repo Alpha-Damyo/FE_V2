@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:damyo_app/utils/go_router.dart';
 import 'package:damyo_app/view_models/bottom_navigation_model.dart';
 import 'package:damyo_app/view_models/login_models/islogin_view_model.dart';
+import 'package:damyo_app/view_models/login_models/token_view_model.dart';
+import 'package:damyo_app/view_models/login_models/user_info_view_model.dart';
 import 'package:damyo_app/view_models/map_models/map_view_model.dart';
 import 'package:damyo_app/view_models/map_models/search/sa_search_view_model.dart';
 import 'package:damyo_app/view_models/map_models/smoking_area/sa_inform_view_model.dart';
@@ -26,6 +28,8 @@ void main() async {
         ChangeNotifierProvider(create: (context) => SaInformViewModel()),
         ChangeNotifierProvider(create: (context) => SaSearchViewModel()),
         ChangeNotifierProvider(create: (context) => IsloginViewModel()),
+        ChangeNotifierProvider(create: (context) => TokenViewModel()),
+        ChangeNotifierProvider(create: (context) => UserInfoViewModel()),
       ],
       child: const Damyo(),
     ),

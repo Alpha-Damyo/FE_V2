@@ -1,10 +1,34 @@
 import "package:damyo_app/style.dart";
+import "package:damyo_app/view/setting/login/signup/signup_view.dart";
+import "package:damyo_app/view_models/login_models/islogin_view_model.dart";
+import "package:damyo_app/view_models/login_models/token_view_model.dart";
+import "package:damyo_app/view_models/login_models/user_info_view_model.dart";
 import "package:flutter/material.dart";
 import "package:damyo_app/services/naverlogin_service.dart";
 
-Widget naverLoginBtn(BuildContext context) {
+Widget naverLoginBtn(BuildContext context, IsloginViewModel isloginViewModel,
+    TokenViewModel tokenViewModel, UserInfoViewModel userInfoViewModel) {
   return InkWell(
-    onTap: signInWithNaver,
+    onTap: () async {
+      int val = await signInWithNaver(isloginViewModel, tokenViewModel);
+      switch (val) {
+        case 0:
+          // 로그인 완료
+          Navigator.pop(context);
+          break;
+        case 1:
+          // 회원 가입 필요
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const SignupView()),
+          );
+          break;
+        case 2:
+          // 토큰 재발급 필요
+          break;
+        default:
+      }
+    },
     borderRadius: BorderRadius.circular(41),
     child: Container(
       width: 337,
@@ -57,6 +81,31 @@ Widget naverLoginBtn(BuildContext context) {
             ],
           ),
         ],
+      ),
+    ),
+  );
+}
+
+Widget testBtn(BuildContext context) {
+  return Padding(
+    padding: const EdgeInsets.only(top: 10.0),
+    child: InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const SignupView()),
+        );
+      },
+      child: Container(
+        width: 337,
+        height: 55,
+        clipBehavior: Clip.antiAlias,
+        decoration: ShapeDecoration(
+          color: const Color(0xFF000000),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(41),
+          ),
+        ),
       ),
     ),
   );
