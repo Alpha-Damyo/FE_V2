@@ -66,11 +66,11 @@ Widget searchedSmokingAreaCard(
                   )
                 ],
               ),
-              Row(
+              const Row(
                 children: [
-                  simpleBtn(context, "즐겨찾기 추가", onTapAddFavorites),
-                  const SizedBox(width: 10),
-                  simpleBtn(context, "흡연 완료", onTapCompleteSmoking),
+                  // simpleBtn(context, "즐겨찾기 추가", onTapAddFavorites),
+                  // const SizedBox(width: 10),
+                  // simpleBtn(context, "흡연 완료", onTapCompleteSmoking),
                 ],
               )
             ],

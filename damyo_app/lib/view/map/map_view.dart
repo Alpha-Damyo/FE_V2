@@ -12,11 +12,7 @@ class MapView extends StatefulWidget {
   State<MapView> createState() => _MapViewState();
 }
 
-class _MapViewState extends State<MapView> with AutomaticKeepAliveClientMixin {
-  // 페이지를 이동하더라도 dispose하지 않고 re-rendering을 막음
-  @override
-  bool get wantKeepAlive => true;
-
+class _MapViewState extends State<MapView> {
   late MapViewModel _mapViewModel;
   late SaSearchViewModel _saSearchViewModel;
   late NaverMapController mapController;
@@ -25,8 +21,6 @@ class _MapViewState extends State<MapView> with AutomaticKeepAliveClientMixin {
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
-
     _mapViewModel = Provider.of<MapViewModel>(context);
     _saSearchViewModel = Provider.of<SaSearchViewModel>(context);
     _saSearchViewModel.readRecentSearchWords();
