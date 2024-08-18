@@ -10,18 +10,13 @@ import 'package:damyo_app/view/statistics/statistics_view.dart';
 class HomeView extends StatelessWidget {
   HomeView({super.key});
   late BottomNavigationModel _bottomNavigationModel;
-  final PageController _pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
     _bottomNavigationModel = Provider.of<BottomNavigationModel>(context);
     return Scaffold(
-      body: PageView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: _pageController,
-        onPageChanged: (index) {
-          _bottomNavigationModel.setCurPage(index);
-        },
+      body: IndexedStack(
+        index: _bottomNavigationModel.curPage,
         children: const [
           MapView(),
           FavoritesView(),
@@ -52,7 +47,6 @@ class HomeView extends StatelessWidget {
         currentIndex: _bottomNavigationModel.curPage,
         onTap: (index) {
           _bottomNavigationModel.setCurPage(index);
-          _pageController.jumpToPage(index);
         },
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey,
