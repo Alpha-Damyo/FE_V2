@@ -6,7 +6,7 @@ class UserInfoViewModel extends ChangeNotifier {
   
   FlutterSecureStorage storage = const FlutterSecureStorage();
   
-  final UserInfoModel _userInfoModel = UserInfoModel();
+  final UserInfoModel _userInfoModel = UserInfoModel(name: '홍길동');
   
   UserInfoModel get userInfoModel => _userInfoModel;
 

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class IsloginViewModel extends ChangeNotifier {
-  FlutterSecureStorage storage = FlutterSecureStorage();
+  FlutterSecureStorage storage = const FlutterSecureStorage();
 
   final IsloginModel _isloginModel = IsloginModel(isLogin: false);
   
@@ -15,7 +15,16 @@ class IsloginViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void logout() async {
+  Future<bool> checkLogin()async{
+    String? state = await storage.read(key: 'loginState');
+
+    if(state == 'true'){
+      return true;
+    }
+    return false;
+  }
+
+  void logout() {
     _isloginModel.isLogin = false;
     storage.write(key: 'loginState', value: 'false');
     notifyListeners();
