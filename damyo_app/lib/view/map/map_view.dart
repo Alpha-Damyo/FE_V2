@@ -1,3 +1,4 @@
+import 'package:damyo_app/view/map/smoking_area/favorites_bottomsheet.dart';
 import 'package:damyo_app/view_models/map_models/map_view_model.dart';
 import 'package:damyo_app/view_models/map_models/search/sa_search_view_model.dart';
 import 'package:damyo_app/widgets/map/map_widgets.dart';
@@ -26,6 +27,7 @@ class _MapViewState extends State<MapView> {
     _saSearchViewModel.readRecentSearchWords();
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           // 지도
@@ -103,7 +105,15 @@ class _MapViewState extends State<MapView> {
               child: smokingAreaCard(
                 context,
                 _mapViewModel,
-                () {},
+                // 즐겨찾기 추가
+                () {
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return const FavoritesBottomsheet();
+                      });
+                },
+                // Todo: 흡연 완료
                 () {},
               ),
             ),
