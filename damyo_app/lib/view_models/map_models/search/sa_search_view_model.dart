@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:core';
 
 import 'package:damyo_app/models/smoking_area/sa_basic_model.dart';
-import 'package:damyo_app/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';

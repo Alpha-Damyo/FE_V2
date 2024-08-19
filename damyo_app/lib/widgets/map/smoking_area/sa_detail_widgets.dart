@@ -1,4 +1,5 @@
 import 'package:damyo_app/style.dart';
+import 'package:damyo_app/view/map/smoking_area/favorites_bottomsheet.dart';
 import 'package:damyo_app/view/map/smoking_area/sa_gallery_screen.dart';
 import 'package:damyo_app/view/map/smoking_area/sa_image_screen.dart';
 import 'package:flutter/material.dart';
@@ -74,7 +75,13 @@ Widget saDetailNameScoreBtns(
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          saDetailBtn(context, (Icons.bookmark_add), "즐겨찾기", () {}),
+          saDetailBtn(context, (Icons.bookmark_add), "즐겨찾기", () {
+            showModalBottomSheet(
+                context: context,
+                builder: (context) {
+                  return const FavoritesBottomsheet();
+                });
+          }),
           saDetailBtn(context, (Icons.share_rounded), "공유", () {}),
           saDetailBtn(
             context,

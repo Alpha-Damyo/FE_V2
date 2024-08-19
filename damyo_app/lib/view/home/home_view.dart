@@ -15,6 +15,7 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     _bottomNavigationModel = Provider.of<BottomNavigationModel>(context);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: IndexedStack(
         index: _bottomNavigationModel.curPage,
         children: const [

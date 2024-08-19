@@ -1,3 +1,4 @@
+import 'package:damyo_app/view/map/smoking_area/favorites_bottomsheet.dart';
 import 'package:damyo_app/view_models/map_models/map_view_model.dart';
 import 'package:damyo_app/view_models/map_models/search/sa_search_view_model.dart';
 import 'package:damyo_app/widgets/map/map_widgets.dart';
@@ -15,7 +16,6 @@ class MapView extends StatefulWidget {
 class _MapViewState extends State<MapView> {
   late MapViewModel _mapViewModel;
   late SaSearchViewModel _saSearchViewModel;
-  late NaverMapController mapController;
   bool isMapControllerLoaded = false;
   List<String> tags = ['개방', '폐쇄', '실외', '실내'];
 
@@ -23,9 +23,11 @@ class _MapViewState extends State<MapView> {
   Widget build(BuildContext context) {
     _mapViewModel = Provider.of<MapViewModel>(context);
     _saSearchViewModel = Provider.of<SaSearchViewModel>(context);
+    _mapViewModel.loadFavorites();
     _saSearchViewModel.readRecentSearchWords();
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
           // 지도
@@ -38,9 +40,9 @@ class _MapViewState extends State<MapView> {
               locationButtonEnable: true,
             ),
             onMapReady: (controller) {
-              mapController = controller;
+              _mapViewModel.mapController = controller;
               isMapControllerLoaded = true;
-              updateSmokingAreas(mapController);
+              updateSmokingAreas();
             },
             onCameraIdle: () {
               _mapViewModel.trueResearchBtnVisible();
@@ -71,14 +73,14 @@ class _MapViewState extends State<MapView> {
                 const SizedBox(height: 10),
                 tagListView(context, tags, _mapViewModel.tagIndex, (index) {
                   _mapViewModel.updateTagIndex(index);
-                  updateSmokingAreas(mapController);
+                  updateSmokingAreas();
                 }),
                 const SizedBox(height: 10),
                 reSearchBtn(
                   context,
                   _mapViewModel.researchBtnVisible,
                   () {
-                    updateSmokingAreas(mapController);
+                    updateSmokingAreas();
                   },
                 )
               ],
@@ -103,7 +105,15 @@ class _MapViewState extends State<MapView> {
               child: smokingAreaCard(
                 context,
                 _mapViewModel,
-                () {},
+                // 즐겨찾기 추가
+                () {
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return const FavoritesBottomsheet();
+                      });
+                },
+                // Todo: 흡연 완료
                 () {},
               ),
             ),
@@ -116,9 +126,11 @@ class _MapViewState extends State<MapView> {
   Map<String, double> getNowCamerPosition() {
     if (isMapControllerLoaded) {
       return {
-        "lat": double.parse(
-            mapController.nowCameraPosition.target.latitude.toStringAsFixed(6)),
-        "lng": double.parse(mapController.nowCameraPosition.target.longitude
+        "lat": double.parse(_mapViewModel
+            .mapController.nowCameraPosition.target.latitude
+            .toStringAsFixed(6)),
+        "lng": double.parse(_mapViewModel
+            .mapController.nowCameraPosition.target.longitude
             .toStringAsFixed(6)),
       };
     } else {
@@ -129,12 +141,12 @@ class _MapViewState extends State<MapView> {
     }
   }
 
-  void updateSmokingAreas(NaverMapController mapController) {
+  void updateSmokingAreas() {
     _mapViewModel.updateSaSearchModel(
-      mapController.nowCameraPosition.target.latitude,
-      mapController.nowCameraPosition.target.longitude,
+      _mapViewModel.mapController.nowCameraPosition.target.latitude,
+      _mapViewModel.mapController.nowCameraPosition.target.longitude,
     );
-    _mapViewModel.updateSmokingAreas(mapController);
+    _mapViewModel.updateSmokingAreas();
     _mapViewModel.falseResearchBtnVisible();
   }
 }
