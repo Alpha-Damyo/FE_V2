@@ -1,6 +1,7 @@
 // 제보 버튼을 관리해주는 provider
 import 'package:damyo_app/models/smoking_area/sa_basic_model.dart';
 import 'package:damyo_app/models/smoking_area/sa_search_model.dart';
+import 'package:damyo_app/services/favorites_service.dart';
 import 'package:damyo_app/services/smoking_area_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
@@ -57,7 +58,7 @@ class MapViewModel extends ChangeNotifier {
       SaBasicModel("-1", "null", 0, 0, "null", 0);
 
   bool get showSmokingAreaCard => _showSmokingAreaCard;
-  SaBasicModel get smokingAreawCardInfo => _smokingAreaCardInfo;
+  SaBasicModel get smokingAreaCardInfo => _smokingAreaCardInfo;
 
   // 흡연구역 업데이트
   updateSmokingAreas(NaverMapController mapController) async {
@@ -109,5 +110,23 @@ class MapViewModel extends ChangeNotifier {
   changeInformBtnVisible() {
     _informBtnVisible = !_informBtnVisible;
     notifyListeners();
+  }
+
+  // 즐겨찾기
+  final List<dynamic> _favoritesList = [];
+  List<dynamic> get favoritesList => _favoritesList;
+
+  loadFavorites() {
+    FavoritesService.loadFavorites();
+    notifyListeners();
+  }
+
+  addFavoritesList(String listName) {
+    _favoritesList.add([listName, []]);
+    notifyListeners();
+  }
+
+  addFavoritesElement(int index) {
+    _favoritesList[index][1].add(smokingAreaCardInfo.areaId);
   }
 }

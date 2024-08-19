@@ -222,8 +222,7 @@ Widget smokingAreaCard(
     visible: mapViewModel.showSmokingAreaCard,
     child: GestureDetector(
       onTap: () {
-        context
-            .push('/smokingarea/${mapViewModel.smokingAreawCardInfo.areaId}');
+        context.push('/smokingarea/${mapViewModel.smokingAreaCardInfo.areaId}');
       },
       child: Container(
         height: 150,
@@ -247,14 +246,14 @@ Widget smokingAreaCard(
                       size: 24,
                     ),
                     textFormat(
-                      text: " ${mapViewModel.smokingAreawCardInfo.name}",
+                      text: " ${mapViewModel.smokingAreaCardInfo.name}",
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
                     ),
                   ],
                 ),
                 textFormat(
-                  text: "상세주소: ${mapViewModel.smokingAreawCardInfo.address}",
+                  text: "상세주소: ${mapViewModel.smokingAreaCardInfo.address}",
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                 ),
@@ -272,7 +271,7 @@ Widget smokingAreaCard(
                       size: 24,
                     ),
                     textFormat(
-                      text: mapViewModel.smokingAreawCardInfo.score.toString(),
+                      text: mapViewModel.smokingAreaCardInfo.score.toString(),
                       fontSize: 16,
                     )
                   ],
