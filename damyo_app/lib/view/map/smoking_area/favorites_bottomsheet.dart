@@ -14,10 +14,6 @@ class FavoritesBottomsheet extends StatefulWidget {
 
 class _FavoritesBottomSheetState extends State<FavoritesBottomsheet> {
   late MapViewModel _mapViewModel;
-  // FlutterSecureStorage secureStorage = const FlutterSecureStorage();
-  // final List<String> _favorites = List.from(favorites);
-  // final List<List<dynamic>> _favoritesDetail = List.from(favoritesDetail);
-
   int selectedFavorite = 0;
 
   @override
@@ -123,17 +119,6 @@ class _FavoritesBottomSheetState extends State<FavoritesBottomsheet> {
                 Radius.circular(16.0),
               ),
               onTap: () async {
-                // Todo: 즐겨찾기 추가
-                // String? tmpIdInfo = await secureStorage.read(
-                //     key:
-                //         'favoritesList.id.${_favorites[selectedFavorite]}');
-                // String? tmpNameInfo = await secureStorage.read(
-                //     key:
-                //         'favoritesList.name.${_favorites[selectedFavorite]}');
-                // List<String> tmpList = tmpIdInfo.toString().split(',');
-
-                // tmpList.remove('');
-
                 // 이미 추가되어 있는 경우
                 if (_mapViewModel.favoritesList[selectedFavorite][1]
                     .contains(_mapViewModel.smokingAreaCardInfo.areaId)) {
@@ -141,7 +126,7 @@ class _FavoritesBottomSheetState extends State<FavoritesBottomsheet> {
                 } else {
                   _mapViewModel.addFavoritesElement(selectedFavorite);
                   FavoritesService.updateFavorites(_mapViewModel.favoritesList);
-                  Fluttertoast.showToast(msg: "리스트에 추가가 완료되었습니다");
+                  Fluttertoast.showToast(msg: "즐겨찾기 추가가 완료되었습니다");
 
                   setState(() {
                     Navigator.of(context).pop();

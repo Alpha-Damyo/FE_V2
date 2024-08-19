@@ -14,7 +14,7 @@ class FavoritesService {
     if (str == null) {
       return [];
     } else {
-      return List<String>.from(jsonDecode(str));
+      return jsonDecode(str);
     }
   }
 }

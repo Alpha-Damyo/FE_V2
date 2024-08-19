@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 
 class MapViewModel extends ChangeNotifier {
+  // 흡연구역 컨트롤러
+  late NaverMapController mapController;
   // 흡연구역 목록
   List<SaBasicModel> _smokingAreas = [];
   List<SaBasicModel> get smokingAreas => _smokingAreas;
@@ -61,7 +63,7 @@ class MapViewModel extends ChangeNotifier {
   SaBasicModel get smokingAreaCardInfo => _smokingAreaCardInfo;
 
   // 흡연구역 업데이트
-  updateSmokingAreas(NaverMapController mapController) async {
+  updateSmokingAreas() async {
     _smokingAreas =
         await SmokingAreaService.searchSmokingAreaByTag(_saSearchModel);
     mapController.clearOverlays();
@@ -113,20 +115,65 @@ class MapViewModel extends ChangeNotifier {
   }
 
   // 즐겨찾기
-  final List<dynamic> _favoritesList = [];
+  List<dynamic> _favoritesList = [];
   List<dynamic> get favoritesList => _favoritesList;
 
-  loadFavorites() {
-    FavoritesService.loadFavorites();
+  loadFavorites() async {
+    _favoritesList = await FavoritesService.loadFavorites();
+    if (_favoritesList.isEmpty) {
+      _favoritesList.add(['기본', [], []]);
+    }
     notifyListeners();
   }
 
   addFavoritesList(String listName) {
-    _favoritesList.add([listName, []]);
+    _favoritesList.add([listName, [], []]);
+    notifyListeners();
+  }
+
+  removeFavoritesList(int index) {
+    _favoritesList.removeAt(index);
     notifyListeners();
   }
 
   addFavoritesElement(int index) {
     _favoritesList[index][1].add(smokingAreaCardInfo.areaId);
+    _favoritesList[index][2].add(smokingAreaCardInfo.name);
+  }
+
+  removeFavoritesElement(int listIndex, int elementIndex) {
+    _favoritesList[listIndex][1].removeAt(elementIndex);
+    _favoritesList[listIndex][2].removeAt(elementIndex);
+  }
+
+  // 즐겨찾기에서 장소를 고른 경우
+  tapFavoritesSa(SaBasicModel sa) {
+    _showSmokingAreaCard = true;
+    _smokingAreaCardInfo = sa;
+
+    mapController.clearOverlays();
+
+    final NMarker marker = NMarker(
+      id: _smokingAreaCardInfo.areaId,
+      position: NLatLng(
+        _smokingAreaCardInfo.latitude,
+        _smokingAreaCardInfo.longitude,
+      ),
+    );
+    marker.setOnTapListener((overlay) {
+      _showSmokingAreaCard = true;
+      notifyListeners();
+    });
+
+    mapController.addOverlay(marker);
+
+    mapController.updateCamera(
+      NCameraUpdate.scrollAndZoomTo(
+        target: NLatLng(
+            _smokingAreaCardInfo.latitude, _smokingAreaCardInfo.longitude),
+        zoom: 15,
+      ),
+    );
+    notifyListeners();
   }
 }
