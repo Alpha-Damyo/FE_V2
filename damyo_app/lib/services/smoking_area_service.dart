@@ -14,6 +14,7 @@ import 'package:image_picker/image_picker.dart';
 class SmokingAreaService {
   static final baseUrl = dotenv.get('BASE_URL');
 
+  // 흡연구역 태그 검색
   static Future<List<SaBasicModel>> searchSmokingAreaByTag(
       SaSearchModel saSearchModel) async {
     var url = Uri.parse("$baseUrl/area/locateSearch");
@@ -39,6 +40,22 @@ class SmokingAreaService {
     }
   }
 
+  // 흡연구역 areaId 검색
+  static Future<SaBasicModel> serachSmokingAreaByAreaId(String areaId) async {
+    final baseUrl = dotenv.get('BASE_URL');
+    var url = Uri.parse('$baseUrl/area/summary/$areaId');
+
+    var response = await http.get(url);
+
+    var responseDecode = jsonDecode(utf8.decode(response.bodyBytes));
+    if (response.statusCode == 200) {
+      return SaBasicModel.fromJson(responseDecode);
+    } else {
+      throw Exception("fail search");
+    }
+  }
+
+  // 흡연구역 이름 검색
   static Future<List<SaBasicModel>> searchSmokingAreaByName(String name) async {
     var url = Uri.parse("$baseUrl/area/querySearch");
     var body = json.encode({
@@ -70,6 +87,7 @@ class SmokingAreaService {
     }
   }
 
+  // 흡연구역 상세정보
   static Future<SaDetailModel> getDetailSmokingArea(String areaId) async {
     final baseUrl = dotenv.get('BASE_URL');
     var url = Uri.parse('$baseUrl/area/details/$areaId');
@@ -83,6 +101,7 @@ class SmokingAreaService {
     }
   }
 
+  // 흡연구역 제보
   static Future<bool> informSmokingArea(
       XFile? image, SaInformModel saInformModel) async {
     final baseUrl = dotenv.get('BASE_URL');
@@ -125,6 +144,7 @@ class SmokingAreaService {
     }
   }
 
+  // 흡연구역 리뷰
   static Future<bool> reviewSmokingArea(
       XFile? image, SaReviewModel saReviewModel) async {
     final baseUrl = dotenv.get('BASE_URL');
