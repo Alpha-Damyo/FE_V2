@@ -47,3 +47,4 @@ app.*.map.json
 # Secret Files
 /android/app/src/main/res/values/strings.xml
 /ios/Runner/Info.plist
+/android/app/google-services.json
