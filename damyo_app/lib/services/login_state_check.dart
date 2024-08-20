@@ -16,7 +16,6 @@ Future<int> checkLoginState(
     tokenViewModel.setToken(userInfo['accessToken'], userInfo['refreshToken']);
     isloginViewModel.login();
     
-
     return 0;
   }
 }
