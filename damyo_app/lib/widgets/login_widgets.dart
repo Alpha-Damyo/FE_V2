@@ -11,7 +11,7 @@ Widget naverLoginBtn(BuildContext context, IsloginViewModel isloginViewModel,
     TokenViewModel tokenViewModel, UserInfoViewModel userInfoViewModel) {
   return InkWell(
     onTap: () async {
-      int val = await signInWithNaver(isloginViewModel, tokenViewModel);
+      int val = await signInWithNaver(isloginViewModel, tokenViewModel, userInfoViewModel);
       switch (val) {
         case 0:
           // 로그인 완료
