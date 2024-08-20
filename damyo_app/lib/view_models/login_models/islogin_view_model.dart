@@ -15,15 +15,6 @@ class IsloginViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<bool> checkLogin()async{
-    String? state = await storage.read(key: 'loginState');
-
-    if(state == 'true'){
-      return true;
-    }
-    return false;
-  }
-
   void logout() {
     _isloginModel.isLogin = false;
     storage.write(key: 'loginState', value: 'false');
