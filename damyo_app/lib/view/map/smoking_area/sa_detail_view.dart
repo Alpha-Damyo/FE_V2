@@ -62,8 +62,11 @@ class _SaDetailViewState extends State<SaDetailView> {
                     color: Colors.white,
                     padding: const EdgeInsets.all(15),
                     child: saDetailInfo(
+                      context,
+                      saDetailModel.name,
                       saDetailModel.address,
                       saDetailModel.description,
+                      saDetailModel.areaId,
                       saDetailModel.opened,
                       saDetailModel.outdoor,
                     ),
