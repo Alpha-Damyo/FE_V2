@@ -88,7 +88,7 @@ Widget saDetailNameScoreBtns(
             (Icons.message),
             "리뷰작성",
             () {
-              context.push('/smokingarea/$areaId/review', extra: name);
+              context.push("/smokingarea/$areaId/review", extra: name);
             },
           ),
           saDetailBtn(context, (Icons.check_box), "흡연완료", () {}),
@@ -134,16 +134,16 @@ Widget saDetailBtn(
 }
 
 // 흡연구역 정보(주소, 설명, 태그)
-Widget saDetailInfo(
-    String address, String description, bool? opened, bool? outdoor) {
+Widget saDetailInfo(BuildContext context, String name, String address,
+    String description, String areaId, bool? opened, bool? outdoor) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.location_on_outlined),
-          const SizedBox(width: 5),
+          const Icon(Icons.location_on_sharp),
+          const SizedBox(width: 10),
           Flexible(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -153,15 +153,36 @@ Widget saDetailInfo(
                   fontSize: 16,
                   textOverflow: TextOverflow.clip,
                 ),
-                const SizedBox(height: 5),
-                textFormat(
-                  text: description,
-                  textOverflow: TextOverflow.clip,
-                ),
+                if (description != "") const SizedBox(height: 5),
+                if (description != "")
+                  textFormat(
+                    text: description,
+                    textOverflow: TextOverflow.clip,
+                  ),
               ],
             ),
           ),
         ],
+      ),
+      const SizedBox(height: 15),
+      InkWell(
+        onTap: () {
+          context.push("/smokingarea/$areaId/report", extra: name);
+        },
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Icon(Icons.mode_edit_outlined),
+            const SizedBox(width: 10),
+            Flexible(
+              child: textFormat(
+                text: "정보 수정 제안",
+                fontSize: 16,
+                textOverflow: TextOverflow.clip,
+              ),
+            ),
+          ],
+        ),
       ),
     ],
   );
