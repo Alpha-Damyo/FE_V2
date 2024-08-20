@@ -1,3 +1,4 @@
+import 'package:damyo_app/style.dart';
 import 'package:damyo_app/view_models/login_models/islogin_view_model.dart';
 import 'package:damyo_app/view_models/login_models/user_info_view_model.dart';
 import 'package:flutter/material.dart';
@@ -17,11 +18,14 @@ class _SettingViewState extends State<SettingView> {
     return Consumer2<IsloginViewModel, UserInfoViewModel>(
         builder: (context, isloginViewModel, userInfoViewModel, child) {
       return Scaffold(
+        appBar: AppBar(
+          title: appbarTitleFormat(text: "설정"),
+          centerTitle: true,
+        ),
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            if(isloginViewModel.isloginModel.isLogin)
+            if (isloginViewModel.isloginModel.isLogin)
               userProfile(context, isloginViewModel, userInfoViewModel)
             else
               loginBtn(context),
