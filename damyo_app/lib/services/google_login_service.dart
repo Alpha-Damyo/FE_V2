@@ -23,7 +23,5 @@ Future<int> signInWithGoogle(
     "token": googleAccessToken,
   }, "google");
 
-  print(userInfo);
-  // return await checkLoginState(userInfo, isloginViewModel, tokenViewModel);
-  return 1;
+  return await checkLoginState(userInfo, isloginViewModel, tokenViewModel);
 }
