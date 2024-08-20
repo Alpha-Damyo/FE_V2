@@ -1,8 +1,10 @@
+import 'package:damyo_app/services/statistics_service.dart';
 import 'package:damyo_app/style.dart';
+import 'package:damyo_app/view_models/login_models/user_info_view_model.dart';
 import 'package:flutter/material.dart';
 
 // 사용자 정보 위젯
-Widget userInfo(BuildContext context) {
+Widget userInfo(BuildContext context, UserInfoViewModel userInfoViewModel) {
   return Container(
       width: double.infinity,
       padding: const EdgeInsets.only(
@@ -33,7 +35,7 @@ Widget userInfo(BuildContext context) {
                     TextSpan(
                       children: [
                         TextSpan(
-                          text: '홍길동',
+                          text: userInfoViewModel.userInfoModel.name,
                           style: const TextStyle(
                             color: Colors.black,
                             fontSize: 20,
@@ -80,4 +82,27 @@ Widget userInfo(BuildContext context) {
           ),
         ],
       ));
+}
+
+Widget testbtn() {
+  return Padding(
+    padding: const EdgeInsets.only(top: 10.0),
+    child: InkWell(
+      onTap: () async {
+        await getDateStatics();
+        await getRegionStatics();
+      },
+      child: Container(
+        width: 100,
+        height: 55,
+        clipBehavior: Clip.antiAlias,
+        decoration: ShapeDecoration(
+          color: const Color(0xFF000000),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(41),
+          ),
+        ),
+      ),
+    ),
+  );
 }

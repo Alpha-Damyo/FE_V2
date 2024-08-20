@@ -1,11 +1,8 @@
 import 'package:damyo_app/style.dart';
-import 'package:damyo_app/view/setting/setting_view.dart';
 import 'package:damyo_app/view_models/login_models/islogin_view_model.dart';
-import 'package:damyo_app/view_models/login_models/token_view_model.dart';
 import 'package:damyo_app/view_models/login_models/user_info_view_model.dart';
 import 'package:damyo_app/widgets/signup_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:damyo_app/widgets/login_widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -87,7 +84,6 @@ class _SignupViewState extends State<SignupView> {
               ],
             ),
           ),
-          testbtn(_userInfoViewModel),
           Expanded(child: Container()),
           signupCompleteBtn(context, _userInfoViewModel, _isloginViewModel,nameController, ageController),
           const SizedBox(

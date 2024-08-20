@@ -1,8 +1,10 @@
 import 'package:damyo_app/view_models/login_models/islogin_view_model.dart';
 import 'package:damyo_app/view_models/login_models/token_view_model.dart';
 
-Future<int> checkLoginState(Map<String, dynamic> userInfo,
-    IsloginViewModel isloginViewModel, TokenViewModel tokenViewModel) async {
+Future<int> checkLoginState(
+    Map<String, dynamic> userInfo,
+    IsloginViewModel isloginViewModel,
+    TokenViewModel tokenViewModel) async {
   if (userInfo['code'] == "A102") {
     // 회원 가입 필요
     return 1;
