@@ -22,6 +22,7 @@ Future<statDateModel> getDateStatics() async {
       jsonDecode(utf8.decode(response.bodyBytes));
 
   if (response.statusCode == 200) {
+    print(jsonMap);
     return statDateModel.fromJson(jsonMap);
   } else {
     throw Exception("Failed to date statics");
