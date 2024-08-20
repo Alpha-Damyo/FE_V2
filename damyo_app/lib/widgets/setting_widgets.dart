@@ -54,8 +54,6 @@ Widget userProfile(BuildContext context, IsloginViewModel isloginViewModel,
     child: InkWell(
         onTap: () {},
         child: Container(
-          // width: 390.w,
-          // height: 189.h,
           padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
           decoration: const BoxDecoration(color: Colors.white),
           child: Column(
@@ -148,7 +146,6 @@ Widget userProfile(BuildContext context, IsloginViewModel isloginViewModel,
                           print(isloginViewModel.isloginModel.isLogin);
                         },
                         icon: const Icon(Icons.keyboard_arrow_right)),
-                    SizedBox(width: 10),
                   ],
                 ),
               ),

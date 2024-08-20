@@ -1,7 +1,6 @@
 import 'package:damyo_app/services/login_state_check.dart';
 import 'package:damyo_app/view_models/login_models/islogin_view_model.dart';
 import 'package:damyo_app/view_models/login_models/token_view_model.dart';
-import 'package:damyo_app/view_models/login_models/user_info_view_model.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:damyo_app/services/login_service.dart';
 
