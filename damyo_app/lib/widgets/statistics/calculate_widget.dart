@@ -1,12 +1,19 @@
 import 'package:damyo_app/style.dart';
+import 'package:damyo_app/view_models/statistics_models/smoke_info_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
-List<String> calType = ['1일', '1주일', '1달'];
-
-// 담배값 계산기 
-Widget calculate(BuildContext context, TextEditingController _priceController,
-    int _selectedIndex, Function(int) onTap) {
+// 담배값 계산기
+Widget calculate(
+    BuildContext context,
+    SmokeViewModel smokeViewModel,
+    TextEditingController _priceController,
+    int _selectedIndex,
+    List<String> calType,
+    int allcnt,
+    Function(int) onTap,
+    Function(int) onChanged) {
   return Container(
     width: double.infinity,
     height: 300,
@@ -94,41 +101,38 @@ Widget calculate(BuildContext context, TextEditingController _priceController,
                 ),
                 onPressed: () {
                   onTap(-1);
-                  // _inputUser = !_inputUser;
-                  // _selectedIndex = -1;
-                  // _priceController.clear();
-                  // allcnt = 0;
+                  _selectedIndex = -1;
+                  _priceController.clear();
+                  onChanged(0);
                 },
               ),
-              // if (_inputUser)
-              //   SizedBox(
-              //     width: 100,
-              //     child: TextField(
-              //       controller: _priceController,
-              //       textAlign: TextAlign.right,
-              //       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              //       onChanged: (value) {
-              //         setState(() {
-              //           if (!_isFieldEmpty(_priceController)) {
-              //             allcnt = int.parse(_priceController.text);
-              //           } else {
-              //             allcnt = 0;
-              //           }
-              //         });
-              //       },
-              //       decoration: const InputDecoration(
-              //         hintText: '개비 수를 입력해주세요.',
-              //         border: InputBorder.none,
-              //         alignLabelWithHint: true,
-              //       ),
-              //       style: const TextStyle(
-              //         color: Color(0xFF454D56),
-              //         fontSize: 16,
-              //         fontFamily: 'Pretendard',
-              //         fontWeight: FontWeight.w500,
-              //       ),
-              //     ),
-              //   ),
+              if (_selectedIndex == -1)
+                SizedBox(
+                  width: 100,
+                  child: TextField(
+                    controller: _priceController,
+                    textAlign: TextAlign.right,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    onChanged: (value) {
+                      if (!_isFieldEmpty(_priceController)) {
+                        onChanged(int.parse(_priceController.text));
+                      } else {
+                        onChanged(0);
+                      }
+                    },
+                    decoration: const InputDecoration(
+                      hintText: '개비 수를 입력해주세요.',
+                      border: InputBorder.none,
+                      alignLabelWithHint: true,
+                    ),
+                    style: const TextStyle(
+                      color: Color(0xFF454D56),
+                      fontSize: 16,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
             ],
           ),
         ),
@@ -137,45 +141,61 @@ Widget calculate(BuildContext context, TextEditingController _priceController,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // SizedBox(
-              //   child: Text(
-              //     (_inputUser)
-              //         ? '${_priceController.text} 개비'
-              //         : (_selectedIndex == 0)
-              //             ? '$cntMonth 개비'
-              //             : (_selectedIndex == 1)
-              //                 ? '$cntWeek 개비'
-              //                 : '$cntDay 개비',
-              //     style: const TextStyle(
-              //       color: Color(0xFF454D56),
-              //       fontSize: 14,
-              //       fontFamily: 'Pretendard',
-              //       fontWeight: FontWeight.w600,
-              //     ),
-              //   ),
-              // ),
-              // SizedBox(
-              //   child: Text(
-              //     (_inputUser)
-              //         ? formatCurrency(allcnt)
-              //         : (_selectedIndex == 0)
-              //             ? formatCurrency(cntMonth)
-              //             : (_selectedIndex == 1)
-              //                 ? formatCurrency(cntWeek)
-              //                 : formatCurrency(cntDay),
-              //     textAlign: TextAlign.right,
-              //     style: const TextStyle(
-              //       color: Color(0xFF0099FC),
-              //       fontSize: 16,
-              //       fontFamily: 'Pretendard',
-              //       fontWeight: FontWeight.w600,
-              //     ),
-              //   ),
-              // ),
+              SizedBox(
+                child: Text(
+                  (_selectedIndex == -1)
+                      ? '${_priceController.text} 개비'
+                      : (_selectedIndex == 0)
+                          ? '${(smokeViewModel.cntMonth == null) ? 0 : smokeViewModel.cntMonth} 개비'
+                          : (_selectedIndex == 1)
+                              ? '${(smokeViewModel.cntWeek == null) ? 0 : smokeViewModel.cntWeek} 개비'
+                              : '${(smokeViewModel.cntDay == null) ? 0 : smokeViewModel.cntDay} 개비',
+                  style: const TextStyle(
+                    color: Color(0xFF454D56),
+                    fontSize: 14,
+                    fontFamily: 'Pretendard',
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              SizedBox(
+                child: Text(
+                  (_selectedIndex == -1)
+                      ? formatCurrency(allcnt)
+                      : (_selectedIndex == 0)
+                          ? formatCurrency(smokeViewModel.cntMonth)
+                          : (_selectedIndex == 1)
+                              ? formatCurrency(smokeViewModel.cntWeek)
+                              : formatCurrency(smokeViewModel.cntDay),
+                  textAlign: TextAlign.right,
+                  style: const TextStyle(
+                    color: Color(0xFF0099FC),
+                    fontSize: 16,
+                    fontFamily: 'Pretendard',
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
             ],
           ),
         ),
       ],
     ),
   );
+}
+
+String formatCurrency(var cnt) {
+  int price;
+  if (cnt == null) {
+    price = 0;
+  } else {
+    price = cnt * 225;
+  }
+
+  final formatter = NumberFormat.currency(locale: 'ko_KR', symbol: '');
+  return '${formatter.format(price)}원';
+}
+
+bool _isFieldEmpty(TextEditingController controller) {
+  return controller.text.trim().isEmpty;
 }

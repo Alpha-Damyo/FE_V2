@@ -1,4 +1,10 @@
 PODS:
+  - AppAuth (1.7.5):
+    - AppAuth/Core (= 1.7.5)
+    - AppAuth/ExternalUserAgent (= 1.7.5)
+  - AppAuth/Core (1.7.5)
+  - AppAuth/ExternalUserAgent (1.7.5):
+    - AppAuth/Core
   - Flutter (1.0.0)
   - flutter_naver_login (0.0.1):
     - Flutter
@@ -13,6 +19,24 @@ PODS:
     - Toast
   - geolocator_apple (1.2.0):
     - Flutter
+  - google_sign_in_ios (0.0.1):
+    - AppAuth (>= 1.7.4)
+    - Flutter
+    - FlutterMacOS
+    - GoogleSignIn (~> 7.1)
+    - GTMSessionFetcher (>= 3.4.0)
+  - GoogleSignIn (7.1.0):
+    - AppAuth (< 2.0, >= 1.7.3)
+    - GTMAppAuth (< 5.0, >= 4.1.1)
+    - GTMSessionFetcher/Core (~> 3.3)
+  - GTMAppAuth (4.1.1):
+    - AppAuth/Core (~> 1.7)
+    - GTMSessionFetcher/Core (< 4.0, >= 3.3)
+  - GTMSessionFetcher (3.4.1):
+    - GTMSessionFetcher/Full (= 3.4.1)
+  - GTMSessionFetcher/Core (3.4.1)
+  - GTMSessionFetcher/Full (3.4.1):
+    - GTMSessionFetcher/Core
   - image_picker_ios (0.0.1):
     - Flutter
   - naveridlogin-sdk-ios (4.1.6)
@@ -34,12 +58,17 @@ DEPENDENCIES:
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
   - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
+  - google_sign_in_ios (from `.symlinks/plugins/google_sign_in_ios/darwin`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - sqflite (from `.symlinks/plugins/sqflite/darwin`)
 
 SPEC REPOS:
   trunk:
+    - AppAuth
+    - GoogleSignIn
+    - GTMAppAuth
+    - GTMSessionFetcher
     - naveridlogin-sdk-ios
     - NMapsGeometry
     - NMapsMap
@@ -58,6 +87,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/fluttertoast/ios"
   geolocator_apple:
     :path: ".symlinks/plugins/geolocator_apple/ios"
+  google_sign_in_ios:
+    :path: ".symlinks/plugins/google_sign_in_ios/darwin"
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
   path_provider_foundation:
@@ -66,12 +97,17 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/sqflite/darwin"
 
 SPEC CHECKSUMS:
+  AppAuth: 501c04eda8a8d11f179dbe8637b7a91bb7e5d2fa
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_naver_login: 1dbf6d21aae5235cdf76a28ac79cf6871899282f
   flutter_naver_map: 9b36cee8e83421f40782af8a4e7afbdf63ee5f92
   flutter_secure_storage: d33dac7ae2ea08509be337e775f6b59f1ff45f12
   fluttertoast: e9a18c7be5413da53898f660530c56f35edfba9c
   geolocator_apple: 6cbaf322953988e009e5ecb481f07efece75c450
+  google_sign_in_ios: 07375bfbf2620bc93a602c0e27160d6afc6ead38
+  GoogleSignIn: d4281ab6cf21542b1cfaff85c191f230b399d2db
+  GTMAppAuth: f69bd07d68cd3b766125f7e072c45d7340dea0de
+  GTMSessionFetcher: 8000756fc1c19d2e5697b90311f7832d2e33f6cd
   image_picker_ios: c560581cceedb403a6ff17f2f816d7fea1421fc1
   naveridlogin-sdk-ios: cdd34e3585a3d5aaf37c1d84c1f41faba4a25d1a
   NMapsGeometry: 4e02554fa9880ef02ed96b075dc84355d6352479

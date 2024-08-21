@@ -22,7 +22,6 @@ Future<statDateModel> getDateStatics() async {
       jsonDecode(utf8.decode(response.bodyBytes));
 
   if (response.statusCode == 200) {
-    print(jsonMap);
     return statDateModel.fromJson(jsonMap);
   } else {
     throw Exception("Failed to date statics");
@@ -44,7 +43,7 @@ Future<statRegionModel> getRegionStatics() async {
       jsonDecode(utf8.decode(response.bodyBytes));
 
   if (response.statusCode == 200) {
-    print(jsonMap);
+    // print(statRegionModel.fromJson(jsonMap));
     return statRegionModel.fromJson(jsonMap);
   } else {
     throw Exception("Failed to region statics");
