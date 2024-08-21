@@ -2,6 +2,9 @@ import 'package:damyo_app/database/smoke_data.dart';
 import 'package:damyo_app/style.dart';
 import 'package:damyo_app/view_models/login_models/islogin_view_model.dart';
 import 'package:damyo_app/view_models/login_models/user_info_view_model.dart';
+import 'package:damyo_app/view_models/statistics_models/locaI_info_view_model.dart';
+import 'package:damyo_app/view_models/statistics_models/smoke_info_view_model.dart';
+import 'package:damyo_app/view_models/statistics_models/timeAver_info_view_model.dart';
 import 'package:damyo_app/widgets/statistics/calculate_widget.dart';
 import 'package:damyo_app/widgets/statistics/local_info_widget.dart';
 import 'package:damyo_app/widgets/statistics/period_info_widget.dart';
@@ -28,13 +31,15 @@ class _StatisticsViewState extends State<StatisticsView>
   bool compareCheck = true;
   int _selectedIndex = -1;
 
-  List<dynamic>? smokePlace;
-
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
-    getSmokeDB();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<SmokeViewModel>(context, listen: false).fetchSmokeDB(userDB);
+      Provider.of<LocalInfoViewModel>(context, listen: false).fetchLocalDB(userDB);
+      Provider.of<TimeaverInfoViewModel>(context, listen: false).fetchTimeDB(userDB);
+    });
   }
 
   @override
@@ -44,17 +49,12 @@ class _StatisticsViewState extends State<StatisticsView>
     super.dispose();
   }
 
-  Future<void> getSmokeDB() async {
-    final smokeDB = await userDB.getSmokeInfoGroupedByColumn('id');
-    setState(() {
-      smokePlace = smokeDB;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Consumer2<IsloginViewModel, UserInfoViewModel>(
-        builder: (context, isloginViewModel, userInfoViewModel, child) {
+    return Consumer5<IsloginViewModel, UserInfoViewModel, SmokeViewModel,
+            LocalInfoViewModel, TimeaverInfoViewModel>(
+        builder: (context, isloginViewModel, userInfoViewModel, smokeViewModel,
+            localInfoViewModel, timeaverInfoViewModel, child) {
       return Scaffold(
         appBar: AppBar(
           scrolledUnderElevation: 0,
@@ -69,16 +69,17 @@ class _StatisticsViewState extends State<StatisticsView>
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    userInfo(context, userInfoViewModel, smokePlace),
+                    userInfo(
+                        context, userInfoViewModel, smokeViewModel.smokePlace),
                     testbtn(),
                     const SizedBox(
                       height: 20,
                     ),
-                    localInfo(context, _tabController),
+                    localInfo(context, _tabController, localInfoViewModel.GuList, localInfoViewModel.areaList, localInfoViewModel.areaInfo),
                     const SizedBox(
                       height: 20,
                     ),
-                    timeAverInfo(context, timeCheck, (check) {
+                    timeAverInfo(context, timeCheck, timeaverInfoViewModel.everyTimeInfo, timeaverInfoViewModel.userTimeInfo, (check) {
                       setState(() {
                         timeCheck = check;
                       });

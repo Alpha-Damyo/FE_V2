@@ -210,8 +210,7 @@ Widget testbtn() {
     padding: const EdgeInsets.only(top: 10.0),
     child: InkWell(
       onTap: () async {
-        await getDateStatics();
-        await getRegionStatics();
+        // await getDateStatics();
       },
       child: Container(
         width: 100,
