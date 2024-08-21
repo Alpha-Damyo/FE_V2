@@ -1,8 +1,19 @@
 import 'dart:developer';
 
-import 'package:damyo_app/view/home/home_view.dart';
+import 'package:damyo_app/utils/get_cur_pos.dart';
+import 'package:damyo_app/utils/go_router.dart';
 import 'package:damyo_app/view_models/bottom_navigation_model.dart';
+import 'package:damyo_app/view_models/login_models/islogin_view_model.dart';
+import 'package:damyo_app/view_models/login_models/token_view_model.dart';
+import 'package:damyo_app/view_models/login_models/user_info_view_model.dart';
 import 'package:damyo_app/view_models/map_models/map_view_model.dart';
+import 'package:damyo_app/view_models/map_models/search/sa_search_view_model.dart';
+import 'package:damyo_app/view_models/map_models/smoking_area/sa_inform_view_model.dart';
+import 'package:damyo_app/view_models/map_models/smoking_area/sa_review_view_model.dart';
+import 'package:damyo_app/view_models/statistics_models/period_info_view_model.dart';
+import 'package:damyo_app/view_models/statistics_models/smoke_info_view_model.dart';
+import 'package:damyo_app/view_models/statistics_models/locaI_info_view_model.dart';
+import 'package:damyo_app/view_models/statistics_models/timeAver_info_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
@@ -13,11 +24,22 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await loadDotEnv();
   await initializeMap();
+  // await getCurrentLocation();
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => BottomNavigationModel()),
         ChangeNotifierProvider(create: (context) => MapViewModel()),
+        ChangeNotifierProvider(create: (context) => SaReviewViewModel()),
+        ChangeNotifierProvider(create: (context) => SaInformViewModel()),
+        ChangeNotifierProvider(create: (context) => SaSearchViewModel()),
+        ChangeNotifierProvider(create: (context) => IsloginViewModel()),
+        ChangeNotifierProvider(create: (context) => TokenViewModel()),
+        ChangeNotifierProvider(create: (context) => UserInfoViewModel()),
+        ChangeNotifierProvider(create: (context) => SmokeViewModel()),
+        ChangeNotifierProvider(create: (context) => LocalInfoViewModel()),
+        ChangeNotifierProvider(create: (context) => TimeaverInfoViewModel()),
+        ChangeNotifierProvider(create: (context) => PeriodInfoViewModel()),
       ],
       child: const Damyo(),
     ),
@@ -36,18 +58,26 @@ class Damyo extends StatelessWidget {
         statusBarIconBrightness: Brightness.dark,
       ),
     );
-    return MaterialApp(
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.white,
-          primary: const Color(0xFF0099FC),
-          secondary: const Color(0xFFD6ECFA),
+        colorScheme: const ColorScheme.light(
+          primary: Color(0xFF0099FC),
+          secondary: Color(0xFFD6ECFA),
+          secondaryContainer: Color(0xFFEEF1F5),
+          onSecondaryContainer: Color(0xFFD2D7DD),
         ),
-        useMaterial3: true,
       ),
       // Todo: Provider 적용
-      home: HomeView(),
+      routerConfig: router,
+      builder: (context, child) {
+        return MediaQuery(
+          data:
+              MediaQuery.of(context).copyWith(textScaler: TextScaler.noScaling),
+          child: child!,
+        );
+      },
     );
   }
 }
