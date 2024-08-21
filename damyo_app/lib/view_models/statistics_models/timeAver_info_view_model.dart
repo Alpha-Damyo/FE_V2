@@ -6,19 +6,16 @@ import 'package:flutter/material.dart';
 class TimeaverInfoViewModel extends ChangeNotifier {
   TimeaverInfoViewModel();
 
-  Map<String,dynamic>? _userTimeInfo;
   List<dynamic>? _everyTimeInfo = [];
 
-  Map<String,dynamic>? get userTimeInfo => _userTimeInfo;
   List<dynamic>? get everyTimeInfo => _everyTimeInfo;
 
-  Future<void> fetchTimeDB(SmokeDatabase userDB)async{
+  Future<void> fetchTimeDB() async {
     statDateModel dateModel;
-    
+
     dateModel = await getDateStatics();
-    
+
     _everyTimeInfo = dateModel.time;
-    _userTimeInfo = await userDB.getThreeHourlyAverages();
 
     notifyListeners();
   }
