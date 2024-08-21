@@ -81,7 +81,7 @@ Widget userInfo(BuildContext context, UserInfoViewModel userInfoViewModel,
               const SizedBox(height: 10),
               const SizedBox(height: 10),
               (smokePlace == null || smokePlace.isEmpty)
-                  ? Center(child: textFormat(text: 'No Data Available'))
+                  ? Center(child: textFormat(text: '흡연 기록이 없습니다.'))
                   : SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(
