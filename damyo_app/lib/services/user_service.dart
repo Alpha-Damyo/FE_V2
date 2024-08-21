@@ -42,14 +42,14 @@ class UserService {
           if (response.statusCode == 200) {
             return [true, UserInfoModel.fromJson(responseDecode)];
           } else {
-            // Todo: 로그인 페이지로 이동
-            throw [false, false];
+            // RT 만료: 로그인 페이지로 이동
+            return [false, false];
           }
         }
         // reissue에 실패한 경우
         else {
-          // Todo: 로그인 페이지로 이동
-          throw [false, false];
+          // RT 만료: 로그인 페이지로 이동
+          return [false, false];
         }
       }
       return [true, UserInfoModel.fromJson(responseDecode)];
