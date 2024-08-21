@@ -21,7 +21,7 @@ Future<Map<String, dynamic>> login(
 
   var responseDecode = jsonDecode(utf8.decode(response.bodyBytes));
 
-  if (response.statusCode == 200 || response.statusCode == 404) {
+  if (response.statusCode == 200) {
     return responseDecode;
   } else {
     throw '${response.statusCode}';
