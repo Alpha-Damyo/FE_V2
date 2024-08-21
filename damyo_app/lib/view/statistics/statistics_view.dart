@@ -161,7 +161,7 @@ class _StatisticsViewState extends State<StatisticsView>
                     })
                   ],
                 )
-              : Column(),
+              : const Column(),
         ),
       );
     });
