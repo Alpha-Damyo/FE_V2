@@ -161,7 +161,31 @@ class _StatisticsViewState extends State<StatisticsView>
                     })
                   ],
                 )
-              : Column(),
+              : Center(
+                child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10.0),
+                        child: InkWell(
+                          onTap: () async {
+                            
+                          },
+                          child: Container(
+                            width: 100,
+                            height: 30,
+                            clipBehavior: Clip.antiAlias,
+                            decoration: ShapeDecoration(
+                              color: const Color(0xFF000000),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(41),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+              ),
         ),
       );
     });
