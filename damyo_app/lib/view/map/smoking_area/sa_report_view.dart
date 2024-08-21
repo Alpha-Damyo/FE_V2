@@ -81,7 +81,82 @@ class _SaReportViewState extends State<SaReportView> {
                     },
                   ),
                   textFormat(
+                      text: "태그가 일치하지 않아요",
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600)
+                ],
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  _isChecked[1] = !_isChecked[1];
+                  _canReport = checkCanReport();
+                });
+              },
+              child: Row(
+                children: [
+                  Checkbox(
+                    value: _isChecked[1],
+                    onChanged: (bool? value) {
+                      setState(() {
+                        _isChecked[1] = value!;
+                        _canReport = checkCanReport();
+                      });
+                    },
+                  ),
+                  textFormat(
+                      text: "위치가 정확하지 않아요",
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600)
+                ],
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  _isChecked[1] = !_isChecked[1];
+                  _canReport = checkCanReport();
+                });
+              },
+              child: Row(
+                children: [
+                  Checkbox(
+                    value: _isChecked[1],
+                    onChanged: (bool? value) {
+                      setState(() {
+                        _isChecked[1] = value!;
+                        _canReport = checkCanReport();
+                      });
+                    },
+                  ),
+                  textFormat(
                       text: "부적절한 단어가 포함되어 있어요",
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600)
+                ],
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  _isChecked[1] = !_isChecked[1];
+                  _canReport = checkCanReport();
+                });
+              },
+              child: Row(
+                children: [
+                  Checkbox(
+                    value: _isChecked[1],
+                    onChanged: (bool? value) {
+                      setState(() {
+                        _isChecked[1] = value!;
+                        _canReport = checkCanReport();
+                      });
+                    },
+                  ),
+                  textFormat(
+                      text: "부적절한 사진이 포함되어 있어요",
                       fontSize: 18,
                       fontWeight: FontWeight.w600)
                 ],
