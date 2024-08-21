@@ -8,4 +8,11 @@ class BottomNavigationModel extends ChangeNotifier {
     _curPage = index;
     notifyListeners();
   }
+
+  int _searchPage = 0;
+  int get searchPage => _searchPage;
+  setSearchPage(int index) {
+    _searchPage = index;
+    notifyListeners();
+  }
 }

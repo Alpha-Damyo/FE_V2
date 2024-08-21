@@ -10,18 +10,14 @@ import 'package:damyo_app/view/statistics/statistics_view.dart';
 class HomeView extends StatelessWidget {
   HomeView({super.key});
   late BottomNavigationModel _bottomNavigationModel;
-  final PageController _pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
     _bottomNavigationModel = Provider.of<BottomNavigationModel>(context);
     return Scaffold(
-      body: PageView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: _pageController,
-        onPageChanged: (index) {
-          _bottomNavigationModel.setCurPage(index);
-        },
+      resizeToAvoidBottomInset: false,
+      body: IndexedStack(
+        index: _bottomNavigationModel.curPage,
         children: const [
           MapView(),
           FavoritesView(),
@@ -36,7 +32,7 @@ class HomeView extends StatelessWidget {
             label: "지도",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.star),
+            icon: Icon(Icons.star_rounded),
             label: "즐겨찾기",
           ),
           BottomNavigationBarItem(
@@ -52,7 +48,6 @@ class HomeView extends StatelessWidget {
         currentIndex: _bottomNavigationModel.curPage,
         onTap: (index) {
           _bottomNavigationModel.setCurPage(index);
-          _pageController.jumpToPage(index);
         },
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey,

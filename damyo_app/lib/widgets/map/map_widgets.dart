@@ -1,53 +1,13 @@
-import "dart:ui";
-
 import "package:damyo_app/style.dart";
 import "package:damyo_app/view_models/map_models/map_view_model.dart";
 import "package:flutter/material.dart";
-
-// 버튼 그림자
-BoxShadow btnBoxShadow() {
-  return BoxShadow(
-    color: Colors.grey.withOpacity(0.5),
-    spreadRadius: 0,
-    blurRadius: 2.0,
-    offset: const Offset(0, 3), // changes position of shadow
-  );
-}
-
-// 그림자가 적용된 Inkwell의 부모
-Widget shadowMaterial(BuildContext context, double borderRadius, Widget child) {
-  return Container(
-    decoration: BoxDecoration(
-      boxShadow: [
-        btnBoxShadow(),
-      ],
-      borderRadius: BorderRadius.circular(borderRadius),
-    ),
-    child: Material(
-      color: Colors.transparent,
-      child: child,
-    ),
-  );
-}
-
-// 그림자가 없는 Inkwell의 부모
-Widget normalMaterial(BuildContext context, double borderRadius, Widget child) {
-  return Container(
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(borderRadius),
-    ),
-    child: Material(
-      color: Colors.transparent,
-      child: child,
-    ),
-  );
-}
+import "package:go_router/go_router.dart";
 
 // 검색 바
 Widget mapSearchBar(BuildContext context) {
   return GestureDetector(
     onTap: () {
-      // Todo: 검색페이지 연동
+      context.push("/search");
     },
     child: Container(
       width: MediaQuery.of(context).size.width - 50 - 30 - 10,
@@ -60,14 +20,15 @@ Widget mapSearchBar(BuildContext context) {
         ],
       ),
       padding: const EdgeInsets.only(left: 10),
-      child: const Row(
+      child: Row(
         children: [
-          Icon(
+          const Icon(
             Icons.search,
             size: 25,
           ),
-          SizedBox(width: 10),
-          Text("흡연구역 검색")
+          const SizedBox(width: 10),
+          textFormat(
+              text: "흡연구역 검색", fontSize: 18, color: const Color(0xFF666666)),
         ],
       ),
     ),
@@ -210,7 +171,8 @@ Widget reSearchBtn(BuildContext context, bool visible, Function onTap) {
 }
 
 // 제보 버튼을 누르면 가운데에 활성화되는 버튼
-Widget centerInformBtn(BuildContext context, bool visible) {
+Widget centerInformBtn(
+    BuildContext context, bool visible, Map<String, double> coord) {
   return Visibility(
     visible: visible,
     child: Column(
@@ -230,7 +192,9 @@ Widget centerInformBtn(BuildContext context, bool visible) {
           context,
           36,
           InkWell(
-            onTap: () {},
+            onTap: () {
+              context.push("/smokingarea/inform", extra: coord);
+            },
             borderRadius: BorderRadius.circular(36),
             child: Ink(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
@@ -256,68 +220,73 @@ Widget smokingAreaCard(
 ) {
   return Visibility(
     visible: mapViewModel.showSmokingAreaCard,
-    child: Container(
-      height: 150,
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(color: const Color(0xFFD2D7DD)),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  const Icon(
-                    Icons.location_on_sharp,
-                    size: 24,
-                  ),
-                  textFormat(
-                    text: " ${mapViewModel.smokingAreawCardInfo.name}",
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ],
-              ),
-              textFormat(
-                text: "상세주소: ${mapViewModel.smokingAreawCardInfo.address}",
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Row(
-                children: [
-                  const Icon(
-                    Icons.star_rounded,
-                    color: Colors.yellow,
-                    size: 24,
-                  ),
-                  textFormat(
-                    text: mapViewModel.smokingAreawCardInfo.score.toString(),
-                    fontSize: 16,
-                  )
-                ],
-              ),
-              Row(
-                children: [
-                  simpleBtn(context, "즐겨찾기 추가", onTapAddFavorites),
-                  const SizedBox(width: 10),
-                  simpleBtn(context, "흡연 완료", onTapCompleteSmoking),
-                ],
-              )
-            ],
-          )
-        ],
+    child: GestureDetector(
+      onTap: () {
+        context.push('/smokingarea/${mapViewModel.smokingAreaCardInfo.areaId}');
+      },
+      child: Container(
+        height: 150,
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(color: const Color(0xFFD2D7DD)),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.location_on_sharp,
+                      size: 24,
+                    ),
+                    textFormat(
+                      text: " ${mapViewModel.smokingAreaCardInfo.name}",
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ],
+                ),
+                textFormat(
+                  text: "상세주소: ${mapViewModel.smokingAreaCardInfo.address}",
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.star_rounded,
+                      color: Colors.red,
+                      size: 24,
+                    ),
+                    textFormat(
+                      text: mapViewModel.smokingAreaCardInfo.score.toString(),
+                      fontSize: 16,
+                    )
+                  ],
+                ),
+                Row(
+                  children: [
+                    simpleBtn(context, "즐겨찾기 추가", onTapAddFavorites),
+                    const SizedBox(width: 10),
+                    simpleBtn(context, "흡연 완료", onTapCompleteSmoking),
+                  ],
+                )
+              ],
+            )
+          ],
+        ),
       ),
     ),
   );
