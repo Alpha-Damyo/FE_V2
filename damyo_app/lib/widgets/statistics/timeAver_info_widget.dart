@@ -1,7 +1,6 @@
 import 'package:damyo_app/style.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:damyo_app/view_models/statistics_models/timeAver_info_view_model.dart';
 
 // 시간대별 평균 흡연량 그래프
 Widget timeAverInfo(

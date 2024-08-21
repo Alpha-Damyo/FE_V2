@@ -1,4 +1,3 @@
-import 'package:damyo_app/database/smoke_data.dart';
 import 'package:damyo_app/services/statistics_service.dart';
 import 'package:damyo_app/style.dart';
 import 'package:damyo_app/view_models/login_models/user_info_view_model.dart';
@@ -210,7 +209,7 @@ Widget testbtn() {
     padding: const EdgeInsets.only(top: 10.0),
     child: InkWell(
       onTap: () async {
-        // await getDateStatics();
+        await getDateStatics();
       },
       child: Container(
         width: 100,

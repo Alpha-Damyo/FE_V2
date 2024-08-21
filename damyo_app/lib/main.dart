@@ -9,6 +9,7 @@ import 'package:damyo_app/view_models/map_models/map_view_model.dart';
 import 'package:damyo_app/view_models/map_models/search/sa_search_view_model.dart';
 import 'package:damyo_app/view_models/map_models/smoking_area/sa_inform_view_model.dart';
 import 'package:damyo_app/view_models/map_models/smoking_area/sa_review_view_model.dart';
+import 'package:damyo_app/view_models/statistics_models/period_info_view_model.dart';
 import 'package:damyo_app/view_models/statistics_models/smoke_info_view_model.dart';
 import 'package:damyo_app/view_models/statistics_models/locaI_info_view_model.dart';
 import 'package:damyo_app/view_models/statistics_models/timeAver_info_view_model.dart';
@@ -36,6 +37,7 @@ void main() async {
         ChangeNotifierProvider(create: (context) => SmokeViewModel()),
         ChangeNotifierProvider(create: (context) => LocalInfoViewModel()),
         ChangeNotifierProvider(create: (context) => TimeaverInfoViewModel()),
+        ChangeNotifierProvider(create: (context) => PeriodInfoViewModel()),
       ],
       child: const Damyo(),
     ),
