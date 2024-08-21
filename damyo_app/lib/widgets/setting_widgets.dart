@@ -6,41 +6,34 @@ import "package:damyo_app/style.dart";
 
 // 로그인 버튼
 Widget loginBtn(BuildContext context) {
-  return Padding(
-    padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 50.0),
-    child: InkWell(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const LoginView()),
-        );
-      },
-      child: Container(
-        width: double.infinity,
-        height: 60,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                textFormat(
-                    text: '로그인 / 회원가입',
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700),
-                const SizedBox(height: 6),
-                textFormat(
-                  text: '담요와 함께 바른 문화를 만들어봐요 ! ',
-                  color: Color(0xFF6E767F),
-                ),
-              ],
-            ),
-          ],
-        ),
+  return InkWell(
+    onTap: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginView()),
+      );
+    },
+    child: Container(
+      padding: const EdgeInsets.all(15),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              textFormat(
+                  text: '로그인 / 회원가입',
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700),
+              const SizedBox(height: 6),
+              textFormat(
+                text: '담요와 함께 바른 문화를 만들어봐요 ! ',
+                color: const Color(0xFF6E767F),
+              ),
+            ],
+          ),
+          const Icon(Icons.keyboard_arrow_right, size: 30),
+        ],
       ),
     ),
   );
@@ -49,138 +42,113 @@ Widget loginBtn(BuildContext context) {
 // 사용자 기본 정보
 Widget userProfile(BuildContext context, IsloginViewModel isloginViewModel,
     UserInfoViewModel userInfoViewModel) {
-  return Padding(
-    padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 50.0),
-    child: InkWell(
-        onTap: () {},
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-          decoration: const BoxDecoration(color: Colors.white),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          clipBehavior: Clip.antiAlias,
-                          decoration: const BoxDecoration(
-                              color: Color(0xFFDEDEDE), shape: BoxShape.circle),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                width: 84,
-                                height: 84,
-                                // decoration: BoxDecoration(
-                                //   image: DecorationImage(
-                                //     image:
-                                //         NetworkImage('no'),
-                                //     fit: BoxFit.fill,
-                                //   ),
-                                // ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(width: 15),
-                        Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            textFormat(
-                              text: userInfoViewModel.userInfoModel.name,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                            ),
-                            SizedBox(height: 6),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 5),
-                              clipBehavior: Clip.antiAlias,
-                              decoration: ShapeDecoration(
-                                color: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                  side: const BorderSide(
-                                      width: 1, color: Color(0xFFDEDEDE)),
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    '바른 문화 기여도: 0점',
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 12,
-                                      fontFamily: 'Pretendard',
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    SizedBox(width: 70),
-                    IconButton(
-                        onPressed: () {
-                          print(isloginViewModel.isloginModel.isLogin);
-                        },
-                        icon: const Icon(Icons.keyboard_arrow_right)),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 20),
-              Container(
-                width: 358,
-                padding: EdgeInsets.symmetric(horizontal: 55, vertical: 12),
-                clipBehavior: Clip.antiAlias,
-                decoration: ShapeDecoration(
-                  color: const Color(0xFFEEF1F4),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+  return Container(
+    width: double.infinity,
+    padding: const EdgeInsets.all(15),
+    child: Column(
+      children: [
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Container(
+                  decoration: const BoxDecoration(
+                      color: Color(0xFFDEDEDE), shape: BoxShape.circle),
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 84,
+                        height: 84,
+                        // decoration: BoxDecoration(
+                        //   image: DecorationImage(
+                        //     image:
+                        //         NetworkImage('no'),
+                        //     fit: BoxFit.fill,
+                        //   ),
+                        // ),
+                      ),
+                    ],
                   ),
                 ),
-                child: InkWell(
-                  onTap: () {
-                    isloginViewModel.logout();
-                  },
-                  child: Container(
-                    alignment: Alignment.center,
-                    child: const Text(
-                      '로그아웃',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w600,
+                const SizedBox(width: 15),
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    textFormat(
+                      text: userInfoViewModel.userInfoModel.name,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                    ),
+                    const SizedBox(height: 6),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 5),
+                      clipBehavior: Clip.antiAlias,
+                      decoration: ShapeDecoration(
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          side: const BorderSide(
+                              width: 1, color: Color(0xFFDEDEDE)),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                      child: const Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            '바른 문화 기여도: 0점',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 12,
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
+                  ],
                 ),
-              ),
-            ],
+              ],
+            ),
+            IconButton(
+              onPressed: () {
+                print(isloginViewModel.isloginModel.isLogin);
+              },
+              icon: const Icon(Icons.keyboard_arrow_right),
+              iconSize: 30,
+            ),
+          ],
+        ),
+        const SizedBox(height: 20),
+        InkWell(
+          borderRadius: BorderRadius.circular(10),
+          onTap: () {
+            isloginViewModel.logout();
+          },
+          child: Ink(
+            width: double.infinity,
+            height: 40,
+            decoration: BoxDecoration(
+              color: const Color(0xFFEEF1F4),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Align(
+                alignment: Alignment.center,
+                child: textFormat(text: "로그아웃", fontWeight: FontWeight.w700)),
           ),
-        )),
+        ),
+      ],
+    ),
   );
 }
 
@@ -194,7 +162,7 @@ Widget toolBax(BuildContext context, String name) {
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
+        SizedBox(
           width: double.infinity,
           height: 30,
           child: InkWell(
@@ -205,7 +173,7 @@ Widget toolBax(BuildContext context, String name) {
                 padding: const EdgeInsets.only(left: 8.0),
                 child: textFormat(
                   text: name,
-                  color: Color(0xFF262B32),
+                  color: const Color(0xFF262B32),
                   fontSize: 16,
                 ),
               ),
