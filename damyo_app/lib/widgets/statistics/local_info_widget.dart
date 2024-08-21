@@ -1,11 +1,15 @@
+import 'package:damyo_app/models/smoking_area/sa_basic_model.dart';
 import 'package:damyo_app/style.dart';
 import 'package:flutter/material.dart';
-import 'package:damyo_app/view_models/statistics_models/locaI_info_view_model.dart';
-import 'package:damyo_app/models/smoking_area/sa_detail_model.dart';
 import 'package:go_router/go_router.dart';
 
 // 인기있는 흡연 구역 정보
-Widget localInfo(BuildContext context, TabController _tabController) {
+Widget localInfo(
+    BuildContext context,
+    TabController _tabController,
+    List<dynamic>? _GuList,
+    List<dynamic>? _areaList,
+    List<dynamic>? _areaInfo) {
   return Container(
     width: double.infinity,
     height: 300,
@@ -45,8 +49,8 @@ Widget localInfo(BuildContext context, TabController _tabController) {
             child: TabBarView(
               controller: _tabController,
               children: [
-                _tapContentsGu(),
-                _tapContentsSmokeArea(context)
+                _tapContentsGu(_GuList),
+                _tapContentsSmokeArea(context, _areaList, _areaInfo)
               ],
             ),
           ),
@@ -56,38 +60,34 @@ Widget localInfo(BuildContext context, TabController _tabController) {
   );
 }
 
-List<dynamic> _GuList = [];
-List<dynamic> _SaList = [];
-List<dynamic> _areaList = [];
-
 // 가장 인기있는 지역
-Widget _tapContentsGu() {
-  if (_GuList == null || _GuList!.isEmpty) {
+Widget _tapContentsGu(List<dynamic>? _GuList) {
+  if (_GuList == null || _GuList.isEmpty) {
     return const Center(child: Text('No Data Available'));
   }
   return Column(
       children: List.generate(
-    _GuList!.length,
+    _GuList.length,
     (index) {
-      return Gu(_GuList?[index], index);
+      return Gu(_GuList[index], index);
     },
   ));
 }
 
 // 가장 인기있는 흡연구역(흡연구역)
-Widget _tapContentsSmokeArea(BuildContext context) {
-  if (_areaList == null || _areaList!.isEmpty) {
+Widget _tapContentsSmokeArea(
+    BuildContext context, List<dynamic>? _areaList, List<dynamic>? _areaInfo) {
+  if (_areaList == null || _areaList.isEmpty) {
     return const Center(child: Text('No Data Available'));
   }
   return Column(
       children: List.generate(
-    _GuList!.length,
+    _areaList.length,
     (index) {
-      return Sa(_areaList?[index], _SaList![index], index, context);
+      return Sa(_areaList[index], _areaInfo?[index], index, context);
     },
   ));
 }
-
 
 // 흡연 지역 정보
 Widget Gu(Map<String, dynamic> GuInfo, int rank) {
@@ -140,15 +140,16 @@ Widget Gu(Map<String, dynamic> GuInfo, int rank) {
 }
 
 // 흡연 구역 정보
-Widget Sa(Map<String, dynamic> SaInfo, SaDetailModel SaModel, int rank,
+Widget Sa(Map<String, dynamic> SaInfo, SaBasicModel SaModel, int rank,
     BuildContext context) {
   String key = SaInfo.keys.first;
   dynamic value = SaInfo[key];
+
   return Ink(
     height: 55,
     child: InkWell(
       onTap: () {
-        context.push('/sa_info', extra: '${SaModel.areaId},${SaModel.name}');
+        
       },
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
