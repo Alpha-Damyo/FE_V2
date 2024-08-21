@@ -32,7 +32,7 @@ class HomeView extends StatelessWidget {
             label: "지도",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.star),
+            icon: Icon(Icons.star_rounded),
             label: "즐겨찾기",
           ),
           BottomNavigationBarItem(
