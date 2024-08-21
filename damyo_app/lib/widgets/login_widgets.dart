@@ -76,7 +76,6 @@ Widget googleLoginBtn(BuildContext context, IsloginViewModel isloginViewModel,
   return InkWell(
     borderRadius: BorderRadius.circular(41),
     onTap: () async {
-      // Todo: 구글로 로그인 구현
       if (await LoginService.signInWithGoogle(
           isloginViewModel, tokenViewModel, userInfoViewModel)) {
         Navigator.pop(context);

@@ -144,7 +144,6 @@ class _FavoriteScreenState extends State<FavoritesView> {
                         j++)
                       InkWell(
                         onTap: () async {
-                          // Todo: 지도 이동 및 즐겨찾기 장소 보여줌
                           SaBasicModel sa = await SmokingAreaService
                               .serachSmokingAreaByAreaId(
                                   _mapViewModel.favoritesList[index][1][j]);
