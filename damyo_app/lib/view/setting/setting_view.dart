@@ -29,11 +29,8 @@ class _SettingViewState extends State<SettingView> {
               userProfile(context, isloginViewModel, userInfoViewModel)
             else
               loginBtn(context),
-            toolBax(context, '즐겨찾기 관리'),
-            toolBax(context, '흡연구역 업데이트'),
-            toolBax(context, '업적'),
+            toolBax(context, '기여도'),
             toolBax(context, '흡연데이터 초기화'),
-            toolBax(context, '푸쉬 알림'),
             toolBax(context, '앱버전'),
           ],
         ),
