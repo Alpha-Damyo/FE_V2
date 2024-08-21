@@ -32,11 +32,12 @@ class _MapViewState extends State<MapView> {
         children: [
           // 지도
           NaverMap(
-            options: const NaverMapViewOptions(
-              // initialCameraPosition: NCameraPosition(
-              //   target: NLatLng(userLatitude, userLongitude),
-              //   zoom: 14.0,
-              // ),
+            options: NaverMapViewOptions(
+              initialCameraPosition: NCameraPosition(
+                target:
+                    NLatLng(_mapViewModel.getCurLat, _mapViewModel.getCurLng),
+                zoom: 14.0,
+              ),
               locationButtonEnable: true,
             ),
             onMapReady: (controller) {
