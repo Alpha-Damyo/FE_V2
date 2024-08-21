@@ -5,6 +5,11 @@ import 'package:damyo_app/services/favorites_service.dart';
 import 'package:damyo_app/services/smoking_area_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:geolocator/geolocator.dart';
+
+double curLat = 37.5666;
+double curLng = 126.979;
 
 class MapViewModel extends ChangeNotifier {
   // 흡연구역 컨트롤러
@@ -12,6 +17,25 @@ class MapViewModel extends ChangeNotifier {
   // 흡연구역 목록
   List<SaBasicModel> _smokingAreas = [];
   List<SaBasicModel> get smokingAreas => _smokingAreas;
+
+  double get getCurLat => curLat;
+  double get getCurLng => curLng;
+
+  // 현재 위치 받아오기
+  getCurrentLocation() async {
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+    }
+    try {
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+      curLat = position.latitude;
+      curLng = position.longitude;
+    } catch (e) {
+      Fluttertoast.showToast(msg: "현재 위치를 불러올 수 없습니다");
+    }
+  }
 
   // 흡연구역 검색 모델
   final SaSearchModel _saSearchModel = SaSearchModel(

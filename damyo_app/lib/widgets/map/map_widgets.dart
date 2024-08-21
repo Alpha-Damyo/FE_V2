@@ -28,7 +28,7 @@ Widget mapSearchBar(BuildContext context) {
           ),
           const SizedBox(width: 10),
           textFormat(
-              text: "흡연구역 검색", fontSize: 16, color: const Color(0xFF666666)),
+              text: "흡연구역 검색", fontSize: 18, color: const Color(0xFF666666)),
         ],
       ),
     ),
