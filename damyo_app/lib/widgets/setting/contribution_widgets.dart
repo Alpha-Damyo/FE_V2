@@ -203,8 +203,11 @@ Widget badgeList(int contributionScore) {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
-                    child: Image.asset(
-                        'assets/icons/setting/contribution/contribution_${contributionPoint[index]}.png'),
+                    child: (contributionScore < contributionPoint[index])
+                        ? Image.asset(
+                            'assets/icons/setting/contribution/lock.png')
+                        : Image.asset(
+                            'assets/icons/setting/contribution/contribution_${contributionPoint[index]}.png'),
                   ),
                 ],
               ),
@@ -338,43 +341,6 @@ Widget explane() {
               ),
             ),
             const SizedBox(height: 20),
-            Container(
-              child: const Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: 56,
-                    child: Text(
-                      '챌린지   ',
-                      style: TextStyle(
-                        color: Color(0xFF0099FC),
-                        fontSize: 16,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w600,
-                        height: 0,
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 23),
-                  Expanded(
-                    child: SizedBox(
-                      child: Text(
-                        '챌린지에 참여하여 좋아요를 누르고 받을떄마다 기여도를 얻을 수 있어요.\n3등안에 들면 더 높은 기여도를 획득해요 !',
-                        style: TextStyle(
-                          color: Color(0xFF262B32),
-                          fontSize: 12,
-                          fontFamily: 'Pretendard',
-                          fontWeight: FontWeight.w500,
-                          height: 0,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
           ],
         ),
         const SizedBox(height: 30),
