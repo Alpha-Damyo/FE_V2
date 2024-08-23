@@ -1,4 +1,5 @@
 import 'package:damyo_app/style.dart';
+import 'package:damyo_app/utils/re_login_dialog.dart';
 import 'package:damyo_app/view/map/smoking_area/favorites_bottomsheet.dart';
 import 'package:damyo_app/view/map/smoking_area/sa_gallery_screen.dart';
 import 'package:damyo_app/view/map/smoking_area/sa_image_screen.dart';
@@ -44,7 +45,24 @@ Widget saDetailNameScoreBtns(
   String areaId,
   String name,
   double score,
+  bool? opened,
+  bool? closed,
+  bool? indoor,
+  bool? outdoor,
+  bool isLogin,
 ) {
+  String tag = "";
+  if (opened == true) {
+    tag += " #개방형 ";
+  } else if (closed == true) {
+    tag += " #폐쇄형 ";
+  }
+  if (indoor == true) {
+    tag += "#실내 ";
+  } else if (outdoor == true) {
+    tag += "#실외 ";
+  }
+
   return Column(
     children: [
       textFormat(
@@ -57,7 +75,7 @@ Widget saDetailNameScoreBtns(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          textFormat(text: "$score", color: Colors.red),
+          textFormat(text: score.toStringAsFixed(1), color: Colors.red),
           const SizedBox(width: 5),
           RatingStars(
             value: score,
@@ -70,28 +88,47 @@ Widget saDetailNameScoreBtns(
         ],
       ),
       const SizedBox(height: 10),
-      textFormat(text: "#개방형 #실내"),
+      textFormat(text: tag),
       const SizedBox(height: 20),
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          saDetailBtn(context, (Icons.bookmark_add), "즐겨찾기", () {
-            showModalBottomSheet(
-                context: context,
-                builder: (context) {
-                  return const FavoritesBottomsheet();
-                });
-          }),
-          saDetailBtn(context, (Icons.share_rounded), "공유", () {}),
+          saDetailBtn(
+            context,
+            (Icons.bookmark_add),
+            "즐겨찾기",
+            () {
+              showModalBottomSheet(
+                  context: context,
+                  builder: (context) {
+                    return const FavoritesBottomsheet();
+                  });
+            },
+          ),
+          saDetailBtn(
+            context, (Icons.share_rounded), "공유",
+            // Todo: 공유
+            () {},
+          ),
           saDetailBtn(
             context,
             (Icons.message),
             "리뷰작성",
             () {
-              context.push("/smokingarea/$areaId/review", extra: name);
+              if (isLogin) {
+                context.push("/smokingarea/$areaId/review", extra: name);
+              } else {
+                reLogin(context);
+              }
             },
           ),
-          saDetailBtn(context, (Icons.check_box), "흡연완료", () {}),
+          saDetailBtn(
+            context,
+            (Icons.check_box),
+            "흡연완료",
+            // Todo: 흡연 완료
+            () {},
+          ),
         ],
       ),
     ],
@@ -133,9 +170,16 @@ Widget saDetailBtn(
   );
 }
 
-// 흡연구역 정보(주소, 설명, 태그)
-Widget saDetailInfo(BuildContext context, String name, String address,
-    String description, String areaId, bool? opened, bool? outdoor) {
+// 흡연구역 정보(주소, 설명, 수정제안)
+Widget saDetailInfo(
+    BuildContext context,
+    String name,
+    String address,
+    String description,
+    String areaId,
+    bool? opened,
+    bool? outdoor,
+    bool isLogined) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -167,7 +211,11 @@ Widget saDetailInfo(BuildContext context, String name, String address,
       const SizedBox(height: 15),
       InkWell(
         onTap: () {
-          context.push("/smokingarea/$areaId/report", extra: name);
+          if (isLogined) {
+            context.push("/smokingarea/$areaId/report", extra: name);
+          } else {
+            reLogin(context);
+          }
         },
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,

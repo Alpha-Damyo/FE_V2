@@ -25,6 +25,9 @@ Future<bool> reissueService(TokenViewModel tokenViewModel) async {
 
   var responseDecode = jsonDecode(utf8.decode(response.bodyBytes));
   if (response.statusCode == 200) {
+    if (responseDecode['code'] == "A108") {
+      return false;
+    }
     tokenViewModel.setToken(
         responseDecode['accessToken'], responseDecode['refreshToken']);
     return true;
