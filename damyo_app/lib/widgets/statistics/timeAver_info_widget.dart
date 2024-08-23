@@ -9,7 +9,7 @@ Widget timeAverInfo(
     List<dynamic>? EveryList,
     Map<String, dynamic>? UserList,
     Function(bool) onTimeCheck) {
-  return Container(
+  return SizedBox(
     width: double.infinity,
     height: 400,
     child: Column(
@@ -63,12 +63,10 @@ Widget timeAverInfo(
   );
 }
 
-
 LineChartData timeSmokeAver(
     bool timeCheck, List<dynamic>? EveryList, Map<String, dynamic>? UserList) {
-  
   double EveryMax = 0, UserMax = 0;
-  
+
   for (int i = 0; i < EveryList!.length; i++) {
     if (EveryList[i] > EveryMax) {
       EveryMax = EveryList[i];
@@ -81,8 +79,8 @@ LineChartData timeSmokeAver(
     }
   }
 
-  int UptoMax(double val){
-    return ((val/10).toInt() + 1)*10;
+  int UptoMax(double val) {
+    return ((val / 10).toInt() + 1) * 10;
   }
 
   return LineChartData(
@@ -279,6 +277,6 @@ LineChartBarData lineChartBarDataEvery(
       dotData: const FlDotData(show: false),
       belowBarData: BarAreaData(show: false),
       spots: List.generate(EveryList!.length, (index) {
-        return FlSpot(index * 3, EveryList![index]);
+        return FlSpot(index * 3, EveryList[index]);
       }));
 }
