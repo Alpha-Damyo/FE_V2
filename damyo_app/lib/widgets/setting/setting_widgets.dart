@@ -1,3 +1,4 @@
+import "package:damyo_app/view/setting/contribution/contribution_view.dart";
 import "package:damyo_app/view/setting/login/login_view.dart";
 import "package:damyo_app/view_models/login_models/is_login_view_model.dart";
 import "package:damyo_app/view_models/login_models/token_view_model.dart";
@@ -138,6 +139,30 @@ Widget userProfile(BuildContext context, IsloginViewModel isloginViewModel,
           ),
         ),
       ],
+    ),
+  );
+}
+
+// 기여도 버튼
+Widget contributionBtn(BuildContext context, String name) {
+  return InkWell(
+    onTap: () {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const ContributionView()));
+    },
+    child: Ink(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      width: double.infinity,
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 15),
+        decoration: const BoxDecoration(
+            border: Border(bottom: BorderSide(width: 1.5, color: Colors.grey))),
+        child: textFormat(
+          text: name,
+          color: const Color(0xFF262B32),
+          fontSize: 16,
+        ),
+      ),
     ),
   );
 }
