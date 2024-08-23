@@ -1,5 +1,6 @@
 import "package:damyo_app/view/setting/contribution/contribution_view.dart";
 import "package:damyo_app/view/setting/login/login_view.dart";
+import "package:damyo_app/view/setting/updateprofile/updateprofile_view.dart";
 import "package:damyo_app/view_models/login_models/is_login_view_model.dart";
 import "package:damyo_app/view_models/login_models/token_view_model.dart";
 import "package:damyo_app/view_models/login_models/user_info_view_model.dart";
@@ -42,8 +43,12 @@ Widget loginBtn(BuildContext context) {
 }
 
 // 사용자 기본 정보
-Widget userProfile(BuildContext context, IsloginViewModel isloginViewModel,
-    TokenViewModel tokenViewModel, UserInfoViewModel userInfoViewModel) {
+Widget userProfile(
+    BuildContext context,
+    IsloginViewModel isloginViewModel,
+    TokenViewModel tokenViewModel,
+    UserInfoViewModel userInfoViewModel,
+    Function reload) {
   return Container(
     width: double.infinity,
     padding: const EdgeInsets.all(15),
@@ -59,10 +64,13 @@ Widget userProfile(BuildContext context, IsloginViewModel isloginViewModel,
                   height: 84,
                   decoration: const BoxDecoration(shape: BoxShape.circle),
                   child: ClipOval(
-                    child: Image.network(
-                      userInfoViewModel.userInfoModel.profileUrl,
-                      fit: BoxFit.cover,
-                    ),
+                    child: (userInfoViewModel.userInfoModel.profileUrl != null)
+                        ? Image.network(
+                            userInfoViewModel.userInfoModel.profileUrl!,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset(
+                            'assets/icons/setting/updateprofile/defalut.png'),
                   ),
                 ),
                 const SizedBox(width: 15),
@@ -111,8 +119,13 @@ Widget userProfile(BuildContext context, IsloginViewModel isloginViewModel,
               ],
             ),
             IconButton(
-              onPressed: () {
-                print(isloginViewModel.isLogin);
+              onPressed: () async {
+                await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const UpdateprofileView()));
+
+                reload();
               },
               icon: const Icon(Icons.keyboard_arrow_right),
               iconSize: 30,
@@ -147,8 +160,8 @@ Widget userProfile(BuildContext context, IsloginViewModel isloginViewModel,
 Widget contributionBtn(BuildContext context, String name) {
   return InkWell(
     onTap: () {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const ContributionView()));
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const ContributionView()));
     },
     child: Ink(
       padding: const EdgeInsets.symmetric(horizontal: 15),

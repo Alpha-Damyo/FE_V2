@@ -5,11 +5,21 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class UserInfoViewModel extends ChangeNotifier {
   FlutterSecureStorage storage = const FlutterSecureStorage();
 
-  UserInfoModel _userInfoModel = UserInfoModel("홍길동", "profile-url", 0, 0, 0);
+  UserInfoModel _userInfoModel = UserInfoModel("홍길동", null, 0, 0, 0);
   UserInfoModel get userInfoModel => _userInfoModel;
 
   updateUserInfoModel(UserInfoModel model) {
     _userInfoModel = model;
+    notifyListeners();
+  }
+
+  updateUserName(String name){
+    _userInfoModel.name = name;
+    notifyListeners();
+  }
+
+  updateUserProfile(String profileUrl){
+    _userInfoModel.profileUrl = profileUrl;
     notifyListeners();
   }
 }
