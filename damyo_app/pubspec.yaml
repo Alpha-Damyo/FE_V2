@@ -95,6 +95,7 @@ flutter:
   assets:
     - .env
     - assets/images/smoking_area_default_img.png
+    - assets/icons/setting/contribution/
 
   fonts:
     - family: pretendard
