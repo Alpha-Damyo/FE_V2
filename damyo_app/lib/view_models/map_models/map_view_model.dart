@@ -88,10 +88,14 @@ class MapViewModel extends ChangeNotifier {
   SaBasicModel get smokingAreaCardInfo => _smokingAreaCardInfo;
 
   // 흡연구역 업데이트
-  updateSmokingAreas() async {
+  updateSmokingAreas(BuildContext context) async {
     _smokingAreas =
         await SmokingAreaService.searchSmokingAreaByTag(_saSearchModel);
     mapController.clearOverlays();
+
+    const iconImage =
+        NOverlayImage.fromAssetImage("assets/icons/map/marker.png");
+
     for (int i = 0; i < _smokingAreas.length; i++) {
       final NMarker marker = NMarker(
         id: _smokingAreas[i].areaId,
@@ -99,6 +103,7 @@ class MapViewModel extends ChangeNotifier {
           _smokingAreas[i].latitude,
           _smokingAreas[i].longitude,
         ),
+        icon: iconImage,
       );
       marker.setOnTapListener((overlay) {
         _smokingAreaCardInfo = _smokingAreas[i];
@@ -172,11 +177,14 @@ class MapViewModel extends ChangeNotifier {
   }
 
   // 즐겨찾기에서 장소를 고른 경우
-  tapFavoritesSa(SaBasicModel sa) {
+  tapFavoritesSa(BuildContext context, SaBasicModel sa) async {
     _showSmokingAreaCard = true;
     _smokingAreaCardInfo = sa;
 
     mapController.clearOverlays();
+
+    const iconImage =
+        NOverlayImage.fromAssetImage("assets/icons/map/marker.png");
 
     final NMarker marker = NMarker(
       id: _smokingAreaCardInfo.areaId,
@@ -184,6 +192,7 @@ class MapViewModel extends ChangeNotifier {
         _smokingAreaCardInfo.latitude,
         _smokingAreaCardInfo.longitude,
       ),
+      icon: iconImage,
     );
     marker.setOnTapListener((overlay) {
       _showSmokingAreaCard = true;

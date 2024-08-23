@@ -28,44 +28,59 @@ class _SaReviewViewState extends State<SaReviewView> {
     _saReviewViewModel = Provider.of<SaReviewViewModel>(context);
     _tokenViewModel = Provider.of<TokenViewModel>(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        scrolledUnderElevation: 0,
-        title: appbarTitleFormat(text: "리뷰 작성"),
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    reviewSaName(context, _name),
-                    const SizedBox(height: 20),
-                    imageSelector(
-                      context,
-                      _imagePicker,
-                      _saReviewViewModel.reviewImage,
-                      (xfile) {
-                        _saReviewViewModel.setReviewImage(xfile);
-                      },
+    return Stack(
+      children: [
+        Scaffold(
+          appBar: AppBar(
+            scrolledUnderElevation: 0,
+            title: appbarTitleFormat(text: "리뷰 작성"),
+            centerTitle: true,
+          ),
+          body: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        reviewSaName(context, _name),
+                        const SizedBox(height: 20),
+                        imageSelector(
+                          context,
+                          _imagePicker,
+                          _saReviewViewModel.reviewImage,
+                          (xfile) {
+                            _saReviewViewModel.setReviewImage(xfile);
+                          },
+                        ),
+                        const SizedBox(height: 20),
+                        reviewRating(context, _saReviewViewModel.starValue,
+                            (val) {
+                          _saReviewViewModel.setStarValue(val);
+                        })
+                      ],
                     ),
-                    const SizedBox(height: 20),
-                    reviewRating(context, _saReviewViewModel.starValue, (val) {
-                      _saReviewViewModel.setStarValue(val);
-                    })
-                  ],
+                  ),
                 ),
-              ),
+                reviewComplete(context, _saReviewViewModel.canReview, _areaId,
+                    _saReviewViewModel, _tokenViewModel),
+              ],
             ),
-            reviewComplete(context, _saReviewViewModel.canReview, _areaId,
-                _saReviewViewModel, _tokenViewModel),
-          ],
+          ),
         ),
-      ),
+        if (_saReviewViewModel.isLoading)
+          Stack(
+            children: [
+              ModalBarrier(
+                color: Colors.black.withOpacity(0.5),
+                dismissible: false,
+              ),
+              const Center(child: CircularProgressIndicator()),
+            ],
+          ),
+      ],
     );
   }
 

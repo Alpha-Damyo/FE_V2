@@ -24,7 +24,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await loadDotEnv();
   await initializeMap();
-  await getCurrentLocation();
+  // await getCurrentLocation();
 
   runApp(
     MultiProvider(
