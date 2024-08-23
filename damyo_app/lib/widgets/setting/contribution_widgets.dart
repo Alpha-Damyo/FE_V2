@@ -82,10 +82,6 @@ Widget UserInfo(int contributionScore, double contributionPecentage,
         ),
         const SizedBox(height: 24),
         Container(
-          // padding: EdgeInsets.only(
-          //     right: (340 * (1 - ((contributionPecentage ?? 0) * 0.01)))),
-          // clipBehavior: Clip.antiAlias,
-
           child: Row(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
