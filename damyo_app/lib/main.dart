@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:damyo_app/utils/get_cur_pos.dart';
+import 'package:damyo_app/utils/get_gal_permission.dart';
 import 'package:damyo_app/utils/go_router.dart';
 import 'package:damyo_app/view_models/bottom_navigation_model.dart';
 import 'package:damyo_app/view_models/login_models/is_login_view_model.dart';
@@ -25,6 +26,7 @@ void main() async {
   await loadDotEnv();
   await initializeMap();
   // await getCurrentLocation();
+  await getPhotoPermission();
 
   runApp(
     MultiProvider(
@@ -63,7 +65,7 @@ class Damyo extends StatelessWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
+        scaffoldBackgroundColor: const Color.fromARGB(255, 193, 163, 163),
         colorScheme: const ColorScheme.light(
           primary: Color(0xFF0099FC),
           secondary: Color(0xFFD6ECFA),

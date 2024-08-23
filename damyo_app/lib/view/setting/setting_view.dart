@@ -1,7 +1,9 @@
+import 'package:damyo_app/services/user_service.dart';
 import 'package:damyo_app/style.dart';
 import 'package:damyo_app/view_models/login_models/is_login_view_model.dart';
 import 'package:damyo_app/view_models/login_models/token_view_model.dart';
 import 'package:damyo_app/view_models/login_models/user_info_view_model.dart';
+import 'package:damyo_app/widgets/statistics/user_info_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:damyo_app/widgets/setting/setting_widgets.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +16,12 @@ class SettingView extends StatefulWidget {
 }
 
 class _SettingViewState extends State<SettingView> {
+  
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer3<IsloginViewModel, UserInfoViewModel, TokenViewModel>(
@@ -29,7 +37,7 @@ class _SettingViewState extends State<SettingView> {
           children: [
             if (isloginViewModel.isLogin)
               userProfile(
-                  context, isloginViewModel, tokenViewModel, userInfoViewModel)
+                  context, isloginViewModel, tokenViewModel, userInfoViewModel, updateProfile)
             else
               loginBtn(context),
             contributionBtn(context, '기여도'),
@@ -39,5 +47,12 @@ class _SettingViewState extends State<SettingView> {
         ),
       );
     });
+  }
+
+  void updateProfile() async {
+    List<dynamic> userInfo = await UserService.getUserInfo(
+        Provider.of<TokenViewModel>(context, listen: false));
+    Provider.of<UserInfoViewModel>(context, listen: false)
+        .updateUserInfoModel(userInfo[1]);
   }
 }
