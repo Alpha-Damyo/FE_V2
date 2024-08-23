@@ -45,8 +45,24 @@ Widget saDetailNameScoreBtns(
   String areaId,
   String name,
   double score,
+  bool? opened,
+  bool? closed,
+  bool? indoor,
+  bool? outdoor,
   bool isLogin,
 ) {
+  String tag = "";
+  if (opened == true) {
+    tag += " #개방형 ";
+  } else if (closed == true) {
+    tag += " #폐쇄형 ";
+  }
+  if (indoor == true) {
+    tag += "#실내 ";
+  } else if (outdoor == true) {
+    tag += "#실외 ";
+  }
+
   return Column(
     children: [
       textFormat(
@@ -59,7 +75,7 @@ Widget saDetailNameScoreBtns(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          textFormat(text: "$score", color: Colors.red),
+          textFormat(text: score.toStringAsFixed(1), color: Colors.red),
           const SizedBox(width: 5),
           RatingStars(
             value: score,
@@ -72,19 +88,28 @@ Widget saDetailNameScoreBtns(
         ],
       ),
       const SizedBox(height: 10),
-      textFormat(text: "#개방형 #실내"),
+      textFormat(text: tag),
       const SizedBox(height: 20),
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          saDetailBtn(context, (Icons.bookmark_add), "즐겨찾기", () {
-            showModalBottomSheet(
-                context: context,
-                builder: (context) {
-                  return const FavoritesBottomsheet();
-                });
-          }),
-          saDetailBtn(context, (Icons.share_rounded), "공유", () {}),
+          saDetailBtn(
+            context,
+            (Icons.bookmark_add),
+            "즐겨찾기",
+            () {
+              showModalBottomSheet(
+                  context: context,
+                  builder: (context) {
+                    return const FavoritesBottomsheet();
+                  });
+            },
+          ),
+          saDetailBtn(
+            context, (Icons.share_rounded), "공유",
+            // Todo: 공유
+            () {},
+          ),
           saDetailBtn(
             context,
             (Icons.message),
@@ -97,7 +122,13 @@ Widget saDetailNameScoreBtns(
               }
             },
           ),
-          saDetailBtn(context, (Icons.check_box), "흡연완료", () {}),
+          saDetailBtn(
+            context,
+            (Icons.check_box),
+            "흡연완료",
+            // Todo: 흡연 완료
+            () {},
+          ),
         ],
       ),
     ],

@@ -7,9 +7,12 @@ void reLogin(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: textFormat(
-          text: "로그인이 필요합니다.\n로그인을 진행해주세요.\n",
-          fontSize: 20,
+        title: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: textFormat(
+            text: "로그인이 필요합니다.\n로그인을 진행해주세요.",
+            fontSize: 20,
+          ),
         ),
         actions: [
           TextButton(

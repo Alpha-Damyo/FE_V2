@@ -42,8 +42,8 @@ class _MapViewState extends State<MapView> {
             ),
             onMapReady: (controller) {
               _mapViewModel.mapController = controller;
+              updateSmokingAreas(context);
               isMapControllerLoaded = true;
-              updateSmokingAreas();
             },
             onCameraIdle: () {
               _mapViewModel.trueResearchBtnVisible();
@@ -74,14 +74,14 @@ class _MapViewState extends State<MapView> {
                 const SizedBox(height: 10),
                 tagListView(context, tags, _mapViewModel.tagIndex, (index) {
                   _mapViewModel.updateTagIndex(index);
-                  updateSmokingAreas();
+                  updateSmokingAreas(context);
                 }),
                 const SizedBox(height: 10),
                 reSearchBtn(
                   context,
                   _mapViewModel.researchBtnVisible,
                   () {
-                    updateSmokingAreas();
+                    updateSmokingAreas(context);
                   },
                 )
               ],
@@ -142,12 +142,12 @@ class _MapViewState extends State<MapView> {
     }
   }
 
-  void updateSmokingAreas() {
+  void updateSmokingAreas(BuildContext context) {
     _mapViewModel.updateSaSearchModel(
       _mapViewModel.mapController.nowCameraPosition.target.latitude,
       _mapViewModel.mapController.nowCameraPosition.target.longitude,
     );
-    _mapViewModel.updateSmokingAreas();
+    _mapViewModel.updateSmokingAreas(context);
     _mapViewModel.falseResearchBtnVisible();
   }
 }
