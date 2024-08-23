@@ -271,7 +271,8 @@ Widget smokingAreaCard(
                       size: 24,
                     ),
                     textFormat(
-                      text: mapViewModel.smokingAreaCardInfo.score.toString(),
+                      text: mapViewModel.smokingAreaCardInfo.score
+                          .toStringAsFixed(1),
                       fontSize: 16,
                     )
                   ],
