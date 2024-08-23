@@ -1,6 +1,14 @@
+import 'package:damyo_app/models/smoking_area/sa_report_model.dart';
+import 'package:damyo_app/services/smoking_area_service.dart';
 import 'package:damyo_app/style.dart';
+import 'package:damyo_app/utils/re_login_dialog.dart';
+import 'package:damyo_app/view/setting/login/login_view.dart';
+import 'package:damyo_app/view_models/login_models/token_view_model.dart';
 import 'package:damyo_app/widgets/map/smoking_area/sa_report_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class SaReportView extends StatefulWidget {
   final String areaId;
@@ -12,14 +20,18 @@ class SaReportView extends StatefulWidget {
 }
 
 class _SaReportViewState extends State<SaReportView> {
+  late TokenViewModel _tokenViewModel;
+
   String get _areaId => widget.areaId;
   String get _name => widget.name;
-  final List<bool> _isChecked = [false, false];
-  String _etc = "";
+  final List<bool> _isChecked = [false, false, false, false, false];
+  String? _etc;
   bool _canReport = false;
 
   @override
   Widget build(BuildContext context) {
+    _tokenViewModel = Provider.of<TokenViewModel>(context);
+    print(_tokenViewModel.tokenModel.accessToken);
     return GestureDetector(
       onTap: () {
         FocusManager.instance.primaryFocus?.unfocus();
@@ -90,14 +102,14 @@ class _SaReportViewState extends State<SaReportView> {
             GestureDetector(
               onTap: () {
                 setState(() {
-                  _isChecked[1] = !_isChecked[1];
+                  _isChecked[2] = !_isChecked[2];
                   _canReport = checkCanReport();
                 });
               },
               child: Row(
                 children: [
                   Checkbox(
-                    value: _isChecked[1],
+                    value: _isChecked[2],
                     onChanged: (bool? value) {
                       setState(() {
                         _isChecked[1] = value!;
@@ -115,17 +127,17 @@ class _SaReportViewState extends State<SaReportView> {
             GestureDetector(
               onTap: () {
                 setState(() {
-                  _isChecked[1] = !_isChecked[1];
+                  _isChecked[3] = !_isChecked[3];
                   _canReport = checkCanReport();
                 });
               },
               child: Row(
                 children: [
                   Checkbox(
-                    value: _isChecked[1],
+                    value: _isChecked[3],
                     onChanged: (bool? value) {
                       setState(() {
-                        _isChecked[1] = value!;
+                        _isChecked[3] = value!;
                         _canReport = checkCanReport();
                       });
                     },
@@ -140,14 +152,14 @@ class _SaReportViewState extends State<SaReportView> {
             GestureDetector(
               onTap: () {
                 setState(() {
-                  _isChecked[1] = !_isChecked[1];
+                  _isChecked[4] = !_isChecked[4];
                   _canReport = checkCanReport();
                 });
               },
               child: Row(
                 children: [
                   Checkbox(
-                    value: _isChecked[1],
+                    value: _isChecked[4],
                     onChanged: (bool? value) {
                       setState(() {
                         _isChecked[1] = value!;
@@ -182,7 +194,26 @@ class _SaReportViewState extends State<SaReportView> {
               padding: const EdgeInsets.all(15.0),
               child: InkWell(
                 borderRadius: const BorderRadius.all(Radius.circular(16)),
-                onTap: () async {},
+                onTap: () async {
+                  SaReportModel saReportModel = SaReportModel(
+                    notExist: _isChecked[0],
+                    incorrectTag: _isChecked[1],
+                    incorrectLocation: _isChecked[2],
+                    inappropriateWord: _isChecked[3],
+                    inappropriatePicture: _isChecked[4],
+                    otherSuggestions: _etc,
+                  );
+                  String response = await SmokingAreaService.reportSmokingArea(
+                      saReportModel, _areaId, _tokenViewModel);
+                  if (response == "success") {
+                    Fluttertoast.showToast(msg: "수정 제안이 완료되었습니다");
+                    Navigator.pop(context);
+                  } else if (response == "re_login") {
+                    reLogin(context);
+                  } else if (response == "already_reported") {
+                    Fluttertoast.showToast(msg: "이미 수정 제안한 흡연구역입니다");
+                  }
+                },
                 child: Ink(
                   width: double.infinity,
                   height: 60,
@@ -211,10 +242,12 @@ class _SaReportViewState extends State<SaReportView> {
   }
 
   bool checkCanReport() {
-    if (_isChecked[0] || _isChecked[1]) {
-      return true;
+    for (int i = 0; i < _isChecked.length; i++) {
+      if (_isChecked[i]) {
+        return true;
+      }
     }
-    if (_etc != "") {
+    if (_etc != "" && _etc != null) {
       return true;
     }
     return false;

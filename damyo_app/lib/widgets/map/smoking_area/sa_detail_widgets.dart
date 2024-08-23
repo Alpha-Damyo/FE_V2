@@ -1,4 +1,5 @@
 import 'package:damyo_app/style.dart';
+import 'package:damyo_app/utils/re_login_dialog.dart';
 import 'package:damyo_app/view/map/smoking_area/favorites_bottomsheet.dart';
 import 'package:damyo_app/view/map/smoking_area/sa_gallery_screen.dart';
 import 'package:damyo_app/view/map/smoking_area/sa_image_screen.dart';
@@ -44,6 +45,7 @@ Widget saDetailNameScoreBtns(
   String areaId,
   String name,
   double score,
+  bool isLogin,
 ) {
   return Column(
     children: [
@@ -88,7 +90,11 @@ Widget saDetailNameScoreBtns(
             (Icons.message),
             "리뷰작성",
             () {
-              context.push("/smokingarea/$areaId/review", extra: name);
+              if (isLogin) {
+                context.push("/smokingarea/$areaId/review", extra: name);
+              } else {
+                reLogin(context);
+              }
             },
           ),
           saDetailBtn(context, (Icons.check_box), "흡연완료", () {}),
@@ -133,9 +139,16 @@ Widget saDetailBtn(
   );
 }
 
-// 흡연구역 정보(주소, 설명, 태그)
-Widget saDetailInfo(BuildContext context, String name, String address,
-    String description, String areaId, bool? opened, bool? outdoor) {
+// 흡연구역 정보(주소, 설명, 수정제안)
+Widget saDetailInfo(
+    BuildContext context,
+    String name,
+    String address,
+    String description,
+    String areaId,
+    bool? opened,
+    bool? outdoor,
+    bool isLogined) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -167,7 +180,11 @@ Widget saDetailInfo(BuildContext context, String name, String address,
       const SizedBox(height: 15),
       InkWell(
         onTap: () {
-          context.push("/smokingarea/$areaId/report", extra: name);
+          if (isLogined) {
+            context.push("/smokingarea/$areaId/report", extra: name);
+          } else {
+            reLogin(context);
+          }
         },
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,

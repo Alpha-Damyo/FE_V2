@@ -1,4 +1,5 @@
 import 'package:damyo_app/style.dart';
+import 'package:damyo_app/view_models/login_models/token_view_model.dart';
 import 'package:damyo_app/view_models/map_models/smoking_area/sa_review_view_model.dart';
 import 'package:damyo_app/widgets/common/image_select_widget.dart';
 import 'package:damyo_app/widgets/map/smoking_area/sa_review_widgets.dart';
@@ -20,10 +21,12 @@ class _SaReviewViewState extends State<SaReviewView> {
   String get _name => widget.name;
   final ImagePicker _imagePicker = ImagePicker();
   late SaReviewViewModel _saReviewViewModel;
+  late TokenViewModel _tokenViewModel;
 
   @override
   Widget build(BuildContext context) {
     _saReviewViewModel = Provider.of<SaReviewViewModel>(context);
+    _tokenViewModel = Provider.of<TokenViewModel>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -59,7 +62,7 @@ class _SaReviewViewState extends State<SaReviewView> {
               ),
             ),
             reviewComplete(context, _saReviewViewModel.canReview, _areaId,
-                _saReviewViewModel),
+                _saReviewViewModel, _tokenViewModel),
           ],
         ),
       ),

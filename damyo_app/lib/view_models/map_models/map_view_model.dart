@@ -35,6 +35,7 @@ class MapViewModel extends ChangeNotifier {
     } catch (e) {
       Fluttertoast.showToast(msg: "현재 위치를 불러올 수 없습니다");
     }
+    notifyListeners();
   }
 
   // 흡연구역 검색 모델
