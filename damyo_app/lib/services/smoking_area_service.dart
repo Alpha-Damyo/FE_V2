@@ -1,10 +1,15 @@
 import 'dart:convert';
 
+import 'package:damyo_app/models/login/token_model.dart';
 import 'package:damyo_app/models/smoking_area/sa_basic_model.dart';
 import 'package:damyo_app/models/smoking_area/sa_detail_model.dart';
 import 'package:damyo_app/models/smoking_area/sa_inform_model.dart';
+import 'package:damyo_app/models/smoking_area/sa_report_model.dart';
 import 'package:damyo_app/models/smoking_area/sa_review_model.dart';
 import 'package:damyo_app/models/smoking_area/sa_search_model.dart';
+import 'package:damyo_app/services/reissue_service.dart';
+import 'package:damyo_app/view_models/login_models/is_login_view_model.dart';
+import 'package:damyo_app/view_models/login_models/token_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
@@ -103,11 +108,20 @@ class SmokingAreaService {
 
   // 흡연구역 제보
   static Future<bool> informSmokingArea(
-      XFile? image, SaInformModel saInformModel) async {
+      bool isLogin,
+      TokenViewModel tokenViewModel,
+      XFile? image,
+      SaInformModel saInformModel) async {
     final baseUrl = dotenv.get('BASE_URL');
     var url = Uri.parse('$baseUrl/area/postArea');
 
     var request = http.MultipartRequest('POST', url);
+
+    // 토큰 추가
+    if (isLogin) {
+      request.headers['Authorization'] =
+          'Bearer ${tokenViewModel.tokenModel.accessToken}';
+    }
 
     // 이미지 추가
     if (image != null) {
@@ -145,16 +159,16 @@ class SmokingAreaService {
   }
 
   // 흡연구역 리뷰
-  static Future<bool> reviewSmokingArea(
-      XFile? image, SaReviewModel saReviewModel) async {
+  static Future<String> reviewSmokingArea(XFile? image,
+      SaReviewModel saReviewModel, TokenViewModel tokenViewModel) async {
     final baseUrl = dotenv.get('BASE_URL');
     var url = Uri.parse('$baseUrl/info/postInfo');
 
     var request = http.MultipartRequest('POST', url);
 
     // 토큰 추가
-    String token = "";
-    request.headers['Authorization'] = 'Bearer $token';
+    request.headers['Authorization'] =
+        'Bearer ${tokenViewModel.tokenModel.accessToken}';
 
     // 이미지 추가
     if (image != null) {
@@ -168,7 +182,6 @@ class SmokingAreaService {
 
     // 데이터 추가
     var data = saReviewModel.toJson();
-    debugPrint(data["areaId"]);
     List<int> jsonData = utf8.encode(jsonEncode(data));
     request.files.add(http.MultipartFile.fromBytes(
       'updateInfoRequest',
@@ -182,13 +195,88 @@ class SmokingAreaService {
 
     var response = await request.send();
     var jsonBody = await response.stream.bytesToString();
+    var responseBody = json.decode(jsonBody);
 
     if (response.statusCode == 200) {
-      debugPrint(jsonBody);
-      return true;
+      return "success";
+    }
+    // AT가 만료된 경우
+    else if (responseBody["code"] == "A103") {
+      // reissue에 성공한 경우
+      if (await reissueService(tokenViewModel)) {
+        // 토큰 수정
+        request.headers['Authorization'] =
+            'Bearer ${tokenViewModel.tokenModel.accessToken}';
+
+        var response = await request.send();
+
+        if (response.statusCode == 200) {
+          return "success";
+        } else {
+          throw Exception(response.statusCode);
+        }
+      }
+      // reissue에 실패한 경우
+      else {
+        // RT 만료: 로그인 페이지로 이동
+        return "re_login";
+      }
     } else {
-      debugPrint(jsonBody);
-      return false;
+      return "fail";
+    }
+  }
+
+  // 흡연구역 신고
+  static Future<String> reportSmokingArea(SaReportModel saReportModel,
+      String areaId, TokenViewModel tokenViewModel) async {
+    final baseUrl = dotenv.get('BASE_URL');
+    var url = Uri.parse('$baseUrl/user/report/$areaId');
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ${tokenViewModel.tokenModel.accessToken}',
+    };
+    var body = json.encode(saReportModel.toJson());
+
+    var response = await http.post(
+      url,
+      headers: headers,
+      body: body,
+    );
+
+    var responseDecode = jsonDecode(utf8.decode(response.bodyBytes));
+
+    if (response.statusCode == 200) {
+      return "success";
+    }
+    // 이미 신고한 구역인 경우
+    else if (responseDecode["code"] == "SA102") {
+      return "already_reported";
+    }
+    // AT가 만료된 경우
+    else if (responseDecode["code"] == "A103") {
+      // reissue에 성공한 경우
+      if (await reissueService(tokenViewModel)) {
+        var response = await http.get(
+          url,
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ${tokenViewModel.tokenModel.accessToken}',
+          },
+        );
+
+        if (response.statusCode == 200) {
+          return "success";
+        } else {
+          throw Exception(response.statusCode);
+        }
+      }
+      // reissue에 실패한 경우
+      else {
+        // RT 만료: 로그인 페이지로 이동
+        return "re_login";
+      }
+    } else {
+      throw Exception(response.statusCode);
     }
   }
 }

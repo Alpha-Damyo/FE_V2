@@ -1,4 +1,6 @@
 import 'package:damyo_app/style.dart';
+import 'package:damyo_app/view_models/login_models/is_login_view_model.dart';
+import 'package:damyo_app/view_models/login_models/token_view_model.dart';
 import 'package:damyo_app/view_models/map_models/smoking_area/sa_inform_view_model.dart';
 import 'package:damyo_app/widgets/common/image_select_widget.dart';
 import 'package:damyo_app/widgets/map/smoking_area/sa_inform_widgets.dart';
@@ -20,10 +22,15 @@ class _SaInformViewState extends State<SaInformView> {
   double get _lng => widget.lng;
   final ImagePicker _imagePicker = ImagePicker();
   late SaInformViewModel _saInformModel;
+  late IsloginViewModel _isloginViewModel;
+  late TokenViewModel _tokenViewModel;
 
   @override
   Widget build(BuildContext context) {
     _saInformModel = Provider.of<SaInformViewModel>(context);
+    _isloginViewModel = Provider.of<IsloginViewModel>(context);
+    _tokenViewModel = Provider.of<TokenViewModel>(context);
+
     return Scaffold(
       appBar: AppBar(
         scrolledUnderElevation: 0,
@@ -92,6 +99,8 @@ class _SaInformViewState extends State<SaInformView> {
               _saInformModel,
               _lat,
               _lng,
+              _isloginViewModel.isLogin,
+              _tokenViewModel,
             )
           ],
         ),

@@ -1,8 +1,10 @@
 import 'package:damyo_app/models/smoking_area/sa_detail_model.dart';
 import 'package:damyo_app/services/smoking_area_service.dart';
 import 'package:damyo_app/style.dart';
+import 'package:damyo_app/view_models/login_models/is_login_view_model.dart';
 import 'package:damyo_app/widgets/map/smoking_area/sa_detail_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SaDetailView extends StatefulWidget {
   const SaDetailView({super.key, required this.areaId});
@@ -13,8 +15,10 @@ class SaDetailView extends StatefulWidget {
 }
 
 class _SaDetailViewState extends State<SaDetailView> {
+  late IsloginViewModel _isloginViewModel;
   @override
   Widget build(BuildContext context) {
+    _isloginViewModel = Provider.of<IsloginViewModel>(context);
     return FutureBuilder(
       future: SmokingAreaService.getDetailSmokingArea(widget.areaId),
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -55,6 +59,11 @@ class _SaDetailViewState extends State<SaDetailView> {
                       saDetailModel.areaId,
                       saDetailModel.name,
                       saDetailModel.score,
+                      saDetailModel.opened,
+                      saDetailModel.closed,
+                      saDetailModel.indoor,
+                      saDetailModel.outdoor,
+                      _isloginViewModel.isLogin,
                     ),
                   ),
                   const SizedBox(height: 15),
@@ -69,6 +78,7 @@ class _SaDetailViewState extends State<SaDetailView> {
                       saDetailModel.areaId,
                       saDetailModel.opened,
                       saDetailModel.outdoor,
+                      _isloginViewModel.isLogin,
                     ),
                   ),
                   const SizedBox(height: 15),
