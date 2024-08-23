@@ -1,3 +1,4 @@
+import 'package:damyo_app/icon/damyo_icon_icons.dart';
 import 'package:damyo_app/services/user_service.dart';
 import 'package:damyo_app/view_models/bottom_navigation_model.dart';
 import 'package:damyo_app/view_models/login_models/is_login_view_model.dart';
@@ -43,21 +44,53 @@ class _HomeViewState extends State<HomeView> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: const [
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.map_outlined),
+            icon: _bottomNavigationModel.curPage == 0
+                ? const Icon(
+                    DamyoIcon.map_fill,
+                    size: 18,
+                  )
+                : const Icon(
+                    DamyoIcon.map_empty,
+                    size: 18,
+                  ),
             label: "지도",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.star_rounded),
+            icon: _bottomNavigationModel.curPage == 1
+                ? const Icon(
+                    DamyoIcon.favorites_fill,
+                    size: 18,
+                  )
+                : const Icon(
+                    DamyoIcon.favorites_empty,
+                    size: 18,
+                  ),
             label: "즐겨찾기",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.auto_graph),
+            icon: _bottomNavigationModel.curPage == 2
+                ? const Icon(
+                    DamyoIcon.statistics_fill,
+                    size: 18,
+                  )
+                : const Icon(
+                    DamyoIcon.statistics_empty,
+                    size: 18,
+                  ),
             label: "통계",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
+            icon: _bottomNavigationModel.curPage == 3
+                ? const Icon(
+                    DamyoIcon.setting_fill,
+                    size: 18,
+                  )
+                : const Icon(
+                    DamyoIcon.setting_empty,
+                    size: 18,
+                  ),
             label: "설정",
           ),
         ],

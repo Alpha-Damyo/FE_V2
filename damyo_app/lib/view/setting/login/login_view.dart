@@ -33,10 +33,10 @@ class _LoginViewState extends State<LoginView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            naverLoginBtn(context, _isloginViewModel, _tokenViewModel,
+            googleLoginBtn(context, _isloginViewModel, _tokenViewModel,
                 _userInfoViewModel),
             const SizedBox(height: 15),
-            googleLoginBtn(context, _isloginViewModel, _tokenViewModel,
+            naverLoginBtn(context, _isloginViewModel, _tokenViewModel,
                 _userInfoViewModel),
           ],
         ),
