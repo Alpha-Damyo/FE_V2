@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:core';
 
+import 'package:damyo_app/icon/damyo_icon_icons.dart';
 import 'package:damyo_app/models/smoking_area/sa_basic_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
@@ -28,16 +29,18 @@ class SaSearchViewModel extends ChangeNotifier {
     _searchedSaList = newList;
     // 지도에도 반영하여 마커 추가
     _naverMapController.clearOverlays();
-    const basicIcon = Icon(
+    Widget basicIcon = const Icon(
       Icons.location_on,
       color: Colors.red,
       size: 40,
     );
+
     for (int i = 0; i < newList.length; i++) {
       final iconImage = await NOverlayImage.fromWidget(
           widget: Column(
             children: [
               basicIcon,
+              const SizedBox(height: 5),
               Stack(
                 children: [
                   Text(

@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:damyo_app/utils/get_cur_pos.dart';
 import 'package:damyo_app/utils/get_gal_permission.dart';
 import 'package:damyo_app/utils/go_router.dart';
 import 'package:damyo_app/view_models/bottom_navigation_model.dart';
@@ -24,6 +25,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await loadDotEnv();
   await initializeMap();
+  // await getCurrentLocation();
   await getPhotoPermission();
 
   runApp(

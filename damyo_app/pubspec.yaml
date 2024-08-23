@@ -98,6 +98,7 @@ flutter:
     - assets/images/smoking_area_default_img.png
     - assets/icons/setting/contribution/
     - assets/icons/setting/updateprofile/
+    - assets/icons/map/marker.png
 
   fonts:
     - family: pretendard
@@ -120,6 +121,10 @@ flutter:
           weight: 800
         - asset: assets/fonts/Pretendard-Black.otf
           weight: 900
+
+    - family: DamyoIcon
+      fonts:
+        - asset: assets/fonts/DamyoIcon.ttf
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

@@ -47,7 +47,6 @@ class _SaSearchMapViewState extends State<SaSearchMapView> {
               child: searchedSmokingAreaCard(
                 context,
                 _saSearchViewModel.searchSelectedSa,
-                // Todo: ////
                 () {},
                 () {},
               ),

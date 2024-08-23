@@ -102,7 +102,7 @@ Widget searchedSaListView(
                             textFormat(
                               text: saSearchViewModel
                                   .searchedSaList[index].score
-                                  .toString(),
+                                  .toStringAsFixed(1),
                               fontWeight: FontWeight.w500,
                             ),
                           ],
