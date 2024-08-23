@@ -3,7 +3,7 @@ import 'package:damyo_app/view_models/login_models/is_login_view_model.dart';
 import 'package:damyo_app/view_models/login_models/token_view_model.dart';
 import 'package:damyo_app/view_models/login_models/user_info_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:damyo_app/widgets/setting_widgets.dart';
+import 'package:damyo_app/widgets/setting/setting_widgets.dart';
 import 'package:provider/provider.dart';
 
 class SettingView extends StatefulWidget {
@@ -32,7 +32,7 @@ class _SettingViewState extends State<SettingView> {
                   context, isloginViewModel, tokenViewModel, userInfoViewModel)
             else
               loginBtn(context),
-            toolBax(context, '기여도'),
+            contributionBtn(context, '기여도'),
             toolBax(context, '흡연데이터 초기화'),
             toolBax(context, '앱버전'),
           ],
