@@ -13,7 +13,7 @@ Widget periodCompareInfo(
     PeriodInfoViewModel periodInfoViewModel,
     Function(bool) onCompareCheck,
     Function(int) onCompareType) {
-  return Container(
+  return SizedBox(
     width: double.infinity,
     height: 400,
     child: Column(
@@ -82,7 +82,9 @@ Widget periodCompareInfo(
                     titlesData: createDayTitlesCompare(),
                     borderData: createBorderData(),
                     barGroups: createBarDaysCompare(
-                        smokeViewModel.userDayWeekInfo, periodInfoViewModel.everyDayWeek, compareCheck),
+                        smokeViewModel.userDayWeekInfo,
+                        periodInfoViewModel.everyDayWeek,
+                        compareCheck),
                     gridData: createGridData(),
                     alignment: BarChartAlignment.spaceAround,
                     maxY: roundUpToNearestTen(smokeViewModel.maxD! + 20),
@@ -95,7 +97,9 @@ Widget periodCompareInfo(
                         titlesData: createWeekTitlesCompare(),
                         borderData: createBorderData(),
                         barGroups: createBarWeeksCompare(
-                            smokeViewModel.userWeeksInfo, periodInfoViewModel.everyWeeks, compareCheck),
+                            smokeViewModel.userWeeksInfo,
+                            periodInfoViewModel.everyWeeks,
+                            compareCheck),
                         gridData: createGridData(),
                         alignment: BarChartAlignment.spaceAround,
                         maxY: roundUpToNearestTen(smokeViewModel.maxW! + 20),
@@ -107,8 +111,11 @@ Widget periodCompareInfo(
                         barTouchData: createPeriodCompare(),
                         titlesData: createMonthTitlesCompare(),
                         borderData: createBorderData(),
-                        barGroups: createBarMonthsCompare(smokeViewModel.userMonthsInfo,
-                            periodInfoViewModel.everyMonths, now.month, compareCheck),
+                        barGroups: createBarMonthsCompare(
+                            smokeViewModel.userMonthsInfo,
+                            periodInfoViewModel.everyMonths,
+                            now.month,
+                            compareCheck),
                         gridData: createGridData(),
                         alignment: BarChartAlignment.spaceAround,
                         maxY: roundUpToNearestTen(smokeViewModel.maxM! + 20),
@@ -451,36 +458,39 @@ FlTitlesData createMonthTitlesCompare() {
 }
 
 List<BarChartGroupData> createBarDaysCompare(
-    List<dynamic>? smokeWeekdayInfo,
-    List<double?>? everyDayWeek,
-    bool compareCheck,
-  ) {
+  List<dynamic>? smokeWeekdayInfo,
+  List<double?>? everyDayWeek,
+  bool compareCheck,
+) {
   return [
     for (int i = 0; i < 7; i++)
-      createGroupData(i, smokeWeekdayInfo![i] * 1.0, everyDayWeek![i + 1], compareCheck)
+      createGroupData(
+          i, smokeWeekdayInfo![i] * 1.0, everyDayWeek![i + 1], compareCheck)
   ];
 }
 
 List<BarChartGroupData> createBarWeeksCompare(
-    List<dynamic>? smokeWeeksInfo,
-    List<double?>? everyWeeks,
-    bool compareCheck,
-  ) {
+  List<dynamic>? smokeWeeksInfo,
+  List<double?>? everyWeeks,
+  bool compareCheck,
+) {
   return [
     for (int i = 0; i < 4; i++)
-      createGroupData(i, smokeWeeksInfo![i] * 1.0, everyWeeks![i + 1], compareCheck)
+      createGroupData(
+          i, smokeWeeksInfo![i] * 1.0, everyWeeks![i + 1], compareCheck)
   ];
 }
 
 List<BarChartGroupData> createBarMonthsCompare(
-    List<dynamic>? smokeMonthsInfo,
-    List<double?>? everyMonths,
-    int nowMonth,
-    bool compareCheck,
-  ) {
+  List<dynamic>? smokeMonthsInfo,
+  List<double?>? everyMonths,
+  int nowMonth,
+  bool compareCheck,
+) {
   return [
     for (int i = 0; i < 6; i++)
-      createGroupData(i, smokeMonthsInfo![i] * 1.0, everyMonths![(nowMonth + 12 - i) % 12], compareCheck)
+      createGroupData(i, smokeMonthsInfo![i] * 1.0,
+          everyMonths![(nowMonth + 12 - i) % 12], compareCheck)
   ];
 }
 

@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:damyo_app/models/login/token_model.dart';
 import 'package:damyo_app/models/smoking_area/sa_basic_model.dart';
 import 'package:damyo_app/models/smoking_area/sa_detail_model.dart';
 import 'package:damyo_app/models/smoking_area/sa_inform_model.dart';
@@ -8,7 +7,6 @@ import 'package:damyo_app/models/smoking_area/sa_report_model.dart';
 import 'package:damyo_app/models/smoking_area/sa_review_model.dart';
 import 'package:damyo_app/models/smoking_area/sa_search_model.dart';
 import 'package:damyo_app/services/reissue_service.dart';
-import 'package:damyo_app/view_models/login_models/is_login_view_model.dart';
 import 'package:damyo_app/view_models/login_models/token_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -56,8 +54,6 @@ class SmokingAreaService {
     if (response.statusCode == 200) {
       return SaBasicModel.fromJson(responseDecode);
     } else {
-      print(response.statusCode);
-      print(responseDecode);
       throw Exception("fail search");
     }
   }

@@ -1,10 +1,8 @@
 import 'dart:convert';
 import 'package:damyo_app/services/user_service.dart';
-import 'package:damyo_app/utils/initialized_db.dart';
 import 'package:damyo_app/view_models/login_models/is_login_view_model.dart';
 import 'package:damyo_app/view_models/login_models/token_view_model.dart';
 import 'package:damyo_app/view_models/login_models/user_info_view_model.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_naver_login/flutter_naver_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -18,9 +16,8 @@ class LoginService {
     TokenViewModel tokenViewModel,
     UserInfoViewModel userInfoViewModel,
   ) async {
-    NaverLoginResult naverUser = await FlutterNaverLogin.logIn();
+    // NaverLoginResult naverUser = await FlutterNaverLogin.logIn();
     NaverAccessToken naverToken = await FlutterNaverLogin.currentAccessToken;
-    
 
     if (!naverToken.isValid()) {
       return false;

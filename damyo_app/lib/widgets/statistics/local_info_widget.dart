@@ -2,18 +2,17 @@ import 'package:damyo_app/models/smoking_area/sa_basic_model.dart';
 import 'package:damyo_app/style.dart';
 import 'package:damyo_app/view/map/smoking_area/sa_detail_view.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 // 인기있는 흡연 구역 정보
 Widget localInfo(BuildContext context, TabController tabController,
     List<dynamic>? guList, List<dynamic>? areaList, List<dynamic>? areaInfo) {
-  return Container(
+  return SizedBox(
     width: double.infinity,
     height: 300,
     child: Column(
       children: [
         Padding(
-          padding: const EdgeInsets.only(top:20, left: 16),
+          padding: const EdgeInsets.only(top: 20, left: 16),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -58,30 +57,30 @@ Widget localInfo(BuildContext context, TabController tabController,
 }
 
 // 가장 인기있는 지역
-Widget _tapContentsGu(List<dynamic>? _GuList) {
-  if (_GuList == null || _GuList.isEmpty) {
+Widget _tapContentsGu(List<dynamic>? GuList) {
+  if (GuList == null || GuList.isEmpty) {
     return const Center(child: Text('지역 정보가 존재하지 않습니다.'));
   }
   return Column(
       children: List.generate(
-    _GuList.length,
+    GuList.length,
     (index) {
-      return Gu(_GuList[index], index);
+      return Gu(GuList[index], index);
     },
   ));
 }
 
 // 가장 인기있는 흡연구역(흡연구역)
 Widget _tapContentsSmokeArea(
-    BuildContext context, List<dynamic>? _areaList, List<dynamic>? _areaInfo) {
-  if (_areaList == null || _areaList.isEmpty) {
+    BuildContext context, List<dynamic>? areaList, List<dynamic>? areaInfo) {
+  if (areaList == null || areaList.isEmpty) {
     return const Center(child: Text('구역 정보가 존재하지 않습니다.'));
   }
   return Column(
       children: List.generate(
-    _areaList.length,
+    areaList.length,
     (index) {
-      return Sa(_areaList[index], _areaInfo?[index], index, context);
+      return Sa(areaList[index], areaInfo?[index], index, context);
     },
   ));
 }

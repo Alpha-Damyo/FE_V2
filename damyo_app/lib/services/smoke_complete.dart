@@ -7,7 +7,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
-FlutterSecureStorage storage = FlutterSecureStorage();
+FlutterSecureStorage storage = const FlutterSecureStorage();
 
 Future<String> smokeComplete(BuildContext context, String id) async {
   final baseUrl = dotenv.get('BASE_URL');
@@ -32,7 +32,8 @@ Future<String> smokeComplete(BuildContext context, String id) async {
           url,
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ${Provider.of<TokenViewModel>(context, listen: false).tokenModel.accessToken}',
+            'Authorization':
+                'Bearer ${Provider.of<TokenViewModel>(context, listen: false).tokenModel.accessToken}',
           },
         );
 
@@ -44,8 +45,8 @@ Future<String> smokeComplete(BuildContext context, String id) async {
       }
       // reissue 실패
       else {
-          // RT 만료: 로그인 페이지로 이동
-          return "re_login";
+        // RT 만료: 로그인 페이지로 이동
+        return "re_login";
       }
     } else {
       throw Exception(response.statusCode);

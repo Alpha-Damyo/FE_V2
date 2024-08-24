@@ -1,4 +1,3 @@
-import 'package:damyo_app/database/smoke_data.dart';
 import 'package:damyo_app/style.dart';
 import 'package:damyo_app/utils/initialized_db.dart';
 import 'package:damyo_app/view_models/login_models/is_login_view_model.dart';

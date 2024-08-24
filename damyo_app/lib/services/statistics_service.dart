@@ -24,7 +24,6 @@ Future<statDateModel> getDateStatics() async {
   if (response.statusCode == 200) {
     return statDateModel.fromJson(jsonMap);
   } else {
-    print(jsonMap);
     throw jsonMap;
   }
 }

@@ -1,14 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:damyo_app/models/user/user_info_model.dart';
 import 'package:damyo_app/view_models/login_models/token_view_model.dart';
 import 'package:damyo_app/view_models/login_models/user_info_view_model.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
-Future<String?> putUserUpdateName(
-    TokenViewModel tokenViewModel, String name, UserInfoViewModel userInfoViewModel) async {
+Future<String?> putUserUpdateName(TokenViewModel tokenViewModel, String name,
+    UserInfoViewModel userInfoViewModel) async {
   final baseUrl = dotenv.get('BASE_URL');
 
   var token = tokenViewModel.tokenModel.accessToken;
@@ -29,8 +28,8 @@ Future<String?> putUserUpdateName(
   }
 }
 
-Future<String?> putUserUpdateProfile(
-    TokenViewModel tokenViewModel, UserInfoViewModel userInfoViewModel, XFile profileImage) async {
+Future<String?> putUserUpdateProfile(TokenViewModel tokenViewModel,
+    UserInfoViewModel userInfoViewModel, XFile profileImage) async {
   final baseUrl = dotenv.get('BASE_URL');
 
   var token = tokenViewModel.tokenModel.accessToken;
@@ -63,7 +62,7 @@ Future<String?> putUserUpdateProfile(
     return jsonBody;
   } else {
     final Map<String, dynamic> responseDecode = jsonDecode(jsonBody);
-        
+
     throw responseDecode['code'];
   }
 }

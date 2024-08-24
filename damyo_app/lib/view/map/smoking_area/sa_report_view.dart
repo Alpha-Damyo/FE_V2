@@ -2,12 +2,10 @@ import 'package:damyo_app/models/smoking_area/sa_report_model.dart';
 import 'package:damyo_app/services/smoking_area_service.dart';
 import 'package:damyo_app/style.dart';
 import 'package:damyo_app/utils/re_login_dialog.dart';
-import 'package:damyo_app/view/setting/login/login_view.dart';
 import 'package:damyo_app/view_models/login_models/token_view_model.dart';
 import 'package:damyo_app/widgets/map/smoking_area/sa_report_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class SaReportView extends StatefulWidget {
@@ -31,7 +29,6 @@ class _SaReportViewState extends State<SaReportView> {
   @override
   Widget build(BuildContext context) {
     _tokenViewModel = Provider.of<TokenViewModel>(context);
-    print(_tokenViewModel.tokenModel.accessToken);
     return GestureDetector(
       onTap: () {
         FocusManager.instance.primaryFocus?.unfocus();

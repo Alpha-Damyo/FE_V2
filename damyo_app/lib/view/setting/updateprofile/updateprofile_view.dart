@@ -116,7 +116,7 @@ class _UpdateprofileViewState extends State<UpdateprofileView> {
                   padding: const EdgeInsets.only(bottom: 1),
                   clipBehavior: Clip.antiAlias,
                   decoration: ShapeDecoration(
-                    color: Color(0xFFDEDEDE),
+                    color: const Color(0xFFDEDEDE),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(56),
                     ),
