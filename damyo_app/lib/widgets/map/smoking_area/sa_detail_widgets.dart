@@ -1,4 +1,6 @@
+import 'package:damyo_app/database/smoke_data.dart';
 import 'package:damyo_app/style.dart';
+import 'package:damyo_app/utils/initialized_db.dart';
 import 'package:damyo_app/utils/re_login_dialog.dart';
 import 'package:damyo_app/view/map/smoking_area/favorites_bottomsheet.dart';
 import 'package:damyo_app/view/map/smoking_area/sa_gallery_screen.dart';
@@ -62,6 +64,9 @@ Widget saDetailNameScoreBtns(
   } else if (outdoor == true) {
     tag += "#실외 ";
   }
+
+  SmokeDatabase userDB = SmokeDatabase();
+  DateTime now = DateTime.now();
 
   return Column(
     children: [
@@ -127,7 +132,10 @@ Widget saDetailNameScoreBtns(
             (Icons.check_box),
             "흡연완료",
             // Todo: 흡연 완료
-            () {},
+            () async {
+              await userDB.insertSmokeInfo(areaId, name, now);
+              initializedDB(context, userDB);
+            },
           ),
         ],
       ),
