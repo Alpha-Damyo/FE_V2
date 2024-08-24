@@ -1,13 +1,17 @@
 import 'package:damyo_app/database/smoke_data.dart';
+import 'package:damyo_app/services/smoke_complete.dart';
 import 'package:damyo_app/style.dart';
 import 'package:damyo_app/utils/initialized_db.dart';
 import 'package:damyo_app/utils/re_login_dialog.dart';
+import 'package:damyo_app/utils/smoke_check_dialog.dart';
 import 'package:damyo_app/view/map/smoking_area/favorites_bottomsheet.dart';
 import 'package:damyo_app/view/map/smoking_area/sa_gallery_screen.dart';
 import 'package:damyo_app/view/map/smoking_area/sa_image_screen.dart';
+import 'package:damyo_app/view_models/login_models/is_login_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 // 흡연구역 대표 이미지
 Widget saDetailRepresentativeImage(
@@ -133,8 +137,26 @@ Widget saDetailNameScoreBtns(
             "흡연완료",
             // Todo: 흡연 완료
             () async {
-              await userDB.insertSmokeInfo(areaId, name, now);
-              initializedUserDB(context);
+              if (Provider.of<IsloginViewModel>(context, listen: false)
+                  .isLogin) {
+                // 로그인을 한 경우
+                if (await smokingCheckBox(context) == true) {
+                  // 흡연을 완료한 경우
+                  String response = await smokeComplete(context, areaId);
+                  if (response == "success") {
+                    await userDB.insertSmokeInfo(areaId, name, now);
+                    initializedUserDB(context);
+                  } else if (response == "re_login") {
+                    reLogin(context);
+                  }
+                }
+                else{
+                  // 흡연을 취소한 경우
+                }
+              } else {
+                // 로그인을 안 한 경우
+                reLogin(context);
+              }
             },
           ),
         ],

@@ -1,6 +1,10 @@
 import 'package:damyo_app/database/smoke_data.dart';
+import 'package:damyo_app/services/smoke_complete.dart';
 import 'package:damyo_app/utils/initialized_db.dart';
+import 'package:damyo_app/utils/re_login_dialog.dart';
+import 'package:damyo_app/utils/smoke_check_dialog.dart';
 import 'package:damyo_app/view/map/smoking_area/favorites_bottomsheet.dart';
+import 'package:damyo_app/view_models/login_models/is_login_view_model.dart';
 import 'package:damyo_app/view_models/map_models/map_view_model.dart';
 import 'package:damyo_app/view_models/map_models/search/sa_search_view_model.dart';
 import 'package:damyo_app/widgets/map/map_widgets.dart';
@@ -125,6 +129,30 @@ class _MapViewState extends State<MapView> {
                       _mapViewModel.smokingAreaCardInfo.name,
                       now);
                   initializedUserDB(context);
+
+                  if (Provider.of<IsloginViewModel>(context, listen: false)
+                      .isLogin) {
+                    // 로그인을 한 경우
+                    if (await smokingCheckBox(context) == true) {
+                      // 흡연을 완료한 경우
+                      String response = await smokeComplete(
+                          context, _mapViewModel.smokingAreaCardInfo.areaId);
+                      if (response == "success") {
+                        await userDB.insertSmokeInfo(
+                            _mapViewModel.smokingAreaCardInfo.areaId,
+                            _mapViewModel.smokingAreaCardInfo.name,
+                            now);
+                        initializedUserDB(context);
+                      } else if (response == "re_login") {
+                        reLogin(context);
+                      }
+                    } else {
+                      // 흡연을 취소한 경우
+                    }
+                  } else {
+                    // 로그인을 안 한 경우
+                    reLogin(context);
+                  }
                 },
               ),
             ),
