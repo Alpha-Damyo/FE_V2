@@ -1,8 +1,11 @@
+import 'package:damyo_app/services/user_service.dart';
 import 'package:damyo_app/style.dart';
-import 'package:damyo_app/view_models/login_models/islogin_view_model.dart';
+import 'package:damyo_app/view_models/login_models/is_login_view_model.dart';
+import 'package:damyo_app/view_models/login_models/token_view_model.dart';
 import 'package:damyo_app/view_models/login_models/user_info_view_model.dart';
+import 'package:damyo_app/widgets/statistics/user_info_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:damyo_app/widgets/setting_widgets.dart';
+import 'package:damyo_app/widgets/setting/setting_widgets.dart';
 import 'package:provider/provider.dart';
 
 class SettingView extends StatefulWidget {
@@ -13,31 +16,43 @@ class SettingView extends StatefulWidget {
 }
 
 class _SettingViewState extends State<SettingView> {
+  
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Consumer2<IsloginViewModel, UserInfoViewModel>(
-        builder: (context, isloginViewModel, userInfoViewModel, child) {
+    return Consumer3<IsloginViewModel, UserInfoViewModel, TokenViewModel>(
+        builder: (context, isloginViewModel, userInfoViewModel, tokenViewModel,
+            child) {
       return Scaffold(
         appBar: AppBar(
           title: appbarTitleFormat(text: "설정"),
           centerTitle: true,
         ),
         body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (isloginViewModel.isloginModel.isLogin)
-              userProfile(context, isloginViewModel, userInfoViewModel)
+            if (isloginViewModel.isLogin)
+              userProfile(
+                  context, isloginViewModel, tokenViewModel, userInfoViewModel, updateProfile)
             else
               loginBtn(context),
-            toolBax(context, '즐겨찾기 관리'),
-            toolBax(context, '흡연구역 업데이트'),
-            toolBax(context, '업적'),
+            contributionBtn(context, '기여도'),
             toolBax(context, '흡연데이터 초기화'),
-            toolBax(context, '푸쉬 알림'),
             toolBax(context, '앱버전'),
           ],
         ),
       );
     });
+  }
+
+  void updateProfile() async {
+    List<dynamic> userInfo = await UserService.getUserInfo(
+        Provider.of<TokenViewModel>(context, listen: false));
+    Provider.of<UserInfoViewModel>(context, listen: false)
+        .updateUserInfoModel(userInfo[1]);
   }
 }

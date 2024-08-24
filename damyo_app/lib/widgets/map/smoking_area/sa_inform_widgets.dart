@@ -2,6 +2,7 @@ import 'package:damyo_app/models/smoking_area/sa_inform_model.dart';
 import 'package:damyo_app/services/naver_address_service.dart';
 import 'package:damyo_app/services/smoking_area_service.dart';
 import 'package:damyo_app/style.dart';
+import 'package:damyo_app/view_models/login_models/token_view_model.dart';
 import 'package:damyo_app/view_models/map_models/smoking_area/sa_inform_view_model.dart';
 import 'package:damyo_app/widgets/common/ratingstar_widget.dart';
 import 'package:flutter/material.dart';
@@ -92,8 +93,15 @@ Widget informOpenClose(
   );
 }
 
-Widget informComplete(BuildContext context, bool canReview,
-    SaInformViewModel model, double lat, double lng) {
+Widget informComplete(
+  BuildContext context,
+  bool canReview,
+  SaInformViewModel model,
+  double lat,
+  double lng,
+  bool isLogin,
+  TokenViewModel tokenViewModel,
+) {
   return InkWell(
     borderRadius: const BorderRadius.all(Radius.circular(16)),
     onTap: () async {
@@ -112,7 +120,7 @@ Widget informComplete(BuildContext context, bool canReview,
         });
 
         bool success = await SmokingAreaService.informSmokingArea(
-            model.informImage, saInformModel);
+            isLogin, tokenViewModel, model.informImage, saInformModel);
 
         if (success) {
           Fluttertoast.showToast(msg: "제보가 완료되었습니다");
