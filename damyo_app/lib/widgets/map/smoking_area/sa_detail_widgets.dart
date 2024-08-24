@@ -134,7 +134,7 @@ Widget saDetailNameScoreBtns(
             // Todo: 흡연 완료
             () async {
               await userDB.insertSmokeInfo(areaId, name, now);
-              initializedDB(context, userDB);
+              initializedUserDB(context);
             },
           ),
         ],
