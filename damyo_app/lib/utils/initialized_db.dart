@@ -10,9 +10,9 @@ void initializedDB(BuildContext context, SmokeDatabase userDB) async {
     await Provider.of<SmokeViewModel>(context, listen: false)
         .fetchSmokeDB(userDB);
     await Provider.of<LocalInfoViewModel>(context, listen: false)
-        .fetchLocalDB(userDB, context);
+        .fetchLocalDB(userDB);
     await Provider.of<TimeaverInfoViewModel>(context, listen: false)
-        .fetchTimeDB(context);
+        .fetchTimeDB();
     await Provider.of<PeriodInfoViewModel>(context, listen: false)
-        .fetchPeriodEveryDB(context);
+        .fetchPeriodEveryDB();
   }

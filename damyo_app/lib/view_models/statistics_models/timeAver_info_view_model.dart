@@ -10,10 +10,10 @@ class TimeaverInfoViewModel extends ChangeNotifier {
 
   List<dynamic>? get everyTimeInfo => _everyTimeInfo;
 
-  Future<void> fetchTimeDB(BuildContext context) async {
+  Future<void> fetchTimeDB() async {
     statDateModel dateModel;
 
-    dateModel = await getDateStatics(context);
+    dateModel = await getDateStatics();
 
     _everyTimeInfo = dateModel.time;
 

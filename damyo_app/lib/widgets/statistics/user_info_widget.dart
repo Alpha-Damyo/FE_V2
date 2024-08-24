@@ -2,6 +2,7 @@ import 'package:damyo_app/database/smoke_data.dart';
 import 'package:damyo_app/services/statistics_service.dart';
 import 'package:damyo_app/style.dart';
 import 'package:damyo_app/view_models/login_models/user_info_view_model.dart';
+import 'package:damyo_app/view_models/statistics_models/period_info_view_model.dart';
 import 'package:flutter/material.dart';
 
 // 사용자 정보 위젯
@@ -205,12 +206,14 @@ Widget _buildTag(String text) {
   );
 }
 
-Widget testbtn(SmokeDatabase userDB) {
+Widget testbtn(PeriodInfoViewModel per) {
   return Padding(
     padding: const EdgeInsets.only(top: 10.0),
     child: InkWell(
       onTap: () async {
-        print(await userDB.getSmokeInfo());
+        print(per.everyDayWeek);
+        print(per.everyWeeks);
+        print(per.everyMonths);
       },
       child: Container(
         width: 100,

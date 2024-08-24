@@ -18,7 +18,7 @@ class SmokeViewModel extends ChangeNotifier {
 
   List<dynamic> _smokePlace = [];
   Map<String, dynamic>? _userTimeInfo;
-  List<dynamic>? _userWeekdayInfo, _userWeeksInfo, _userMonthsInfo;
+  late List<dynamic> _userWeekdayInfo, _userWeeksInfo, _userMonthsInfo;
   double? _maxD, _maxW, _maxM;
   int? _cntDay, _cntWeek, _cntMonth;
 
@@ -26,9 +26,9 @@ class SmokeViewModel extends ChangeNotifier {
   
   Map<String, dynamic>? get userTimeInfo => _userTimeInfo;
 
-  List<dynamic>? get userDayWeekInfo => _userWeekdayInfo;
-  List<dynamic>? get userWeeksInfo => _userWeeksInfo;
-  List<dynamic>? get userMonthsInfo => _userMonthsInfo;
+  List<dynamic> get userDayWeekInfo => _userWeekdayInfo;
+  List<dynamic> get userWeeksInfo => _userWeeksInfo;
+  List<dynamic> get userMonthsInfo => _userMonthsInfo;
 
   double? get maxD => _maxD;
   double? get maxW => _maxW;
@@ -44,9 +44,9 @@ class SmokeViewModel extends ChangeNotifier {
 
     double maxD = 0, maxW = 0, maxM = 0;
 
-    List<dynamic>? smokeCountsD = List.filled(7, 0);
-    List<dynamic>? smokeCountsW = List.filled(4, 0);
-    List<dynamic>? smokeCountsM = List.filled(6, 0);
+    List<dynamic> smokeCountsD = List.filled(7, 0);
+    List<dynamic> smokeCountsW = List.filled(4, 0);
+    List<dynamic> smokeCountsM = List.filled(6, 0);
 
     final startDateD = now.subtract(Duration(days: 6));
     final dataInRangeD =
@@ -80,7 +80,7 @@ class SmokeViewModel extends ChangeNotifier {
           await userDB.getSmokeInfoInWeeksRange(startDateM, endDateM);
       smokeCountsM[i] = dateInRangeM.first['count'];
       if (maxM < dateInRangeM.first['count']) {
-        maxM = dateInRangeM.first['count'];
+        maxM = dateInRangeM.first['count'] * 1.0;
       }
     }
 

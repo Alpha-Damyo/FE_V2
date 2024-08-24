@@ -29,7 +29,6 @@ class _StatisticsViewState extends State<StatisticsView>
 
   late SmokeDatabase userDB = SmokeDatabase();
 
-  bool initialized = false;
   bool timeCheck = true;
   bool compareCheck = true;
   String compareType = '일';
@@ -48,9 +47,9 @@ class _StatisticsViewState extends State<StatisticsView>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (!initialized && Provider.of<IsloginViewModel>(context).isLogin) {
+    
+    if (Provider.of<IsloginViewModel>(context).isLogin) {
       initializedDB(context, userDB);
-      initialized = true;
     }
   }
 
@@ -89,7 +88,7 @@ class _StatisticsViewState extends State<StatisticsView>
                   children: [
                     userInfo(
                         context, userInfoViewModel, smokeViewModel.smokePlace),
-                    testbtn(userDB),
+                    testbtn(periodInfoViewModel),
                     const SizedBox(
                       height: 20,
                     ),
@@ -182,12 +181,14 @@ class _StatisticsViewState extends State<StatisticsView>
                         ),
                       ),
                     ),
-                    const SizedBox(height: 10,),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     Center(
                       child: textFormat(
                           text: '로그인하지 않은 상태입니다\n로그인 / 회원가입 후 이용해주세요',
                           fontSize: 16),
-                    )
+                    ),
                   ],
                 ),
         ),
