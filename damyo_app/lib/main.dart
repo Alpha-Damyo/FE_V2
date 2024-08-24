@@ -17,16 +17,19 @@ import 'package:damyo_app/view_models/statistics_models/locaI_info_view_model.da
 import 'package:damyo_app/view_models/statistics_models/timeAver_info_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await loadDotEnv();
   await initializeMap();
   // await getCurrentLocation();
   await getPhotoPermission();
+  FlutterNativeSplash.remove();
 
   runApp(
     MultiProvider(
