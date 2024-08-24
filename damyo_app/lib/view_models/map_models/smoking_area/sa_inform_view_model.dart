@@ -80,7 +80,17 @@ class SaInformViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
+  updateIsLoading(bool b) {
+    _isLoading = b;
+    notifyListeners();
+  }
+
   resetAll() {
+    _nameController.clear();
+    _descriptionController.clear();
     _informImage = null;
     _starValue = 0;
     _canInform = false;
