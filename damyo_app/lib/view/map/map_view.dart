@@ -124,7 +124,7 @@ class _MapViewState extends State<MapView> {
                       _mapViewModel.smokingAreaCardInfo.areaId,
                       _mapViewModel.smokingAreaCardInfo.name,
                       now);
-                  initializedDB(context, userDB);
+                  initializedUserDB(context);
                 },
               ),
             ),
