@@ -1,7 +1,7 @@
 import 'package:damyo_app/style.dart';
 import 'package:flutter/material.dart';
 
-Widget UserInfo(int contributionScore, double contributionPecentage,
+Widget UserInfo(String name, int contributionScore, double contributionPecentage,
     int? contributionGap, String? profileUrl) {
   return Container(
     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
@@ -27,7 +27,7 @@ Widget UserInfo(int contributionScore, double contributionPecentage,
                   child: Row(
                     children: [
                       textFormat(
-                          text: '홍길동',
+                          text: name,
                           fontSize: 16,
                           fontWeight: FontWeight.w700),
                       textFormat(

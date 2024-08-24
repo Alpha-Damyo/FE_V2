@@ -73,9 +73,11 @@ LineChartData timeSmokeAver(
     }
   }
 
-  for (int i = 0; i < 9; i++) {
-    if (UserList!['${i * 3}'] != null && (UserList['${i * 3}']! > UserMax)) {
-      UserMax = UserList['${i * 3}']!;
+  if (UserList != null) {
+    for (int i = 0; i < 9; i++) {
+      if (UserList['${i * 3}'] != null && (UserList['${i * 3}']! > UserMax)) {
+        UserMax = UserList['${i * 3}']!;
+      }
     }
   }
 

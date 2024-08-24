@@ -1,6 +1,11 @@
+import 'package:damyo_app/database/smoke_data.dart';
+import 'package:damyo_app/models/smoking_area/sa_detail_model.dart';
 import 'package:damyo_app/services/statistics_service.dart';
+import 'package:damyo_app/services/smoking_area_service.dart';
 import 'package:damyo_app/style.dart';
+import 'package:damyo_app/view/map/smoking_area/sa_detail_view.dart';
 import 'package:damyo_app/view_models/login_models/user_info_view_model.dart';
+import 'package:damyo_app/view_models/statistics_models/period_info_view_model.dart';
 import 'package:flutter/material.dart';
 
 // 사용자 정보 위젯
@@ -90,12 +95,30 @@ Widget userInfo(BuildContext context, UserInfoViewModel userInfoViewModel,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: List.generate(smokePlace.length, (index) {
                           if (index < 3) {
-                            return _mostSmokingArea(
-                              index + 1,
-                              smokePlace[index]['id'],
-                              smokePlace[index]['name'],
-                              smokePlace[index]['count'],
-                            );
+                            return FutureBuilder(
+                                future: SmokingAreaService.getDetailSmokingArea(
+                                    smokePlace[index]['id']),
+                                builder: (context, AsyncSnapshot saInfo) {
+                                  if (saInfo.hasError) {
+                                    return _mostSmokingArea(
+                                      context,
+                                      index + 1,
+                                      smokePlace[index]['id'],
+                                      smokePlace[index]['name'],
+                                      smokePlace[index]['count'],
+                                      null,
+                                    );
+                                  } else {
+                                    return _mostSmokingArea(
+                                      context,
+                                      index + 1,
+                                      smokePlace[index]['id'],
+                                      smokePlace[index]['name'],
+                                      smokePlace[index]['count'],
+                                      saInfo.data,
+                                    );
+                                  }
+                                });
                           }
                           return Container();
                         }).where((element) => element != Container()).toList(),
@@ -108,12 +131,18 @@ Widget userInfo(BuildContext context, UserInfoViewModel userInfoViewModel,
 }
 
 // 많이 방문한 흡연구역
-Widget _mostSmokingArea(int rank, String id, String name, int cnt) {
+Widget _mostSmokingArea(BuildContext context, int rank, String id, String name,
+    int cnt, SaDetailModel? saInfo) {
   return Row(
     children: [
       Center(
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => SaDetailView(areaId: id)));
+          },
           child: Container(
             width: 130,
             height: 120,
@@ -163,11 +192,19 @@ Widget _mostSmokingArea(int rank, String id, String name, int cnt) {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        _buildTag('실외'),
+                        (saInfo == null)
+                            ? _buildTag('로딩중')
+                            : (saInfo.outdoor!)
+                                ? _buildTag('실외')
+                                : _buildTag('실내'),
                         const SizedBox(
                           width: 10,
                         ),
-                        _buildTag('개방형'),
+                        (saInfo == null)
+                            ? _buildTag('로딩중')
+                            : (saInfo.opened!)
+                                ? _buildTag('개방형')
+                                : _buildTag('폐쇄형'),
                       ],
                     ),
                   ],
@@ -192,36 +229,10 @@ Widget _buildTag(String text) {
       color: const Color(0xFFD6ECFA),
       borderRadius: BorderRadius.circular(8),
     ),
-    child: Text(
-      text,
-      style: const TextStyle(
-        color: Color(0xFF0E6AA6),
-        fontSize: 10,
-        fontFamily: 'Pretendard',
-        fontWeight: FontWeight.w600,
-      ),
-    ),
-  );
-}
-
-Widget testbtn() {
-  return Padding(
-    padding: const EdgeInsets.only(top: 10.0),
-    child: InkWell(
-      onTap: () async {
-        await getDateStatics();
-      },
-      child: Container(
-        width: 100,
-        height: 30,
-        clipBehavior: Clip.antiAlias,
-        decoration: ShapeDecoration(
-          color: const Color(0xFF000000),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(41),
-          ),
-        ),
-      ),
+    child: textFormat(
+      text: text,
+      fontSize: 10,
+      color: const Color(0xFF0E6AA6),
     ),
   );
 }

@@ -24,14 +24,14 @@ Future<statDateModel> getDateStatics() async {
   if (response.statusCode == 200) {
     return statDateModel.fromJson(jsonMap);
   } else {
-    throw Exception("Failed to date statics");
+    throw jsonMap;
   }
 }
 
 Future<statRegionModel> getRegionStatics() async {
   final baseUrl = dotenv.get('BASE_URL');
   String? token = await storage.read(key: 'accessToken');
-  
+
   var url = Uri.parse('$baseUrl/data/regionStatics');
   var headers = {
     "Authorization": 'Bearer $token',
@@ -43,9 +43,8 @@ Future<statRegionModel> getRegionStatics() async {
       jsonDecode(utf8.decode(response.bodyBytes));
 
   if (response.statusCode == 200) {
-    // print(statRegionModel.fromJson(jsonMap));
     return statRegionModel.fromJson(jsonMap);
   } else {
-    throw Exception("Failed to region statics");
+    throw jsonMap;
   }
 }
