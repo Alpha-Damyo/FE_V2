@@ -57,7 +57,7 @@ class SmokeViewModel extends ChangeNotifier {
       if (index != -1) {
         smokeCountsD[index] = item['count'];
         if (maxD < item['count']) {
-          maxD = item['count'];
+          maxD = item['count'] * 1.0;
         }
       }
     }
@@ -69,7 +69,7 @@ class SmokeViewModel extends ChangeNotifier {
           await userDB.getSmokeInfoInWeeksRange(startDateW, endDateW);
       smokeCountsW[i] = dateInRangeW.first['count'];
       if (maxW < dateInRangeW.first['count']) {
-        maxW = dateInRangeW.first['count'];
+        maxW = dateInRangeW.first['count'] * 1.0;
       }
     }
 

@@ -1,5 +1,6 @@
 import 'package:damyo_app/database/smoke_data.dart';
 import 'package:damyo_app/style.dart';
+import 'package:damyo_app/utils/initialized_db.dart';
 import 'package:damyo_app/view_models/login_models/is_login_view_model.dart';
 import 'package:damyo_app/view_models/login_models/user_info_view_model.dart';
 import 'package:damyo_app/view_models/statistics_models/locaI_info_view_model.dart';
@@ -12,8 +13,6 @@ import 'package:damyo_app/widgets/statistics/period_info_widget.dart';
 import 'package:damyo_app/widgets/statistics/timeAver_info_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:damyo_app/widgets/statistics/user_info_widget.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 
 class StatisticsView extends StatefulWidget {
@@ -50,7 +49,7 @@ class _StatisticsViewState extends State<StatisticsView>
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (!initialized && Provider.of<IsloginViewModel>(context).isLogin) {
-      afterLogin();
+      initializedDB(context, userDB);
       initialized = true;
     }
   }
@@ -90,7 +89,7 @@ class _StatisticsViewState extends State<StatisticsView>
                   children: [
                     userInfo(
                         context, userInfoViewModel, smokeViewModel.smokePlace),
-                    // testbtn(),
+                    testbtn(userDB),
                     const SizedBox(
                       height: 20,
                     ),
@@ -165,20 +164,34 @@ class _StatisticsViewState extends State<StatisticsView>
                     })
                   ],
                 )
-              : const Column(),
+              : Column(
+                  children: [
+                    const SizedBox(
+                      height: 200,
+                    ),
+                    Center(
+                      child: Container(
+                        width: 160,
+                        height: 210,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(
+                                'assets/icons/statistics/notlogin.png'),
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 10,),
+                    Center(
+                      child: textFormat(
+                          text: '로그인하지 않은 상태입니다\n로그인 / 회원가입 후 이용해주세요',
+                          fontSize: 16),
+                    )
+                  ],
+                ),
         ),
       );
     });
-  }
-
-  void afterLogin() async {
-    await Provider.of<SmokeViewModel>(context, listen: false)
-        .fetchSmokeDB(userDB);
-    await Provider.of<LocalInfoViewModel>(context, listen: false)
-        .fetchLocalDB(userDB);
-    await Provider.of<TimeaverInfoViewModel>(context, listen: false)
-        .fetchTimeDB();
-    await Provider.of<PeriodInfoViewModel>(context, listen: false)
-        .fetchPeriodEveryDB();
   }
 }

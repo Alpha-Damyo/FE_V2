@@ -60,7 +60,7 @@ Widget localInfo(BuildContext context, TabController tabController,
 // 가장 인기있는 지역
 Widget _tapContentsGu(List<dynamic>? _GuList) {
   if (_GuList == null || _GuList.isEmpty) {
-    return const Center(child: Text('No Data Available'));
+    return const Center(child: Text('지역 정보가 존재하지 않습니다.'));
   }
   return Column(
       children: List.generate(
@@ -75,7 +75,7 @@ Widget _tapContentsGu(List<dynamic>? _GuList) {
 Widget _tapContentsSmokeArea(
     BuildContext context, List<dynamic>? _areaList, List<dynamic>? _areaInfo) {
   if (_areaList == null || _areaList.isEmpty) {
-    return const Center(child: Text('No Data Available'));
+    return const Center(child: Text('구역 정보가 존재하지 않습니다.'));
   }
   return Column(
       children: List.generate(
