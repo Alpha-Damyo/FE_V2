@@ -106,6 +106,7 @@ Widget informComplete(
     borderRadius: const BorderRadius.all(Radius.circular(16)),
     onTap: () async {
       if (canReview) {
+        model.updateIsLoading(true);
         SaInformModel saInformModel = SaInformModel.fromJson({
           "name": model.nameController.text,
           "latitude": lat,
@@ -122,6 +123,7 @@ Widget informComplete(
         bool success = await SmokingAreaService.informSmokingArea(
             isLogin, tokenViewModel, model.informImage, saInformModel);
 
+        model.updateIsLoading(false);
         if (success) {
           Fluttertoast.showToast(msg: "제보가 완료되었습니다");
           Navigator.pop(context);

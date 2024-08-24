@@ -56,6 +56,8 @@ class SmokingAreaService {
     if (response.statusCode == 200) {
       return SaBasicModel.fromJson(responseDecode);
     } else {
+      print(response.statusCode);
+      print(responseDecode);
       throw Exception("fail search");
     }
   }

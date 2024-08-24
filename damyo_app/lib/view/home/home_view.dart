@@ -6,6 +6,7 @@ import 'package:damyo_app/view_models/login_models/is_login_view_model.dart';
 import 'package:damyo_app/view_models/login_models/token_view_model.dart';
 import 'package:damyo_app/view_models/login_models/user_info_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import "package:provider/provider.dart";
 import 'package:damyo_app/view/favorites/favorites_view.dart';
@@ -124,11 +125,11 @@ class _HomeViewState extends State<HomeView> {
         Provider.of<IsloginViewModel>(context, listen: false).login();
         Provider.of<UserInfoViewModel>(context, listen: false)
             .updateUserInfoModel(userInfo[1]);
-        
       } else {
         // 로그인 상태 false
         Provider.of<IsloginViewModel>(context, listen: false).logout();
       }
     }
+    FlutterNativeSplash.remove();
   }
 }
