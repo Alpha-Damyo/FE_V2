@@ -403,7 +403,7 @@ FlTitlesData createDayTitlesCompare() {
 FlTitlesData createWeekTitlesCompare() {
   return FlTitlesData(
     show: true,
-    bottomTitles: AxisTitles(
+    bottomTitles: const AxisTitles(
       sideTitles: SideTitles(
         showTitles: true,
         reservedSize: 30,
@@ -428,7 +428,7 @@ FlTitlesData createWeekTitlesCompare() {
 FlTitlesData createMonthTitlesCompare() {
   return FlTitlesData(
     show: true,
-    bottomTitles: AxisTitles(
+    bottomTitles: const AxisTitles(
       sideTitles: SideTitles(
         showTitles: true,
         reservedSize: 30,
@@ -456,8 +456,8 @@ List<BarChartGroupData> createBarDaysCompare(
     bool compareCheck,
   ) {
   return [
-    for (int i = 0; i < smokeWeekdayInfo!.length; i++)
-      createGroupData(i, smokeWeekdayInfo[i]! * 1.0, everyDayWeek?[i + 1], compareCheck)
+    for (int i = 0; i < 7; i++)
+      createGroupData(i, smokeWeekdayInfo![i] * 1.0, everyDayWeek![i + 1], compareCheck)
   ];
 }
 
@@ -467,8 +467,8 @@ List<BarChartGroupData> createBarWeeksCompare(
     bool compareCheck,
   ) {
   return [
-    for (int i = 0; i < smokeWeeksInfo!.length; i++)
-      createGroupData(i, smokeWeeksInfo[i]! * 1.0, everyWeeks?[i + 1], compareCheck)
+    for (int i = 0; i < 4; i++)
+      createGroupData(i, smokeWeeksInfo![i] * 1.0, everyWeeks![i + 1], compareCheck)
   ];
 }
 
@@ -479,8 +479,8 @@ List<BarChartGroupData> createBarMonthsCompare(
     bool compareCheck,
   ) {
   return [
-    for (int i = 0; i < smokeMonthsInfo!.length; i++)
-      createGroupData(i, smokeMonthsInfo[i]! * 1.0, everyMonths?[(nowMonth + 12 - i) % 12], compareCheck)
+    for (int i = 0; i < 6; i++)
+      createGroupData(i, smokeMonthsInfo![i] * 1.0, everyMonths![(nowMonth + 12 - i) % 12], compareCheck)
   ];
 }
 
@@ -502,7 +502,7 @@ BarChartGroupData createGroupData(
             : createBarsGradientGrey(),
       ),
       BarChartRodData(
-        toY: (y2 == 0) ? 0.4 : y2!,
+        toY: (y2 == 0 || y2 == null) ? 0.4 : y2,
         width: 15,
         gradient: (compareCheck)
             ? createBarsGradientGrey()

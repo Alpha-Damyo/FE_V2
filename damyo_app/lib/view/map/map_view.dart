@@ -1,3 +1,5 @@
+import 'package:damyo_app/database/smoke_data.dart';
+import 'package:damyo_app/utils/initialized_db.dart';
 import 'package:damyo_app/view/map/smoking_area/favorites_bottomsheet.dart';
 import 'package:damyo_app/view_models/map_models/map_view_model.dart';
 import 'package:damyo_app/view_models/map_models/search/sa_search_view_model.dart';
@@ -18,6 +20,8 @@ class _MapViewState extends State<MapView> {
   late SaSearchViewModel _saSearchViewModel;
   bool isMapControllerLoaded = false;
   List<String> tags = ['개방', '폐쇄', '실외', '실내'];
+  SmokeDatabase userDB = SmokeDatabase();
+  DateTime now = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +119,13 @@ class _MapViewState extends State<MapView> {
                       });
                 },
                 // Todo: 흡연 완료
-                () {},
+                () async {
+                  await userDB.insertSmokeInfo(
+                      _mapViewModel.smokingAreaCardInfo.areaId,
+                      _mapViewModel.smokingAreaCardInfo.name,
+                      now);
+                  initializedDB(context, userDB);
+                },
               ),
             ),
           )
