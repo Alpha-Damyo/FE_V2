@@ -98,6 +98,7 @@ flutter:
     - assets/images/smoking_area_default_img.png
     - assets/icons/setting/contribution/
     - assets/icons/setting/updateprofile/
+    - assets/icons/statistics/
     - assets/icons/map/marker.png
 
   fonts:

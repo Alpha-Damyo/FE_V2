@@ -109,7 +109,7 @@ Future<void> showErrorLog(BuildContext context, String log) {
               children: [
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF0099FC),
+                    backgroundColor: const Color(0xFF0099FC),
                     fixedSize: const Size(350, 40),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(26),

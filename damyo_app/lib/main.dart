@@ -65,7 +65,6 @@ class Damyo extends StatelessWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        scaffoldBackgroundColor: const Color.fromARGB(255, 193, 163, 163),
         colorScheme: const ColorScheme.light(
           primary: Color(0xFF0099FC),
           secondary: Color(0xFFD6ECFA),

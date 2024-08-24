@@ -3,6 +3,7 @@ import 'package:damyo_app/style.dart';
 import 'package:damyo_app/view_models/login_models/is_login_view_model.dart';
 import 'package:damyo_app/view_models/login_models/token_view_model.dart';
 import 'package:damyo_app/view_models/login_models/user_info_view_model.dart';
+import 'package:damyo_app/view_models/statistics_models/period_info_view_model.dart';
 import 'package:damyo_app/widgets/statistics/user_info_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:damyo_app/widgets/setting/setting_widgets.dart';
@@ -24,8 +25,8 @@ class _SettingViewState extends State<SettingView> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer3<IsloginViewModel, UserInfoViewModel, TokenViewModel>(
-        builder: (context, isloginViewModel, userInfoViewModel, tokenViewModel,
+    return Consumer4<IsloginViewModel, UserInfoViewModel, TokenViewModel, PeriodInfoViewModel>(
+        builder: (context, isloginViewModel, userInfoViewModel, tokenViewModel, periodInfoViewModel,
             child) {
       return Scaffold(
         appBar: AppBar(
