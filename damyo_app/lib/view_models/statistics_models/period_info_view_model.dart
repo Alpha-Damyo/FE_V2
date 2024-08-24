@@ -11,10 +11,10 @@ class PeriodInfoViewModel extends ChangeNotifier {
   List<double>? get everyWeeks => _everyWeeks;
   List<double>? get everyMonths => _everyMonths;
 
-  Future<void> fetchPeriodEveryDB(BuildContext context) async {
+  Future<void> fetchPeriodEveryDB() async {
     statDateModel dateModel;
 
-    dateModel = await getDateStatics(context);
+    dateModel = await getDateStatics();
 
     _everyDayWeek = dateModel.dayWeek.cast<double>();
     _everyWeeks = dateModel.weeks.cast<double>();

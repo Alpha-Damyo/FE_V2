@@ -456,8 +456,8 @@ List<BarChartGroupData> createBarDaysCompare(
     bool compareCheck,
   ) {
   return [
-    for (int i = 0; i < everyDayWeek!.length; i++)
-      createGroupData(i, smokeWeekdayInfo![i] * 1.0, everyDayWeek[i + 1], compareCheck)
+    for (int i = 0; i < 7; i++)
+      createGroupData(i, smokeWeekdayInfo![i] * 1.0, everyDayWeek![i + 1], compareCheck)
   ];
 }
 
@@ -467,8 +467,8 @@ List<BarChartGroupData> createBarWeeksCompare(
     bool compareCheck,
   ) {
   return [
-    for (int i = 0; i < everyWeeks!.length; i++)
-      createGroupData(i, smokeWeeksInfo![i] * 1.0, everyWeeks[i + 1], compareCheck)
+    for (int i = 0; i < 4; i++)
+      createGroupData(i, smokeWeeksInfo![i] * 1.0, everyWeeks![i + 1], compareCheck)
   ];
 }
 
@@ -479,8 +479,8 @@ List<BarChartGroupData> createBarMonthsCompare(
     bool compareCheck,
   ) {
   return [
-    for (int i = 0; i < everyMonths!.length; i++)
-      createGroupData(i, smokeMonthsInfo![i] * 1.0, everyMonths[(nowMonth + 12 - i) % 12], compareCheck)
+    for (int i = 0; i < 6; i++)
+      createGroupData(i, smokeMonthsInfo![i] * 1.0, everyMonths![(nowMonth + 12 - i) % 12], compareCheck)
   ];
 }
 
