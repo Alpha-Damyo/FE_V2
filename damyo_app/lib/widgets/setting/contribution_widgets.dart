@@ -88,7 +88,7 @@ Widget UserInfo(String name, int contributionScore, double contributionPecentage
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                width: 300 * (contributionPecentage * 0.01),
+                width: 300 * (1-(contributionPecentage * 0.01)),
                 height: 10,
                 decoration: ShapeDecoration(
                   gradient: const LinearGradient(
@@ -115,7 +115,7 @@ Widget UserInfo(String name, int contributionScore, double contributionPecentage
                 ),
               ),
               Container(
-                width: 340 * (1 - (contributionPecentage * 0.01)),
+                width: 340 * (contributionPecentage * 0.01),
                 height: 10,
                 decoration: ShapeDecoration(
                   color: const Color(0xFFEEF1F4),
@@ -183,7 +183,7 @@ Widget badgeList(int contributionScore) {
         const SizedBox(height: 24),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: List.generate(contributionPoint.length, (index) {
             return Container(
               width: 80,

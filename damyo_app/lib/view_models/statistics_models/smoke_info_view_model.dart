@@ -18,7 +18,7 @@ class SmokeViewModel extends ChangeNotifier {
 
   List<dynamic> _smokePlace = [];
   Map<String, dynamic>? _userTimeInfo;
-  late List<dynamic> _userWeekdayInfo, _userWeeksInfo, _userMonthsInfo;
+  List<dynamic>? _userWeekdayInfo, _userWeeksInfo, _userMonthsInfo;
   double? _maxD, _maxW, _maxM;
   int? _cntDay, _cntWeek, _cntMonth;
 
@@ -26,9 +26,9 @@ class SmokeViewModel extends ChangeNotifier {
   
   Map<String, dynamic>? get userTimeInfo => _userTimeInfo;
 
-  List<dynamic> get userDayWeekInfo => _userWeekdayInfo;
-  List<dynamic> get userWeeksInfo => _userWeeksInfo;
-  List<dynamic> get userMonthsInfo => _userMonthsInfo;
+  List<dynamic>? get userDayWeekInfo => _userWeekdayInfo;
+  List<dynamic>? get userWeeksInfo => _userWeeksInfo;
+  List<dynamic>? get userMonthsInfo => _userMonthsInfo;
 
   double? get maxD => _maxD;
   double? get maxW => _maxW;

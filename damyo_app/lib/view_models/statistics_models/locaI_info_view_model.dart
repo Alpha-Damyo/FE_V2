@@ -16,7 +16,7 @@ class LocalInfoViewModel extends ChangeNotifier {
   List<dynamic>? get areaList => _areaList;
   List<dynamic>? get areaInfo => _areaInfo;
   
-  Future<void> fetchLocalDB(SmokeDatabase useDB)async{
+  Future<void> fetchLocalDB()async{
     List<SaBasicModel>? area = [];
     
     statRegionModel? Region;
