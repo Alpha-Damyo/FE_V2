@@ -92,8 +92,9 @@ class _StatisticsViewState extends State<StatisticsView>
                     children: [
                       userInfo(
                           context, userInfoViewModel, smokeViewModel.smokePlace),
-                      const SizedBox(
+                      Container(
                         height: 20,
+                        color: Colors.grey[200],
                       ),
                       localInfo(
                           context,
@@ -101,8 +102,9 @@ class _StatisticsViewState extends State<StatisticsView>
                           localInfoViewModel.GuList,
                           localInfoViewModel.areaList,
                           localInfoViewModel.areaInfo),
-                      const SizedBox(
+                      Container(
                         height: 20,
+                        color: Colors.grey[200],
                       ),
                       timeAverInfo(
                           context,
@@ -113,8 +115,9 @@ class _StatisticsViewState extends State<StatisticsView>
                           timeCheck = check;
                         });
                       }),
-                      const SizedBox(
+                      Container(
                         height: 20,
+                        color: Colors.grey[200],
                       ),
                       calculate(context, smokeViewModel, _priceController,
                           selectedIndex, calType, allcnt, (index) {
@@ -126,8 +129,9 @@ class _StatisticsViewState extends State<StatisticsView>
                           allcnt = val;
                         });
                       }),
-                      const SizedBox(
+                      Container(
                         height: 20,
+                        color: Colors.grey[200],
                       ),
                       periodCompareInfo(
                           context,

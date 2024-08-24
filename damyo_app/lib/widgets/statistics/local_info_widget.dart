@@ -13,7 +13,7 @@ Widget localInfo(BuildContext context, TabController tabController,
     child: Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.only(top:20, left: 16),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
