@@ -47,7 +47,7 @@ class _StatisticsViewState extends State<StatisticsView>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    
+
     if (Provider.of<IsloginViewModel>(context).isLogin) {
       initializedDB(context, userDB);
     }
@@ -80,7 +80,7 @@ class _StatisticsViewState extends State<StatisticsView>
           centerTitle: true,
         ),
         body: RefreshIndicator(
-          onRefresh: () async{
+          onRefresh: () async {
             initializedDB(context, userDB);
           },
           child: SingleChildScrollView(
@@ -90,8 +90,8 @@ class _StatisticsViewState extends State<StatisticsView>
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      userInfo(
-                          context, userInfoViewModel, smokeViewModel.smokePlace),
+                      userInfo(context, userInfoViewModel,
+                          smokeViewModel.smokePlace),
                       Container(
                         height: 20,
                         color: Colors.grey[200],

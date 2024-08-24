@@ -7,12 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void initializedDB(BuildContext context, SmokeDatabase userDB) async {
-    await Provider.of<SmokeViewModel>(context, listen: false)
-        .fetchSmokeDB(userDB);
-    await Provider.of<LocalInfoViewModel>(context, listen: false)
-        .fetchLocalDB(userDB);
-    await Provider.of<TimeaverInfoViewModel>(context, listen: false)
-        .fetchTimeDB();
-    await Provider.of<PeriodInfoViewModel>(context, listen: false)
-        .fetchPeriodEveryDB();
-  }
+  await Provider.of<SmokeViewModel>(context).fetchSmokeDB(userDB);
+  await Provider.of<LocalInfoViewModel>(context, listen: false)
+      .fetchLocalDB(userDB);
+  await Provider.of<TimeaverInfoViewModel>(context, listen: false)
+      .fetchTimeDB();
+  await Provider.of<PeriodInfoViewModel>(context, listen: false)
+      .fetchPeriodEveryDB();
+}
