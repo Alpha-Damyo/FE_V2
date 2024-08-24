@@ -8,13 +8,13 @@ import 'package:intl/intl.dart';
 Widget calculate(
     BuildContext context,
     SmokeViewModel smokeViewModel,
-    TextEditingController _priceController,
-    int _selectedIndex,
+    TextEditingController priceController,
+    int selectedIndex,
     List<String> calType,
     int allcnt,
     Function(int) onTap,
     Function(int) onChanged) {
-  return Container(
+  return SizedBox(
     width: double.infinity,
     height: 300,
     child: Column(
@@ -32,7 +32,7 @@ Widget calculate(
             ),
           ),
         ),
-        Container(
+        SizedBox(
           width: 300,
           height: 60,
           child: ListView.builder(
@@ -43,11 +43,11 @@ Widget calculate(
                   padding: const EdgeInsets.all(10),
                   child: GestureDetector(
                     onTap: () {
-                      if (_selectedIndex == index) {
-                        _selectedIndex = -1;
+                      if (selectedIndex == index) {
+                        selectedIndex = -1;
                         onTap(-1);
                       } else {
-                        _selectedIndex = index;
+                        selectedIndex = index;
                         onTap(index);
                       }
                     },
@@ -58,11 +58,11 @@ Widget calculate(
                         horizontal: 16,
                       ),
                       decoration: BoxDecoration(
-                        color: _selectedIndex == index
+                        color: selectedIndex == index
                             ? Theme.of(context).colorScheme.onPrimary
                             : Colors.white,
                         borderRadius: BorderRadius.circular(26),
-                        border: _selectedIndex == index
+                        border: selectedIndex == index
                             ? Border.all(
                                 color: Theme.of(context).colorScheme.primary,
                               )
@@ -74,7 +74,7 @@ Widget calculate(
                         alignment: Alignment.center,
                         child: textFormat(
                           text: calType[index],
-                          color: Color(0xFF464D57),
+                          color: const Color(0xFF464D57),
                           fontSize: 12,
                         ),
                       ),
@@ -84,7 +84,7 @@ Widget calculate(
               }),
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10),
+          padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -101,21 +101,21 @@ Widget calculate(
                 ),
                 onPressed: () {
                   onTap(-1);
-                  _selectedIndex = -1;
-                  _priceController.clear();
+                  selectedIndex = -1;
+                  priceController.clear();
                   onChanged(0);
                 },
               ),
-              if (_selectedIndex == -1)
+              if (selectedIndex == -1)
                 SizedBox(
                   width: 100,
                   child: TextField(
-                    controller: _priceController,
+                    controller: priceController,
                     textAlign: TextAlign.right,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     onChanged: (value) {
-                      if (!_isFieldEmpty(_priceController)) {
-                        onChanged(int.parse(_priceController.text));
+                      if (!_isFieldEmpty(priceController)) {
+                        onChanged(int.parse(priceController.text));
                       } else {
                         onChanged(0);
                       }
@@ -143,11 +143,11 @@ Widget calculate(
             children: [
               SizedBox(
                 child: Text(
-                  (_selectedIndex == -1)
-                      ? '${_priceController.text} 개비'
-                      : (_selectedIndex == 0)
+                  (selectedIndex == -1)
+                      ? '${priceController.text} 개비'
+                      : (selectedIndex == 0)
                           ? '${(smokeViewModel.cntMonth == null) ? 0 : smokeViewModel.cntMonth} 개비'
-                          : (_selectedIndex == 1)
+                          : (selectedIndex == 1)
                               ? '${(smokeViewModel.cntWeek == null) ? 0 : smokeViewModel.cntWeek} 개비'
                               : '${(smokeViewModel.cntDay == null) ? 0 : smokeViewModel.cntDay} 개비',
                   style: const TextStyle(
@@ -160,11 +160,11 @@ Widget calculate(
               ),
               SizedBox(
                 child: Text(
-                  (_selectedIndex == -1)
+                  (selectedIndex == -1)
                       ? formatCurrency(allcnt)
-                      : (_selectedIndex == 0)
+                      : (selectedIndex == 0)
                           ? formatCurrency(smokeViewModel.cntMonth)
-                          : (_selectedIndex == 1)
+                          : (selectedIndex == 1)
                               ? formatCurrency(smokeViewModel.cntWeek)
                               : formatCurrency(smokeViewModel.cntDay),
                   textAlign: TextAlign.right,

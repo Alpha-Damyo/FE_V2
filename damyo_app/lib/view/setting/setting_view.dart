@@ -4,7 +4,6 @@ import 'package:damyo_app/view_models/login_models/is_login_view_model.dart';
 import 'package:damyo_app/view_models/login_models/token_view_model.dart';
 import 'package:damyo_app/view_models/login_models/user_info_view_model.dart';
 import 'package:damyo_app/view_models/statistics_models/period_info_view_model.dart';
-import 'package:damyo_app/widgets/statistics/user_info_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:damyo_app/widgets/setting/setting_widgets.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +16,6 @@ class SettingView extends StatefulWidget {
 }
 
 class _SettingViewState extends State<SettingView> {
-  
   @override
   void initState() {
     super.initState();
@@ -25,9 +23,10 @@ class _SettingViewState extends State<SettingView> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer4<IsloginViewModel, UserInfoViewModel, TokenViewModel, PeriodInfoViewModel>(
-        builder: (context, isloginViewModel, userInfoViewModel, tokenViewModel, periodInfoViewModel,
-            child) {
+    return Consumer4<IsloginViewModel, UserInfoViewModel, TokenViewModel,
+            PeriodInfoViewModel>(
+        builder: (context, isloginViewModel, userInfoViewModel, tokenViewModel,
+            periodInfoViewModel, child) {
       return Scaffold(
         appBar: AppBar(
           title: appbarTitleFormat(text: "설정"),
@@ -37,8 +36,8 @@ class _SettingViewState extends State<SettingView> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (isloginViewModel.isLogin)
-              userProfile(
-                  context, isloginViewModel, tokenViewModel, userInfoViewModel, updateProfile)
+              userProfile(context, isloginViewModel, tokenViewModel,
+                  userInfoViewModel, updateProfile)
             else
               loginBtn(context),
             contributionBtn(context, '기여도'),

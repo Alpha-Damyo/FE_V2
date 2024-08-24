@@ -1,10 +1,8 @@
-import 'package:damyo_app/database/smoke_data.dart';
 import 'package:damyo_app/models/smoking_area/sa_basic_model.dart';
 import 'package:damyo_app/models/statistics_info/stat_region_model.dart';
 import 'package:damyo_app/services/statistics_service.dart';
 import 'package:damyo_app/services/smoking_area_service.dart';
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 
 class LocalInfoViewModel extends ChangeNotifier {
   LocalInfoViewModel();
@@ -48,7 +46,7 @@ class LocalInfoViewModel extends ChangeNotifier {
         _GuList?.add(_gulist[i]);
       }
     }
-    
+
     _areaInfo = area;
 
     notifyListeners();

@@ -1,11 +1,8 @@
-import 'package:damyo_app/database/smoke_data.dart';
 import 'package:damyo_app/models/smoking_area/sa_detail_model.dart';
-import 'package:damyo_app/services/statistics_service.dart';
 import 'package:damyo_app/services/smoking_area_service.dart';
 import 'package:damyo_app/style.dart';
 import 'package:damyo_app/view/map/smoking_area/sa_detail_view.dart';
 import 'package:damyo_app/view_models/login_models/user_info_view_model.dart';
-import 'package:damyo_app/view_models/statistics_models/period_info_view_model.dart';
 import 'package:flutter/material.dart';
 
 // 사용자 정보 위젯
