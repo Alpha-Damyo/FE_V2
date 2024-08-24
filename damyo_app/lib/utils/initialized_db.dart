@@ -8,13 +8,14 @@ import 'package:provider/provider.dart';
 
 Future<void> initializedDB(BuildContext context) async {
   SmokeDatabase userDB = SmokeDatabase();
-  await Provider.of<SmokeViewModel>(context, listen: false)
-      .fetchSmokeDB(userDB);
+
   await Provider.of<LocalInfoViewModel>(context, listen: false).fetchLocalDB();
   await Provider.of<TimeaverInfoViewModel>(context, listen: false)
       .fetchTimeDB();
   await Provider.of<PeriodInfoViewModel>(context, listen: false)
       .fetchPeriodEveryDB();
+  await Provider.of<SmokeViewModel>(context, listen: false)
+      .fetchSmokeDB(userDB);
 }
 
 void initializedUserDB(BuildContext context) async {

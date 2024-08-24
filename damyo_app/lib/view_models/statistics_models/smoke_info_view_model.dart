@@ -16,11 +16,15 @@ class SmokeViewModel extends ChangeNotifier {
     'Sunday'
   ];
 
+  bool _check = false;
+
   List<dynamic> _smokePlace = [];
   Map<String, dynamic>? _userTimeInfo;
   List<dynamic>? _userWeekdayInfo, _userWeeksInfo, _userMonthsInfo;
   double? _maxD, _maxW, _maxM;
   int? _cntDay, _cntWeek, _cntMonth;
+
+  bool get check => _check;
 
   List<dynamic> get smokePlace => _smokePlace;
   
@@ -103,6 +107,8 @@ class SmokeViewModel extends ChangeNotifier {
     _cntDay = dateInRangeD.first['count'];
     _cntWeek = dateInRangeW.first['count'];
     _cntMonth = dateInRangeM.first['count'];
+
+    _check = true;
 
     notifyListeners();
   }
