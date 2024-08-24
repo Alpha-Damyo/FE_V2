@@ -236,27 +236,3 @@ Widget _buildTag(String text) {
     ),
   );
 }
-
-Widget testbtn(PeriodInfoViewModel per) {
-  return Padding(
-    padding: const EdgeInsets.only(top: 10.0),
-    child: InkWell(
-      onTap: () async {
-        print(per.everyDayWeek);
-        print(per.everyWeeks);
-        print(per.everyMonths);
-      },
-      child: Container(
-        width: 100,
-        height: 30,
-        clipBehavior: Clip.antiAlias,
-        decoration: ShapeDecoration(
-          color: const Color(0xFF000000),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(41),
-          ),
-        ),
-      ),
-    ),
-  );
-}

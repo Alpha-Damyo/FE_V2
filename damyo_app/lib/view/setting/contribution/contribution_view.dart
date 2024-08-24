@@ -26,13 +26,14 @@ class _ContributionViewState extends State<ContributionView> {
           ),
           body: Column(
             children: [
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Expanded(
                 child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   child: Column(
                     children: [
                       UserInfo(
+                          userInfoViewModel.userInfoModel.name,
                           userInfoViewModel.userInfoModel.contribution,
                           userInfoViewModel.userInfoModel.percentage,
                           userInfoViewModel.userInfoModel.gap,
