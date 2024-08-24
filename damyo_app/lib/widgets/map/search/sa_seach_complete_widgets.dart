@@ -2,6 +2,7 @@
 import 'package:damyo_app/style.dart';
 import 'package:damyo_app/utils/cal_distance.dart';
 import 'package:damyo_app/view_models/bottom_navigation_model.dart';
+import 'package:damyo_app/view_models/map_models/map_view_model.dart';
 import 'package:damyo_app/view_models/map_models/search/sa_search_view_model.dart';
 import 'package:flutter/material.dart';
 
@@ -101,7 +102,7 @@ Widget searchedSaListView(
                             textFormat(
                               text: saSearchViewModel
                                   .searchedSaList[index].score
-                                  .toString(),
+                                  .toStringAsFixed(1),
                               fontWeight: FontWeight.w500,
                             ),
                           ],
@@ -109,9 +110,8 @@ Widget searchedSaListView(
                         textFormat(
                           text: mKm(
                             calculateDistance(
-                              // Todo: 유저 위치로 설정
-                              37.5666,
-                              126.979,
+                              curLat,
+                              curLng,
                               saSearchViewModel.searchedSaList[index].latitude,
                               saSearchViewModel.searchedSaList[index].longitude,
                             ),

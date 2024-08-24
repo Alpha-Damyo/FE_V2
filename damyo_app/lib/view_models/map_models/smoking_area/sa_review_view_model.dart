@@ -30,4 +30,12 @@ class SaReviewViewModel extends ChangeNotifier {
     _starValue = 0;
     _canReview = false;
   }
+
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
+  updateIsLoading(bool b) {
+    _isLoading = b;
+    notifyListeners();
+  }
 }
