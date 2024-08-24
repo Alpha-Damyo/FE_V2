@@ -16,7 +16,7 @@ class LoginService {
     TokenViewModel tokenViewModel,
     UserInfoViewModel userInfoViewModel,
   ) async {
-    // NaverLoginResult naverUser = await FlutterNaverLogin.logIn();
+    await FlutterNaverLogin.logIn();
     NaverAccessToken naverToken = await FlutterNaverLogin.currentAccessToken;
 
     if (!naverToken.isValid()) {
