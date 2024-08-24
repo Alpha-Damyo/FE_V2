@@ -12,6 +12,8 @@ import 'package:damyo_app/widgets/statistics/period_info_widget.dart';
 import 'package:damyo_app/widgets/statistics/timeAver_info_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:damyo_app/widgets/statistics/user_info_widget.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart';
 import 'package:provider/provider.dart';
 
 class StatisticsView extends StatefulWidget {
@@ -26,8 +28,9 @@ class _StatisticsViewState extends State<StatisticsView>
   late TabController _tabController;
   final TextEditingController _priceController = TextEditingController();
 
-  SmokeDatabase userDB = SmokeDatabase();
+  late SmokeDatabase userDB = SmokeDatabase();
 
+  bool initialized = false;
   bool timeCheck = true;
   bool compareCheck = true;
   String compareType = '일';
@@ -41,14 +44,15 @@ class _StatisticsViewState extends State<StatisticsView>
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   Provider.of<SmokeViewModel>(context, listen: false).fetchSmokeDB(userDB);
-    //   Provider.of<LocalInfoViewModel>(context, listen: false)
-    //       .fetchLocalDB(userDB);
-    //   Provider.of<TimeaverInfoViewModel>(context, listen: false).fetchTimeDB();
-    //   Provider.of<PeriodInfoViewModel>(context, listen: false)
-    //       .fetchPeriodEveryDB();
-    // });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!initialized && Provider.of<IsloginViewModel>(context).isLogin) {
+      afterLogin();
+      initialized = true;
+    }
   }
 
   @override
@@ -90,80 +94,91 @@ class _StatisticsViewState extends State<StatisticsView>
                     const SizedBox(
                       height: 20,
                     ),
-                    // localInfo(
-                    //     context,
-                    //     _tabController,
-                    //     localInfoViewModel.GuList,
-                    //     localInfoViewModel.areaList,
-                    //     localInfoViewModel.areaInfo),
-                    // const SizedBox(
-                    //   height: 20,
-                    // ),
-                    // timeAverInfo(
-                    //     context,
-                    //     timeCheck,
-                    //     timeaverInfoViewModel.everyTimeInfo,
-                    //     smokeViewModel.userTimeInfo, (check) {
-                    //   setState(() {
-                    //     timeCheck = check;
-                    //   });
-                    // }),
-                    // const SizedBox(
-                    //   height: 20,
-                    // ),
-                    // calculate(context, smokeViewModel, _priceController,
-                    //     selectedIndex, calType, allcnt, (index) {
-                    //   setState(() {
-                    //     selectedIndex = index;
-                    //   });
-                    // }, (val) {
-                    //   setState(() {
-                    //     allcnt = val;
-                    //   });
-                    // }),
-                    // const SizedBox(
-                    //   height: 20,
-                    // ),
-                    // periodCompareInfo(
-                    //     context,
-                    //     compareCheck,
-                    //     compareType,
-                    //     isComparetype,
-                    //     smokeViewModel,
-                    //     periodInfoViewModel, (check) {
-                    //   setState(() {
-                    //     compareCheck = check;
-                    //   });
-                    // }, (type) {
-                    //   setState(() {
-                    //     isComparetype[type] = true;
-                    //     for (int i = 0; i < isComparetype.length; i++) {
-                    //       if (i != type) {
-                    //         isComparetype[i] = false;
-                    //       }
-                    //     }
-                    //     if (isComparetype[type]) {
-                    //       switch (type) {
-                    //         case 0:
-                    //           compareType = '일';
-                    //           break;
-                    //         case 1:
-                    //           compareType = '주';
-                    //           break;
-                    //         case 2:
-                    //           compareType = '월';
-                    //           break;
-                    //         default:
-                    //           break;
-                    //       }
-                    //     }
-                    //   });
-                    // })
+                    localInfo(
+                        context,
+                        _tabController,
+                        localInfoViewModel.GuList,
+                        localInfoViewModel.areaList,
+                        localInfoViewModel.areaInfo),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    timeAverInfo(
+                        context,
+                        timeCheck,
+                        timeaverInfoViewModel.everyTimeInfo,
+                        smokeViewModel.userTimeInfo, (check) {
+                      setState(() {
+                        timeCheck = check;
+                      });
+                    }),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    calculate(context, smokeViewModel, _priceController,
+                        selectedIndex, calType, allcnt, (index) {
+                      setState(() {
+                        selectedIndex = index;
+                      });
+                    }, (val) {
+                      setState(() {
+                        allcnt = val;
+                      });
+                    }),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    periodCompareInfo(
+                        context,
+                        compareCheck,
+                        compareType,
+                        isComparetype,
+                        smokeViewModel,
+                        periodInfoViewModel, (check) {
+                      setState(() {
+                        compareCheck = check;
+                      });
+                    }, (type) {
+                      setState(() {
+                        isComparetype[type] = true;
+                        for (int i = 0; i < isComparetype.length; i++) {
+                          if (i != type) {
+                            isComparetype[i] = false;
+                          }
+                        }
+                        if (isComparetype[type]) {
+                          switch (type) {
+                            case 0:
+                              compareType = '일';
+                              break;
+                            case 1:
+                              compareType = '주';
+                              break;
+                            case 2:
+                              compareType = '월';
+                              break;
+                            default:
+                              break;
+                          }
+                        }
+                      });
+                    })
                   ],
                 )
               : const Column(),
         ),
       );
     });
+  }
+
+  void afterLogin() async {
+    await Provider.of<SmokeViewModel>(context, listen: false)
+        .fetchSmokeDB(userDB);
+    await Provider.of<LocalInfoViewModel>(context, listen: false)
+        .fetchLocalDB(userDB);
+    await Provider.of<TimeaverInfoViewModel>(context, listen: false)
+        .fetchTimeDB();
+    await Provider.of<PeriodInfoViewModel>(context, listen: false)
+        .fetchPeriodEveryDB();
   }
 }
