@@ -403,7 +403,7 @@ FlTitlesData createDayTitlesCompare() {
 FlTitlesData createWeekTitlesCompare() {
   return FlTitlesData(
     show: true,
-    bottomTitles: AxisTitles(
+    bottomTitles: const AxisTitles(
       sideTitles: SideTitles(
         showTitles: true,
         reservedSize: 30,
@@ -428,7 +428,7 @@ FlTitlesData createWeekTitlesCompare() {
 FlTitlesData createMonthTitlesCompare() {
   return FlTitlesData(
     show: true,
-    bottomTitles: AxisTitles(
+    bottomTitles: const AxisTitles(
       sideTitles: SideTitles(
         showTitles: true,
         reservedSize: 30,
@@ -502,7 +502,7 @@ BarChartGroupData createGroupData(
             : createBarsGradientGrey(),
       ),
       BarChartRodData(
-        toY: (y2 == 0) ? 0.4 : y2!,
+        toY: (y2 == 0 || y2 == null) ? 0.4 : y2,
         width: 15,
         gradient: (compareCheck)
             ? createBarsGradientGrey()
