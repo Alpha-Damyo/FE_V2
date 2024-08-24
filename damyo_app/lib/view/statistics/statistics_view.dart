@@ -92,7 +92,6 @@ class _StatisticsViewState extends State<StatisticsView>
                     children: [
                       userInfo(
                           context, userInfoViewModel, smokeViewModel.smokePlace),
-                      testbtn(periodInfoViewModel),
                       const SizedBox(
                         height: 20,
                       ),
