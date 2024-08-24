@@ -3,6 +3,7 @@ import 'package:damyo_app/models/smoking_area/sa_basic_model.dart';
 import 'package:damyo_app/models/statistics_info/stat_region_model.dart';
 import 'package:damyo_app/services/statistics_service.dart';
 import 'package:damyo_app/services/smoking_area_service.dart';import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 
 class LocalInfoViewModel extends ChangeNotifier {
   LocalInfoViewModel();
@@ -15,12 +16,12 @@ class LocalInfoViewModel extends ChangeNotifier {
   List<dynamic>? get areaList => _areaList;
   List<dynamic>? get areaInfo => _areaInfo;
   
-  Future<void> fetchLocalDB(SmokeDatabase useDB)async{
+  Future<void> fetchLocalDB(SmokeDatabase useDB, BuildContext context)async{
     List<SaBasicModel>? area = [];
     
     statRegionModel? Region;
 
-    Region = await getRegionStatics();
+    Region = await getRegionStatics(context);
 
     _areaList = Region.areaTop;
 
