@@ -1,3 +1,4 @@
+import "package:damyo_app/utils/re_login_dialog.dart";
 import "package:damyo_app/view/setting/contribution/contribution_view.dart";
 import "package:damyo_app/view/setting/login/login_view.dart";
 import "package:damyo_app/view/setting/updateprofile/updateprofile_view.dart";
@@ -157,11 +158,15 @@ Widget userProfile(
 }
 
 // 기여도 버튼
-Widget contributionBtn(BuildContext context, String name) {
+Widget contributionBtn(BuildContext context, bool isLogin, String name) {
   return InkWell(
     onTap: () {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const ContributionView()));
+      if (isLogin) {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const ContributionView()));
+      } else {
+        reLogin(context);
+      }
     },
     child: Ink(
       padding: const EdgeInsets.symmetric(horizontal: 15),

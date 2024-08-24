@@ -40,7 +40,11 @@ class _SettingViewState extends State<SettingView> {
                   userInfoViewModel, updateProfile)
             else
               loginBtn(context),
-            contributionBtn(context, '기여도'),
+            contributionBtn(
+              context,
+              isloginViewModel.isLogin,
+              '기여도',
+            ),
             toolBax(context, '흡연데이터 초기화'),
             toolBax(context, '앱버전'),
           ],
