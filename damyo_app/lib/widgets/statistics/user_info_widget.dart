@@ -193,7 +193,7 @@ Widget _mostSmokingArea(BuildContext context, int rank, String id, String name,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         (saInfo == null)
-                            ? _buildTag('로딩중')
+                            ? Container()
                             : (saInfo.outdoor!)
                                 ? _buildTag('실외')
                                 : _buildTag('실내'),
@@ -201,7 +201,7 @@ Widget _mostSmokingArea(BuildContext context, int rank, String id, String name,
                           width: 10,
                         ),
                         (saInfo == null)
-                            ? _buildTag('로딩중')
+                            ? Container()
                             : (saInfo.opened!)
                                 ? _buildTag('개방형')
                                 : _buildTag('폐쇄형'),
