@@ -79,8 +79,8 @@ class _StatisticsViewState extends State<StatisticsView>
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      userInfo(
-                          context, userInfoViewModel, smokeViewModel.smokePlace),
+                      userInfo(context, userInfoViewModel,
+                          smokeViewModel.smokePlace),
                       Container(
                         height: 20,
                         color: Colors.grey[200],
