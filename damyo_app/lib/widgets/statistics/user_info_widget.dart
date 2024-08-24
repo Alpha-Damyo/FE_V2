@@ -99,14 +99,25 @@ Widget userInfo(BuildContext context, UserInfoViewModel userInfoViewModel,
                                 future: SmokingAreaService.getDetailSmokingArea(
                                     smokePlace[index]['id']),
                                 builder: (context, AsyncSnapshot saInfo) {
-                                  return _mostSmokingArea(
-                                    context,
-                                    index + 1,
-                                    smokePlace[index]['id'],
-                                    smokePlace[index]['name'],
-                                    smokePlace[index]['count'],
-                                    saInfo.data,
-                                  );
+                                  if (saInfo.hasError) {
+                                    return _mostSmokingArea(
+                                      context,
+                                      index + 1,
+                                      smokePlace[index]['id'],
+                                      smokePlace[index]['name'],
+                                      smokePlace[index]['count'],
+                                      null,
+                                    );
+                                  } else {
+                                    return _mostSmokingArea(
+                                      context,
+                                      index + 1,
+                                      smokePlace[index]['id'],
+                                      smokePlace[index]['name'],
+                                      smokePlace[index]['count'],
+                                      saInfo.data,
+                                    );
+                                  }
                                 });
                           }
                           return Container();
@@ -121,7 +132,7 @@ Widget userInfo(BuildContext context, UserInfoViewModel userInfoViewModel,
 
 // 많이 방문한 흡연구역
 Widget _mostSmokingArea(BuildContext context, int rank, String id, String name,
-    int cnt, SaDetailModel saInfo) {
+    int cnt, SaDetailModel? saInfo) {
   return Row(
     children: [
       Center(
@@ -181,16 +192,16 @@ Widget _mostSmokingArea(BuildContext context, int rank, String id, String name,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        (saInfo.outdoor == null)
-                            ? _buildTag('실내외')
+                        (saInfo == null)
+                            ? _buildTag('로딩중')
                             : (saInfo.outdoor!)
                                 ? _buildTag('실외')
                                 : _buildTag('실내'),
                         const SizedBox(
                           width: 10,
                         ),
-                        (saInfo.opened == null)
-                            ? _buildTag('개방/폐쇄')
+                        (saInfo == null)
+                            ? _buildTag('로딩중')
                             : (saInfo.opened!)
                                 ? _buildTag('개방형')
                                 : _buildTag('폐쇄형'),
@@ -218,14 +229,10 @@ Widget _buildTag(String text) {
       color: const Color(0xFFD6ECFA),
       borderRadius: BorderRadius.circular(8),
     ),
-    child: Text(
-      text,
-      style: const TextStyle(
-        color: Color(0xFF0E6AA6),
-        fontSize: 10,
-        fontFamily: 'Pretendard',
-        fontWeight: FontWeight.w600,
-      ),
+    child: textFormat(
+      text: text,
+      fontSize: 10,
+      color: const Color(0xFF0E6AA6),
     ),
   );
 }
