@@ -27,8 +27,6 @@ class _StatisticsViewState extends State<StatisticsView>
   late TabController _tabController;
   final TextEditingController _priceController = TextEditingController();
 
-  late SmokeDatabase userDB = SmokeDatabase();
-
   bool timeCheck = true;
   bool compareCheck = true;
   String compareType = '일';
@@ -44,14 +42,14 @@ class _StatisticsViewState extends State<StatisticsView>
     _tabController = TabController(length: 2, vsync: this);
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
 
-    if (Provider.of<IsloginViewModel>(context).isLogin) {
-      initializedDB(context, userDB);
-    }
-  }
+  //   if (Provider.of<IsloginViewModel>(context).isLogin) {
+
+  //   }
+  // }
 
   @override
   void dispose() {
@@ -81,7 +79,7 @@ class _StatisticsViewState extends State<StatisticsView>
         ),
         body: RefreshIndicator(
           onRefresh: () async {
-            initializedDB(context, userDB);
+            initializedDB(context);
           },
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,

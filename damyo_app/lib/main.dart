@@ -29,7 +29,6 @@ void main() async {
   await initializeMap();
   // await getCurrentLocation();
   await getPhotoPermission();
-  FlutterNativeSplash.remove();
 
   runApp(
     MultiProvider(

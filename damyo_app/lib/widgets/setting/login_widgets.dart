@@ -1,6 +1,7 @@
 import "package:damyo_app/icon/damyo_icon_icons.dart";
 import "package:damyo_app/services/login_service.dart";
 import "package:damyo_app/style.dart";
+import "package:damyo_app/utils/initialized_db.dart";
 import "package:damyo_app/view_models/login_models/is_login_view_model.dart";
 import "package:damyo_app/view_models/login_models/token_view_model.dart";
 import "package:damyo_app/view_models/login_models/user_info_view_model.dart";
@@ -12,6 +13,7 @@ Widget naverLoginBtn(BuildContext context, IsloginViewModel isloginViewModel,
     onTap: () async {
       if (await LoginService.signInWithNaver(
           isloginViewModel, tokenViewModel, userInfoViewModel)) {
+        await initializedDB(context);
         Navigator.pop(context);
       }
     },
@@ -50,6 +52,7 @@ Widget googleLoginBtn(BuildContext context, IsloginViewModel isloginViewModel,
     onTap: () async {
       if (await LoginService.signInWithGoogle(
           isloginViewModel, tokenViewModel, userInfoViewModel)) {
+        await initializedDB(context);
         Navigator.pop(context);
       }
     },

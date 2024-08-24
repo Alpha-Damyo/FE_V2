@@ -23,6 +23,7 @@ void reLogin(BuildContext context) {
           ),
           TextButton(
             onPressed: () {
+              Navigator.of(context).pop();
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const LoginView()),
