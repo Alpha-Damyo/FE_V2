@@ -46,6 +46,6 @@ Future<statRegionModel> getRegionStatics() async {
   if (response.statusCode == 200) {
     return statRegionModel.fromJson(jsonMap);
   } else {
-    throw jsonMap;
+    throw jsonMap['code'];
   }
 }

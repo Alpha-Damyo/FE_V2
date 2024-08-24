@@ -70,11 +70,11 @@ class _StatisticsViewState extends State<StatisticsView>
         ),
         body: RefreshIndicator(
           onRefresh: () async {
-            initializedDB(context);
+            await initializedDB(context);
           },
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
-            child: (isloginViewModel.isLogin)
+            child: (isloginViewModel.isLogin && smokeViewModel.check)
                 ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
