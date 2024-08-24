@@ -1,5 +1,6 @@
 import 'package:damyo_app/icon/damyo_icon_icons.dart';
 import 'package:damyo_app/services/user_service.dart';
+import 'package:damyo_app/utils/initialized_db.dart';
 import 'package:damyo_app/view_models/bottom_navigation_model.dart';
 import 'package:damyo_app/view_models/login_models/is_login_view_model.dart';
 import 'package:damyo_app/view_models/login_models/token_view_model.dart';
@@ -118,9 +119,12 @@ class _HomeViewState extends State<HomeView> {
           Provider.of<TokenViewModel>(context, listen: false));
       if (userInfo[0]) {
         // 로그인 상태 true
+        print('초기화!');
+        await initializedDB(context);
         Provider.of<IsloginViewModel>(context, listen: false).login();
         Provider.of<UserInfoViewModel>(context, listen: false)
             .updateUserInfoModel(userInfo[1]);
+        
       } else {
         // 로그인 상태 false
         Provider.of<IsloginViewModel>(context, listen: false).logout();

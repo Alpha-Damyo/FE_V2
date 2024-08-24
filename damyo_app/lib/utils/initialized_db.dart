@@ -6,13 +6,19 @@ import 'package:damyo_app/view_models/statistics_models/timeAver_info_view_model
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void initializedDB(BuildContext context, SmokeDatabase userDB) async {
-    await Provider.of<SmokeViewModel>(context, listen: false)
-        .fetchSmokeDB(userDB);
-    await Provider.of<LocalInfoViewModel>(context, listen: false)
-        .fetchLocalDB(userDB);
-    await Provider.of<TimeaverInfoViewModel>(context, listen: false)
-        .fetchTimeDB();
-    await Provider.of<PeriodInfoViewModel>(context, listen: false)
-        .fetchPeriodEveryDB();
-  }
+Future<void> initializedDB(BuildContext context) async {
+  SmokeDatabase userDB = SmokeDatabase();
+  await Provider.of<SmokeViewModel>(context, listen: false)
+      .fetchSmokeDB(userDB);
+  await Provider.of<LocalInfoViewModel>(context, listen: false).fetchLocalDB();
+  await Provider.of<TimeaverInfoViewModel>(context, listen: false)
+      .fetchTimeDB();
+  await Provider.of<PeriodInfoViewModel>(context, listen: false)
+      .fetchPeriodEveryDB();
+}
+
+void initializedUserDB(BuildContext context) async {
+  SmokeDatabase userDB = SmokeDatabase();
+  await Provider.of<SmokeViewModel>(context, listen: false)
+      .fetchSmokeDB(userDB);
+}
