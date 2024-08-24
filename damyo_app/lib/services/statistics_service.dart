@@ -24,7 +24,7 @@ Future<statDateModel> getDateStatics() async {
   if (response.statusCode == 200) {
     return statDateModel.fromJson(jsonMap);
   } else {
-    throw jsonMap['code'];
+    throw jsonMap;
   }
 }
 
@@ -45,6 +45,6 @@ Future<statRegionModel> getRegionStatics() async {
   if (response.statusCode == 200) {
     return statRegionModel.fromJson(jsonMap);
   } else {
-    throw jsonMap['code'];
+    throw jsonMap;
   }
 }
