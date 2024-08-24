@@ -124,12 +124,6 @@ class _MapViewState extends State<MapView> {
                 },
                 // Todo: 흡연 완료
                 () async {
-                  await userDB.insertSmokeInfo(
-                      _mapViewModel.smokingAreaCardInfo.areaId,
-                      _mapViewModel.smokingAreaCardInfo.name,
-                      now);
-                  initializedUserDB(context);
-
                   if (Provider.of<IsloginViewModel>(context, listen: false)
                       .isLogin) {
                     // 로그인을 한 경우

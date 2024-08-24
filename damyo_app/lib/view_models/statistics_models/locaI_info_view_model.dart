@@ -25,6 +25,7 @@ class LocalInfoViewModel extends ChangeNotifier {
     Region = await getRegionStatics();
 
     _areaList = Region.areaTop;
+    _GuList = [];
     List<dynamic>? _gulist = Region.allRegion;
 
     if (_areaList != null) {
