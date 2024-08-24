@@ -42,15 +42,6 @@ class _StatisticsViewState extends State<StatisticsView>
     _tabController = TabController(length: 2, vsync: this);
   }
 
-  // @override
-  // void didChangeDependencies() {
-  //   super.didChangeDependencies();
-
-  //   if (Provider.of<IsloginViewModel>(context).isLogin) {
-
-  //   }
-  // }
-
   @override
   void dispose() {
     _tabController.dispose();

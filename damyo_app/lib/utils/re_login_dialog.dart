@@ -1,6 +1,7 @@
 import 'package:damyo_app/style.dart';
 import 'package:damyo_app/view/setting/login/login_view.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 void reLogin(BuildContext context) {
   showDialog(
@@ -8,11 +9,13 @@ void reLogin(BuildContext context) {
     builder: (BuildContext context) {
       return AlertDialog(
         title: Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(6.0),
           child: textFormat(
-            text: "로그인이 필요합니다.\n로그인을 진행해주세요.",
-            fontSize: 20,
-          ),
+              text: "로그인 필요 서비스", fontSize: 18, fontWeight: FontWeight.w700),
+        ),
+        content: Padding(
+          padding: const EdgeInsets.all(6.0),
+          child: textFormat(text: "로그인을 진행해주세요."),
         ),
         actions: [
           TextButton(
@@ -24,10 +27,12 @@ void reLogin(BuildContext context) {
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const LoginView()),
-              );
+              Future.delayed(Duration.zero, () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginView()),
+                );
+              });
             },
             child: const Text('확인'),
           ),
