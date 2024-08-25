@@ -50,11 +50,11 @@ class _HomeViewState extends State<HomeView> {
           BottomNavigationBarItem(
             icon: _bottomNavigationModel.curPage == 0
                 ? const Icon(
-                    DamyoIcon.map_fill,
+                    DamyoIcon.map_fill_2,
                     size: 18,
                   )
                 : const Icon(
-                    DamyoIcon.map_empty,
+                    DamyoIcon.map_empty_2,
                     size: 18,
                   ),
             label: "지도",
@@ -62,11 +62,11 @@ class _HomeViewState extends State<HomeView> {
           BottomNavigationBarItem(
             icon: _bottomNavigationModel.curPage == 1
                 ? const Icon(
-                    DamyoIcon.favorites_fill,
+                    DamyoIcon.favorites_fill_3,
                     size: 18,
                   )
                 : const Icon(
-                    DamyoIcon.favorites_empty,
+                    DamyoIcon.favorites_empty_3,
                     size: 18,
                   ),
             label: "즐겨찾기",
