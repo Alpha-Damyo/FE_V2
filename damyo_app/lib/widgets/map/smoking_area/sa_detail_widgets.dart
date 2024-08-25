@@ -51,6 +51,7 @@ Widget saDetailNameScoreBtns(
   String areaId,
   String name,
   double score,
+  int reviewCount,
   bool? opened,
   bool? closed,
   bool? indoor,
@@ -93,7 +94,7 @@ Widget saDetailNameScoreBtns(
             starSize: 18,
           ),
           const SizedBox(width: 5),
-          textFormat(text: "(3건)")
+          textFormat(text: "($reviewCount건)")
         ],
       ),
       const SizedBox(height: 10),
@@ -149,8 +150,7 @@ Widget saDetailNameScoreBtns(
                   } else if (response == "re_login") {
                     reLogin(context);
                   }
-                }
-                else{
+                } else {
                   // 흡연을 취소한 경우
                 }
               } else {
@@ -205,7 +205,7 @@ Widget saDetailInfo(
     BuildContext context,
     String name,
     String address,
-    String description,
+    String? description,
     String areaId,
     bool? opened,
     bool? outdoor,
@@ -227,8 +227,9 @@ Widget saDetailInfo(
                   fontSize: 16,
                   textOverflow: TextOverflow.clip,
                 ),
-                if (description != "") const SizedBox(height: 5),
-                if (description != "")
+                if (description != "" && description != null)
+                  const SizedBox(height: 5),
+                if (description != "" && description != null)
                   textFormat(
                     text: description,
                     textOverflow: TextOverflow.clip,

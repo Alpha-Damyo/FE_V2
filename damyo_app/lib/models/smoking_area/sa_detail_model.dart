@@ -4,9 +4,10 @@ class SaDetailModel {
   double latitude;
   double longitude;
   String address;
-  String creadtedAt;
-  String description;
+  String createdAt;
+  String? description;
   double score;
+  int reviewCount;
   bool? status;
   bool? opened;
   bool? closed;
@@ -20,10 +21,11 @@ class SaDetailModel {
         latitude = json['latitude'],
         longitude = json['longitude'],
         address = json['address'],
-        creadtedAt = json['createdAt'],
+        createdAt = json['createdAt'],
         status = json['status'],
         description = json['description'],
         score = json['score'],
+        reviewCount = json['reviewCount'],
         opened = json['opened'],
         closed = json['closed'],
         indoor = json['indoor'],

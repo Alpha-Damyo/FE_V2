@@ -116,8 +116,7 @@ class SmokeDatabase {
 
   Future<Map<String, double>> getThreeHourlyAverages() async {
     final db = await database;
-    final List<Map<String, dynamic>> result = await db.rawQuery(
-      '''
+    final List<Map<String, dynamic>> result = await db.rawQuery('''
       SELECT 
         CASE 
           WHEN time >= 0 AND time < 3 THEN '3'
@@ -137,8 +136,7 @@ class SmokeDatabase {
       ) 
       GROUP BY time_range
       ORDER BY time
-      '''
-    );
+      ''');
 
     Map<String, double> threeHourlyAverages = {};
     for (var row in result) {
@@ -146,5 +144,4 @@ class SmokeDatabase {
     }
     return threeHourlyAverages;
   }
-
 }
