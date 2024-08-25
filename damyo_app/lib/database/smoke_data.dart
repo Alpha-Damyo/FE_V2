@@ -31,7 +31,7 @@ class SmokeDatabase {
     String path = join(await getDatabasesPath(), 'smokeInfo_database.db');
     return await openDatabase(
       path,
-      version: 1,
+      version: 2,
       onCreate: _onCreate,
       onUpgrade: _onUpgrade,
     );
@@ -48,7 +48,7 @@ class SmokeDatabase {
   }
 
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
-    if (oldVersion < 1) {
+    if (oldVersion < 2) {
       await db.execute('DROP TABLE IF EXISTS smokeInfo');
       await _onCreate(db, newVersion);
     }
@@ -78,7 +78,7 @@ class SmokeDatabase {
       String column) async {
     final db = await database;
     return await db.rawQuery(
-      'SELECT $column, name, COUNT($column) as count FROM smokeInfo GROUP BY $column HAVING COUNT($column) > 1 ORDER BY COUNT($column) DESC',
+      'SELECT $column, name, COUNT($column) as count FROM smokeInfo GROUP BY $column HAVING COUNT($column) > 0 ORDER BY COUNT($column) DESC',
     );
   }
 
