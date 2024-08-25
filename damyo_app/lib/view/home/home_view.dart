@@ -120,7 +120,6 @@ class _HomeViewState extends State<HomeView> {
           Provider.of<TokenViewModel>(context, listen: false));
       if (userInfo[0]) {
         // 로그인 상태 true
-        print('초기화!');
         await initializedDB(context);
         Provider.of<IsloginViewModel>(context, listen: false).login();
         Provider.of<UserInfoViewModel>(context, listen: false)

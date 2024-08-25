@@ -98,6 +98,10 @@ class SmokingAreaService {
     var response = await http.get(url);
     var responseDecode = jsonDecode(utf8.decode(response.bodyBytes));
     if (response.statusCode == 200) {
+      print("123123123321");
+      print(responseDecode);
+      print(SaDetailModel.fromJson(responseDecode).areaId);
+      print("123123123321");
       return SaDetailModel.fromJson(responseDecode);
     } else {
       throw Exception("Fail to Get Detail");
