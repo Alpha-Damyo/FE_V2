@@ -9,6 +9,7 @@ import 'package:damyo_app/view_models/map_models/map_view_model.dart';
 import 'package:damyo_app/view_models/map_models/search/sa_search_view_model.dart';
 import 'package:damyo_app/widgets/map/map_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:provider/provider.dart';
 
@@ -48,10 +49,14 @@ class _MapViewState extends State<MapView> {
               // ),
               locationButtonEnable: true,
             ),
-            onMapReady: (controller) {
+            onMapReady: (controller) async {
               _mapViewModel.mapController = controller;
               _mapViewModel.moveCamera(curLat, curLng);
-              updateSmokingAreas(context);
+              _mapViewModel.updateSaSearchModel(
+                curLat,
+                curLng,
+              );
+              _mapViewModel.updateSmokingAreas(context);
               isMapControllerLoaded = true;
             },
             onCameraIdle: () {

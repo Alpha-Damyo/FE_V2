@@ -179,12 +179,12 @@ class MapViewModel extends ChangeNotifier {
 
   // 장소 이동
   moveCamera(double lat, double lng) {
-    mapController.updateCamera(
-      NCameraUpdate.scrollAndZoomTo(
-        target: NLatLng(lat, lng),
-        zoom: 14,
-      ),
+    final update = NCameraUpdate.withParams(
+      target: NLatLng(lat, lng),
+      zoom: 14,
     );
+    update.setAnimation(animation: NCameraAnimation.none);
+    mapController.updateCamera(update);
     notifyListeners();
   }
 
