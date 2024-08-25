@@ -127,6 +127,7 @@ class MapViewModel extends ChangeNotifier {
 
   trueResearchBtnVisible() {
     _researchBtnVisible = true;
+    // print("truetruetruetruetruetruetruetrue");
     notifyListeners();
   }
 

@@ -109,7 +109,7 @@ class _SaReportViewState extends State<SaReportView> {
                     value: _isChecked[2],
                     onChanged: (bool? value) {
                       setState(() {
-                        _isChecked[1] = value!;
+                        _isChecked[2] = value!;
                         _canReport = checkCanReport();
                       });
                     },
@@ -159,7 +159,7 @@ class _SaReportViewState extends State<SaReportView> {
                     value: _isChecked[4],
                     onChanged: (bool? value) {
                       setState(() {
-                        _isChecked[1] = value!;
+                        _isChecked[4] = value!;
                         _canReport = checkCanReport();
                       });
                     },
