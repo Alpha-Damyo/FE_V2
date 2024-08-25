@@ -42,7 +42,7 @@ class MapViewModel extends ChangeNotifier {
   final SaSearchModel _saSearchModel = SaSearchModel(
     latitude: 37.5666,
     longitude: 126.979,
-    range: 0.005,
+    range: 0.05,
   );
   SaSearchModel get saSearchModel => _saSearchModel;
 
@@ -175,6 +175,17 @@ class MapViewModel extends ChangeNotifier {
   removeFavoritesElement(int listIndex, int elementIndex) {
     _favoritesList[listIndex][1].removeAt(elementIndex);
     _favoritesList[listIndex][2].removeAt(elementIndex);
+  }
+
+  // 장소 이동
+  moveCamera(double lat, double lng) {
+    mapController.updateCamera(
+      NCameraUpdate.scrollAndZoomTo(
+        target: NLatLng(lat, lng),
+        zoom: 14,
+      ),
+    );
+    notifyListeners();
   }
 
   // 즐겨찾기에서 장소를 고른 경우

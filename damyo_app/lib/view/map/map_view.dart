@@ -40,16 +40,17 @@ class _MapViewState extends State<MapView> {
         children: [
           // 지도
           NaverMap(
-            options: NaverMapViewOptions(
-              initialCameraPosition: NCameraPosition(
-                target:
-                    NLatLng(_mapViewModel.getCurLat, _mapViewModel.getCurLng),
-                zoom: 14.0,
-              ),
+            options: const NaverMapViewOptions(
+              // initialCameraPosition: NCameraPosition(
+              //   target:
+              //       NLatLng(_mapViewModel.getCurLat, _mapViewModel.getCurLng),
+              //   zoom: 14.0,
+              // ),
               locationButtonEnable: true,
             ),
             onMapReady: (controller) {
               _mapViewModel.mapController = controller;
+              _mapViewModel.moveCamera(curLat, curLng);
               updateSmokingAreas(context);
               isMapControllerLoaded = true;
             },
