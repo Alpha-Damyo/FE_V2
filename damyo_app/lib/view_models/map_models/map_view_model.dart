@@ -145,6 +145,11 @@ class MapViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  closeInformBtnVisible() {
+    _informBtnVisible = false;
+    notifyListeners();
+  }
+
   // 즐겨찾기
   List<dynamic> _favoritesList = [];
   List<dynamic> get favoritesList => _favoritesList;

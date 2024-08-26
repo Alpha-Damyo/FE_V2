@@ -77,6 +77,7 @@ class _MapViewState extends State<MapView> {
                       () {
                         _mapViewModel.changeInformBtnVisible();
                       },
+                      _mapViewModel.informBtnVisible,
                     ),
                   ],
                 ),
