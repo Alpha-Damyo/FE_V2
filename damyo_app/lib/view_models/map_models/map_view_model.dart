@@ -167,9 +167,9 @@ class MapViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  addFavoritesElement(int index) {
-    _favoritesList[index][1].add(smokingAreaCardInfo.areaId);
-    _favoritesList[index][2].add(smokingAreaCardInfo.name);
+  addFavoritesElement(int index, String areaId, String name) {
+    _favoritesList[index][1].add(areaId);
+    _favoritesList[index][2].add(name);
   }
 
   removeFavoritesElement(int listIndex, int elementIndex) {
@@ -177,12 +177,17 @@ class MapViewModel extends ChangeNotifier {
     _favoritesList[listIndex][2].removeAt(elementIndex);
   }
 
+  changeSmokingAreaCardInfo(SaBasicModel model) {
+    _smokingAreaCardInfo = model;
+    notifyListeners();
+  }
+
   // 장소 이동
   moveCamera(double lat, double lng) {
     mapController.updateCamera(
       NCameraUpdate.scrollAndZoomTo(
         target: NLatLng(lat, lng),
-        zoom: 14,
+        zoom: 15,
       ),
     );
     notifyListeners();

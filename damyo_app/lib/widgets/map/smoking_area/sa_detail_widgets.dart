@@ -111,7 +111,10 @@ Widget saDetailNameScoreBtns(
               showModalBottomSheet(
                   context: context,
                   builder: (context) {
-                    return const FavoritesBottomsheet();
+                    return FavoritesBottomsheet(
+                      areaId: areaId,
+                      areaName: name,
+                    );
                   });
             },
           ),
@@ -136,7 +139,6 @@ Widget saDetailNameScoreBtns(
             context,
             (Icons.check_box),
             "흡연완료",
-            // Todo: 흡연 완료
             () async {
               if (Provider.of<IsloginViewModel>(context, listen: false)
                   .isLogin) {

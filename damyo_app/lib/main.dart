@@ -27,8 +27,8 @@ void main() async {
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await loadDotEnv();
   await initializeMap();
-  await getCurrentLocation();
-  await getPhotoPermission();
+  // await getCurrentLocation();
+  // await getPhotoPermission();
 
   runApp(
     MultiProvider(
@@ -74,7 +74,6 @@ class Damyo extends StatelessWidget {
           onSecondaryContainer: Color(0xFFD2D7DD),
         ),
       ),
-      // Todo: Provider 적용
       routerConfig: router,
       builder: (context, child) {
         return MediaQuery(

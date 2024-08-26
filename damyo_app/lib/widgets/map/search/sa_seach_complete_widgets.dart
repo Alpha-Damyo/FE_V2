@@ -1,4 +1,5 @@
 // 검색 창
+
 import 'package:damyo_app/style.dart';
 import 'package:damyo_app/utils/cal_distance.dart';
 import 'package:damyo_app/view_models/bottom_navigation_model.dart';
@@ -34,6 +35,7 @@ Widget saSearchCompleteBar(BuildContext context, String searchWord) {
 
 Widget searchedSaListView(
     BuildContext context,
+    MapViewModel mapViewModel,
     SaSearchViewModel saSearchViewModel,
     String searchWord,
     BottomNavigationModel bottomNavigationModel) {
@@ -55,6 +57,11 @@ Widget searchedSaListView(
               onTap: () {
                 saSearchViewModel.updateSearchSelectedSa(
                     saSearchViewModel.searchedSaList[index]);
+
+                mapViewModel.closeSmokingAreaCard();
+                mapViewModel.changeSmokingAreaCardInfo(
+                    saSearchViewModel.searchSelectedSa);
+
                 saSearchViewModel.moveMapCamera();
                 bottomNavigationModel.setSearchPage(2);
               },
