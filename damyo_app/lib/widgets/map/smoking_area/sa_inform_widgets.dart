@@ -1,12 +1,15 @@
 import 'package:damyo_app/models/smoking_area/sa_inform_model.dart';
+import 'package:damyo_app/models/user/user_info_model.dart';
 import 'package:damyo_app/services/naver_address_service.dart';
 import 'package:damyo_app/services/smoking_area_service.dart';
 import 'package:damyo_app/style.dart';
 import 'package:damyo_app/view_models/login_models/token_view_model.dart';
+import 'package:damyo_app/view_models/login_models/user_info_view_model.dart';
 import 'package:damyo_app/view_models/map_models/smoking_area/sa_inform_view_model.dart';
 import 'package:damyo_app/widgets/common/ratingstar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
 Widget informName(BuildContext context, TextEditingController nameController,
     Function canInform) {
@@ -123,6 +126,8 @@ Widget informComplete(
         bool success = await SmokingAreaService.informSmokingArea(
             isLogin, tokenViewModel, model.informImage, saInformModel);
 
+        Provider.of<UserInfoViewModel>(context, listen: false)
+            .updateContributionByInform();
         model.updateIsLoading(false);
         if (success) {
           Fluttertoast.showToast(msg: "제보가 완료되었습니다");

@@ -187,7 +187,7 @@ class MapViewModel extends ChangeNotifier {
     mapController.updateCamera(
       NCameraUpdate.scrollAndZoomTo(
         target: NLatLng(lat, lng),
-        zoom: 15,
+        zoom: 14,
       ),
     );
     notifyListeners();
