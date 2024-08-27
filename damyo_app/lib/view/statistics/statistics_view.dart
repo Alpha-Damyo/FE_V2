@@ -33,7 +33,7 @@ class _StatisticsViewState extends State<StatisticsView>
   int allcnt = 0;
 
   final List<bool> isComparetype = [true, false, false];
-  final List<String> calType = ['1일', '1주일', '1달'];
+  final List<String> calType = ['1일', '1주', '1달'];
 
   @override
   void initState() {
