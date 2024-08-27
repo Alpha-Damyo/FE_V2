@@ -5,7 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 Widget nameUpdateBox(
-    BuildContext context, TextEditingController _nameController) {
+    BuildContext context, TextEditingController nameController) {
   return Expanded(
     child: SingleChildScrollView(
       scrollDirection: Axis.vertical,
@@ -39,7 +39,7 @@ Widget nameUpdateBox(
                 ),
               ),
               child: TextField(
-                controller: _nameController,
+                controller: nameController,
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
@@ -54,19 +54,24 @@ Widget nameUpdateBox(
   );
 }
 
-Widget profileUpdateSelectBtn(Function getImage, Function(XFile?) getImg) {
+// 이미지를 가져오는 함수
+Future<XFile?> getImage(ImagePicker imagePicker) async {
+  final XFile? pickedFile =
+      await imagePicker.pickImage(source: ImageSource.gallery);
+  if (pickedFile != null) {
+    return pickedFile;
+  }
+  return null;
+}
+
+Widget profileUpdateSelectBtn(ImagePicker imagePicker, Function setImg) {
   return Positioned(
     top: 65,
     left: 65,
     child: IconButton(
       onPressed: () async {
-        var status = await checkPhotoPermission();
-        if (status) {
-          XFile? imgfile = await getImage(ImageSource.gallery);
-          getImg(imgfile);
-        } else {
-          openAppSettings();
-        }
+        XFile? imgfile = await getImage(imagePicker);
+        setImg(imgfile);
       },
       icon: Image.asset(
         'assets/icons/setting/updateprofile/camera.png',
