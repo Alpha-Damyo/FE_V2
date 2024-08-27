@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:damyo_app/services/userprofile_update_service.dart';
 import 'package:damyo_app/style.dart';
+import 'package:damyo_app/utils/get_permission.dart';
 import 'package:damyo_app/view_models/login_models/token_view_model.dart';
 import 'package:damyo_app/view_models/login_models/user_info_view_model.dart';
 import 'package:damyo_app/widgets/setting/updateprofile_widgets.dart';
