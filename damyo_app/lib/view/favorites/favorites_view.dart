@@ -191,22 +191,26 @@ class _FavoriteScreenState extends State<FavoritesView> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Padding(
-            padding: EdgeInsets.all(20.0),
-            child: Text(
-              "정말 삭제하시겠습니까? ",
-              style: TextStyle(fontSize: 16),
-            ),
+          title: const Text(
+            "정말 삭제하시겠습니까? ",
+            style: TextStyle(fontSize: 18),
           ),
           actions: [
-            TextButton(
-              onPressed: () {
+            InkWell(
+              onTap: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('취소'),
+              child: Ink(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                  child: Text(
+                    '취소',
+                    style:
+                        TextStyle(color: Theme.of(context).colorScheme.primary),
+                  )),
             ),
-            TextButton(
-              onPressed: () {
+            InkWell(
+              onTap: () {
                 if (index == 0) {
                   Fluttertoast.showToast(msg: "기본 그룹은 삭제할 수 없습니다");
                 } else {
@@ -215,7 +219,14 @@ class _FavoriteScreenState extends State<FavoritesView> {
                 }
                 Navigator.of(context).pop();
               },
-              child: const Text('확인'),
+              child: Ink(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                  child: Text(
+                    '확인',
+                    style:
+                        TextStyle(color: Theme.of(context).colorScheme.primary),
+                  )),
             ),
           ],
         );
@@ -228,28 +239,39 @@ class _FavoriteScreenState extends State<FavoritesView> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Padding(
-            padding: EdgeInsets.all(20.0),
-            child: Text(
-              "정말 삭제하시겠습니까?",
-              style: TextStyle(fontSize: 16),
-            ),
+          title: const Text(
+            "정말 삭제하시겠습니까?",
+            style: TextStyle(fontSize: 16),
           ),
           actions: [
-            TextButton(
-              onPressed: () {
+            InkWell(
+              onTap: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('취소'),
+              child: Ink(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                  child: Text(
+                    '취소',
+                    style:
+                        TextStyle(color: Theme.of(context).colorScheme.primary),
+                  )),
             ),
-            TextButton(
-              onPressed: () {
+            InkWell(
+              onTap: () {
                 _mapViewModel.removeFavoritesElement(index1, index2);
                 FavoritesService.updateFavorites(_mapViewModel.favoritesList);
 
                 Navigator.of(context).pop();
               },
-              child: const Text('확인'),
+              child: Ink(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                  child: Text(
+                    '확인',
+                    style:
+                        TextStyle(color: Theme.of(context).colorScheme.primary),
+                  )),
             ),
           ],
         );
