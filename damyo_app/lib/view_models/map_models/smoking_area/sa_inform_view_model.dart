@@ -93,6 +93,10 @@ class SaInformViewModel extends ChangeNotifier {
     _descriptionController.clear();
     _informImage = null;
     _starValue = 0;
+    _inside = false;
+    _outside = false;
+    _open = false;
+    _close = false;
     _canInform = false;
   }
 }
