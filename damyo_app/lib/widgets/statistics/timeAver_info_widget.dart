@@ -250,8 +250,8 @@ LineChartBarData lineChartBarDataUser(
       belowBarData: BarAreaData(show: false),
       spots: List.generate(9, (index) {
         if (UserList?['${index * 3}'] != null) {
-          double? y = UserList!['${index * 3}'];
-          return FlSpot(index * 3, y!);
+          double? y = double.parse(UserList!['${index * 3}'].toStringAsFixed(1));
+          return FlSpot(index * 3, y);
         } else {
           return FlSpot(index * 3, 0);
         }
@@ -279,6 +279,6 @@ LineChartBarData lineChartBarDataEvery(
       dotData: const FlDotData(show: false),
       belowBarData: BarAreaData(show: false),
       spots: List.generate(EveryList!.length, (index) {
-        return FlSpot(index * 3, EveryList[index]);
+        return FlSpot(index * 3, double.parse(EveryList[index].toStringAsFixed(1)));
       }));
 }
