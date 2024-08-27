@@ -1,4 +1,5 @@
 import 'package:damyo_app/style.dart';
+import 'package:damyo_app/view/map/smoking_area/favorites_bottomsheet.dart';
 import 'package:damyo_app/view_models/map_models/search/sa_search_view_model.dart';
 import 'package:damyo_app/widgets/map/search/sa_search_map_widgets.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +48,16 @@ class _SaSearchMapViewState extends State<SaSearchMapView> {
               child: searchedSmokingAreaCard(
                 context,
                 _saSearchViewModel.searchSelectedSa,
-                () {},
+                () {
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return FavoritesBottomsheet(
+                          areaId: _saSearchViewModel.searchSelectedSa.areaId,
+                          areaName: _saSearchViewModel.searchSelectedSa.name,
+                        );
+                      });
+                },
                 () {},
               ),
             ),

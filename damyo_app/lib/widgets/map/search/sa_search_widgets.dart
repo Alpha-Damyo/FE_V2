@@ -2,6 +2,7 @@ import 'package:damyo_app/models/smoking_area/sa_basic_model.dart';
 import 'package:damyo_app/services/smoking_area_service.dart';
 import 'package:damyo_app/style.dart';
 import 'package:damyo_app/view_models/bottom_navigation_model.dart';
+import 'package:damyo_app/view_models/map_models/map_view_model.dart';
 import 'package:damyo_app/view_models/map_models/search/sa_search_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';

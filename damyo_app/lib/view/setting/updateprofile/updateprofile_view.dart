@@ -20,16 +20,8 @@ class UpdateprofileView extends StatefulWidget {
 
 class _UpdateprofileViewState extends State<UpdateprofileView> {
   final TextEditingController _nameController = TextEditingController();
+  late UserInfoViewModel _userInfoViewModel;
   XFile? _profileImage;
-
-  // 이미지를 가져오는 함수
-  Future<XFile?> getImage(ImageSource imageSource) async {
-    final XFile? pickedFile = await picker.pickImage(source: imageSource);
-    if (pickedFile != null) {
-      return pickedFile;
-    }
-    return null;
-  }
 
   @override
   void initState() {
@@ -44,14 +36,16 @@ class _UpdateprofileViewState extends State<UpdateprofileView> {
 
   @override
   Widget build(BuildContext context) {
+    _userInfoViewModel = Provider.of<UserInfoViewModel>(context);
+    _nameController.text = _userInfoViewModel.userInfoModel.name;
     return Consumer2<UserInfoViewModel, TokenViewModel>(
         builder: (context, userInfoViewModel, tokenViewModel, child) {
       return Scaffold(
         appBar: AppBar(
           scrolledUnderElevation: 0,
           backgroundColor: Colors.white,
-          title: const Text(
-            '프로필 수정',
+          title: appbarTitleFormat(
+            text: '프로필 수정',
           ),
           centerTitle: true,
           actions: [
@@ -103,45 +97,47 @@ class _UpdateprofileViewState extends State<UpdateprofileView> {
                     Navigator.pop(context);
                   }
                 },
-                child: textFormat(text: '완료', fontSize: 13)),
+                child: textFormat(text: '완료', fontSize: 16)),
           ],
         ),
         body: Center(
           child: Column(
             children: [
               const SizedBox(height: 10),
-              Stack(children: [
-                Container(
-                  width: 110,
-                  height: 110,
-                  padding: const EdgeInsets.only(bottom: 1),
-                  clipBehavior: Clip.antiAlias,
-                  decoration: ShapeDecoration(
-                    color: const Color(0xFFDEDEDE),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(56),
+              Stack(
+                children: [
+                  Container(
+                    width: 110,
+                    height: 110,
+                    padding: const EdgeInsets.only(bottom: 1),
+                    clipBehavior: Clip.antiAlias,
+                    decoration: ShapeDecoration(
+                      color: const Color(0xFFDEDEDE),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(56),
+                      ),
                     ),
+                    child: userInfoViewModel.userInfoModel.profileUrl == null
+                        ? Image.asset(
+                            'assets/icons/setting/updateprofile/defalut.png')
+                        : _profileImage == null
+                            ? Image.network(
+                                userInfoViewModel.userInfoModel.profileUrl!)
+                            : Image.file(
+                                File(_profileImage!.path),
+                              ),
                   ),
-                  child: userInfoViewModel.userInfoModel.profileUrl == null
-                      ? Image.asset(
-                          'assets/icons/setting/updateprofile/defalut.png')
-                      : _profileImage == null
-                          ? Image.network(
-                              userInfoViewModel.userInfoModel.profileUrl!)
-                          : Image.file(
-                              File(_profileImage!.path),
-                            ),
-                ),
-                profileUpdateSelectBtn(getImage, (img) {
-                  setState(() {
-                    if (img != null) {
-                      _profileImage = img;
-                    } else {
-                      _profileImage = null;
-                    }
-                  });
-                }),
-              ]),
+                  profileUpdateSelectBtn(picker, (img) {
+                    setState(() {
+                      if (img != null) {
+                        _profileImage = img;
+                      } else {
+                        _profileImage = null;
+                      }
+                    });
+                  }),
+                ],
+              ),
               nameUpdateBox(context, _nameController),
             ],
           ),

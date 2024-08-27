@@ -5,6 +5,7 @@ import 'package:damyo_app/view_models/bottom_navigation_model.dart';
 import 'package:damyo_app/view_models/login_models/is_login_view_model.dart';
 import 'package:damyo_app/view_models/login_models/token_view_model.dart';
 import 'package:damyo_app/view_models/login_models/user_info_view_model.dart';
+import 'package:damyo_app/view_models/map_models/map_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -100,6 +101,8 @@ class _HomeViewState extends State<HomeView> {
         currentIndex: _bottomNavigationModel.curPage,
         onTap: (index) {
           _bottomNavigationModel.setCurPage(index);
+          Provider.of<MapViewModel>(context, listen: false)
+              .closeInformBtnVisible();
         },
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey,

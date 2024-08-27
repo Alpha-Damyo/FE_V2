@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:core';
 
 import 'package:damyo_app/models/smoking_area/sa_basic_model.dart';
+import 'package:damyo_app/view_models/map_models/map_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -82,10 +83,6 @@ class SaSearchViewModel extends ChangeNotifier {
       marker.setOnTapListener((overlay) {
         updateSearchSelectedSa(_searchedSaList[i]);
       });
-      // marker.setZIndex(i);
-      marker.setMinZoom(12);
-      marker.setIsMinZoomInclusive(true);
-      marker.setIsMaxZoomInclusive(false);
       _naverMapController.addOverlay(marker);
 
       // final onMarkerInfoWindow = NInfoWindow.onMarker(

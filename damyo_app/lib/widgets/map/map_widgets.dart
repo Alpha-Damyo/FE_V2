@@ -36,7 +36,7 @@ Widget mapSearchBar(BuildContext context) {
 }
 
 // 제보 버튼
-Widget informBtn(BuildContext context, Function onTap) {
+Widget informBtn(BuildContext context, Function onTap, bool isVisible) {
   return shadowMaterial(
     context,
     16,
@@ -52,21 +52,35 @@ Widget informBtn(BuildContext context, Function onTap) {
           color: Theme.of(context).colorScheme.primary,
           borderRadius: BorderRadius.circular(16),
         ),
-        child: const Column(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              Icons.add_location_alt_outlined,
-              size: 25,
-              color: Colors.white,
-            ),
-            Text(
-              "제보",
-              style: TextStyle(
-                fontSize: 10,
-                color: Colors.white,
-              ),
-            ),
+            isVisible
+                ? const Icon(
+                    Icons.close,
+                    size: 25,
+                    color: Colors.white,
+                  )
+                : const Icon(
+                    Icons.add_location_alt_outlined,
+                    size: 25,
+                    color: Colors.white,
+                  ),
+            isVisible
+                ? const Text(
+                    "취소",
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: Colors.white,
+                    ),
+                  )
+                : const Text(
+                    "제보",
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: Colors.white,
+                    ),
+                  ),
           ],
         ),
       ),

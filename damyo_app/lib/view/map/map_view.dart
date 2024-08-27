@@ -82,6 +82,7 @@ class _MapViewState extends State<MapView> {
                       () {
                         _mapViewModel.changeInformBtnVisible();
                       },
+                      _mapViewModel.informBtnVisible,
                     ),
                   ],
                 ),
@@ -125,10 +126,12 @@ class _MapViewState extends State<MapView> {
                   showModalBottomSheet(
                       context: context,
                       builder: (context) {
-                        return const FavoritesBottomsheet();
+                        return FavoritesBottomsheet(
+                          areaId: _mapViewModel.smokingAreaCardInfo.areaId,
+                          areaName: _mapViewModel.smokingAreaCardInfo.name,
+                        );
                       });
                 },
-                // Todo: 흡연 완료
                 () async {
                   if (Provider.of<IsloginViewModel>(context, listen: false)
                       .isLogin) {

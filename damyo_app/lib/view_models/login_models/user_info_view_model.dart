@@ -13,13 +13,23 @@ class UserInfoViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  updateUserName(String name){
+  updateUserName(String name) {
     _userInfoModel.name = name;
     notifyListeners();
   }
 
-  updateUserProfile(String profileUrl){
+  updateUserProfile(String profileUrl) {
     _userInfoModel.profileUrl = profileUrl;
+    notifyListeners();
+  }
+
+  updateContributionByInform() {
+    _userInfoModel.contribution += 20;
+    notifyListeners();
+  }
+
+  updateContributionByReview() {
+    _userInfoModel.contribution += 5;
     notifyListeners();
   }
 }

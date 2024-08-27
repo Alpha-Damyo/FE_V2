@@ -189,19 +189,19 @@ Widget _mostSmokingArea(BuildContext context, int rank, String id, String name,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        (saInfo == null)
-                            ? Container()
-                            : (saInfo.outdoor!)
-                                ? _buildTag('실외')
-                                : _buildTag('실내'),
+                        if (saInfo != null)
+                          if (saInfo.closed == true)
+                            _buildTag('폐쇄')
+                          else if (saInfo.opened == true)
+                            _buildTag('개방'),
                         const SizedBox(
                           width: 10,
                         ),
-                        (saInfo == null)
-                            ? Container()
-                            : (saInfo.opened!)
-                                ? _buildTag('개방형')
-                                : _buildTag('폐쇄형'),
+                        if (saInfo != null)
+                          if (saInfo.outdoor == true)
+                            _buildTag('실외')
+                          else if (saInfo.indoor == true)
+                            _buildTag('실내'),
                       ],
                     ),
                   ],

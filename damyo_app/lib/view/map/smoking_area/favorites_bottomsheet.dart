@@ -6,7 +6,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 class FavoritesBottomsheet extends StatefulWidget {
-  const FavoritesBottomsheet({super.key});
+  const FavoritesBottomsheet(
+      {super.key, required this.areaId, required this.areaName});
+  final String areaId, areaName;
 
   @override
   State<FavoritesBottomsheet> createState() => _FavoritesBottomSheetState();
@@ -15,11 +17,12 @@ class FavoritesBottomsheet extends StatefulWidget {
 class _FavoritesBottomSheetState extends State<FavoritesBottomsheet> {
   late MapViewModel _mapViewModel;
   int selectedFavorite = 0;
+  String get _areaId => widget.areaId;
+  String get _areaName => widget.areaName;
 
   @override
   Widget build(BuildContext context) {
     _mapViewModel = Provider.of<MapViewModel>(context);
-
     return Material(
       color: Colors.white,
       borderRadius: const BorderRadius.only(
@@ -30,7 +33,7 @@ class _FavoritesBottomSheetState extends State<FavoritesBottomsheet> {
         children: [
           const SizedBox(height: 15),
           textFormat(
-            text: _mapViewModel.smokingAreaCardInfo.name,
+            text: _areaName,
             fontSize: 20,
             fontWeight: FontWeight.w700,
           ),
@@ -121,10 +124,11 @@ class _FavoritesBottomSheetState extends State<FavoritesBottomsheet> {
               onTap: () async {
                 // 이미 추가되어 있는 경우
                 if (_mapViewModel.favoritesList[selectedFavorite][1]
-                    .contains(_mapViewModel.smokingAreaCardInfo.areaId)) {
+                    .contains(_areaId)) {
                   Fluttertoast.showToast(msg: "리스트에 이미 추가되어있습니다");
                 } else {
-                  _mapViewModel.addFavoritesElement(selectedFavorite);
+                  _mapViewModel.addFavoritesElement(
+                      selectedFavorite, _areaId, _areaName);
                   FavoritesService.updateFavorites(_mapViewModel.favoritesList);
                   Fluttertoast.showToast(msg: "즐겨찾기 추가가 완료되었습니다");
 
@@ -174,18 +178,19 @@ class _FavoritesBottomSheetState extends State<FavoritesBottomsheet> {
             decoration: const InputDecoration(hintText: '이름'),
           ),
           actions: [
-            TextButton(
-              onPressed: () {
+            InkWell(
+              onTap: () {
                 Navigator.of(context).pop();
               },
-              child: textFormat(
-                text: '취소',
-                color: Theme.of(context).colorScheme.primary,
-                fontWeight: FontWeight.w500,
-              ),
+              child: Ink(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                  child: Text('취소',
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary))),
             ),
-            TextButton(
-              onPressed: () async {
+            InkWell(
+              onTap: () async {
                 if (_mapViewModel.favoritesList
                     .map((sublist) => sublist[0])
                     .toList()
@@ -197,11 +202,12 @@ class _FavoritesBottomSheetState extends State<FavoritesBottomsheet> {
                   Navigator.of(context).pop();
                 }
               },
-              child: textFormat(
-                text: '확인',
-                color: Theme.of(context).colorScheme.primary,
-                fontWeight: FontWeight.w500,
-              ),
+              child: Ink(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                  child: Text('확인',
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary))),
             ),
           ],
         );

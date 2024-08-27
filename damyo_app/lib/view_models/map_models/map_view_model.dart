@@ -145,6 +145,11 @@ class MapViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  closeInformBtnVisible() {
+    _informBtnVisible = false;
+    notifyListeners();
+  }
+
   // 즐겨찾기
   List<dynamic> _favoritesList = [];
   List<dynamic> get favoritesList => _favoritesList;
@@ -167,14 +172,19 @@ class MapViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  addFavoritesElement(int index) {
-    _favoritesList[index][1].add(smokingAreaCardInfo.areaId);
-    _favoritesList[index][2].add(smokingAreaCardInfo.name);
+  addFavoritesElement(int index, String areaId, String name) {
+    _favoritesList[index][1].add(areaId);
+    _favoritesList[index][2].add(name);
   }
 
   removeFavoritesElement(int listIndex, int elementIndex) {
     _favoritesList[listIndex][1].removeAt(elementIndex);
     _favoritesList[listIndex][2].removeAt(elementIndex);
+  }
+
+  changeSmokingAreaCardInfo(SaBasicModel model) {
+    _smokingAreaCardInfo = model;
+    notifyListeners();
   }
 
   // 장소 이동

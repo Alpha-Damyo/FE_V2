@@ -3,10 +3,12 @@ import 'package:damyo_app/services/smoking_area_service.dart';
 import 'package:damyo_app/style.dart';
 import 'package:damyo_app/utils/re_login_dialog.dart';
 import 'package:damyo_app/view_models/login_models/token_view_model.dart';
+import 'package:damyo_app/view_models/login_models/user_info_view_model.dart';
 import 'package:damyo_app/view_models/map_models/smoking_area/sa_review_view_model.dart';
 import 'package:damyo_app/widgets/common/ratingstar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
 Widget reviewSaName(BuildContext context, String name) {
   return RichText(
@@ -76,6 +78,8 @@ Widget reviewComplete(BuildContext context, bool canReview, String areaId,
 
         if (result == "success") {
           Fluttertoast.showToast(msg: "리뷰 작성이 완료되었습니다");
+          Provider.of<UserInfoViewModel>(context, listen: false)
+              .updateContributionByReview();
           Navigator.pop(context);
         } else if (result == "re_login") {
           reLogin(context);

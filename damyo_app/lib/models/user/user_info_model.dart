@@ -1,7 +1,7 @@
 class UserInfoModel {
   String name;
   String? profileUrl;
-  final int contribution;
+  int contribution;
   final double percentage;
   final int gap;
 

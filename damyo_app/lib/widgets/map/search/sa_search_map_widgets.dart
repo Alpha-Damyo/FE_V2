@@ -61,16 +61,16 @@ Widget searchedSmokingAreaCard(
                     size: 24,
                   ),
                   textFormat(
-                    text: saBasicModel.score.toString(),
+                    text: saBasicModel.score.toStringAsFixed(1),
                     fontSize: 16,
                   )
                 ],
               ),
-              const Row(
+              Row(
                 children: [
-                  // simpleBtn(context, "즐겨찾기 추가", onTapAddFavorites),
-                  // const SizedBox(width: 10),
-                  // simpleBtn(context, "흡연 완료", onTapCompleteSmoking),
+                  simpleBtn(context, "즐겨찾기 추가", onTapAddFavorites),
+                  const SizedBox(width: 10),
+                  simpleBtn(context, "흡연 완료", onTapCompleteSmoking),
                 ],
               )
             ],
