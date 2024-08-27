@@ -26,7 +26,7 @@ void main() async {
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await loadDotEnv();
   await initializeMap();
-  // await getCurrentLocation();
+  await getCurrentLocation();
 
   runApp(
     MultiProvider(
