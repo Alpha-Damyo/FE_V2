@@ -72,7 +72,9 @@ class _UpdateprofileViewState extends State<UpdateprofileView> {
                     }
                   }
 
-                  if (!_isFieldEmpty(_nameController)) {
+                  if (!_isFieldEmpty(_nameController) &&
+                      _nameController.text !=
+                          userInfoViewModel.userInfoModel.name) {
                     try {
                       await putUserUpdateName(tokenViewModel,
                           _nameController.text, userInfoViewModel);
@@ -94,6 +96,7 @@ class _UpdateprofileViewState extends State<UpdateprofileView> {
                   }
 
                   if (photoUpdateSuccess && nameUpdateSuccess) {
+                    FocusManager.instance.primaryFocus?.unfocus();
                     Navigator.pop(context);
                   }
                 },
