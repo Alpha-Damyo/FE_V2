@@ -1,5 +1,11 @@
+import 'package:damyo_app/database/smoke_data.dart';
+import 'package:damyo_app/services/smoke_complete.dart';
 import 'package:damyo_app/style.dart';
+import 'package:damyo_app/utils/initialized_db.dart';
+import 'package:damyo_app/utils/re_login_dialog.dart';
+import 'package:damyo_app/utils/smoke_check_dialog.dart';
 import 'package:damyo_app/view/map/smoking_area/favorites_bottomsheet.dart';
+import 'package:damyo_app/view_models/login_models/is_login_view_model.dart';
 import 'package:damyo_app/view_models/map_models/search/sa_search_view_model.dart';
 import 'package:damyo_app/widgets/map/search/sa_search_map_widgets.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +24,8 @@ class SaSearchMapView extends StatefulWidget {
 class _SaSearchMapViewState extends State<SaSearchMapView> {
   late NaverMapController mapController;
   late SaSearchViewModel _saSearchViewModel;
+  DateTime now = DateTime.now();
+  SmokeDatabase userDB = SmokeDatabase();
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +66,32 @@ class _SaSearchMapViewState extends State<SaSearchMapView> {
                         );
                       });
                 },
-                () {},
+                () async {
+                  // 흡연 완료
+                  if (Provider.of<IsloginViewModel>(context, listen: false)
+                      .isLogin) {
+                    // 로그인을 한 경우
+                    if (await smokingCheckBox(context) == true) {
+                      // 흡연을 완료한 경우
+                      String response = await smokeComplete(
+                          context,_saSearchViewModel.searchSelectedSa.areaId);
+                      if (response == "success") {
+                        await userDB.insertSmokeInfo(
+                            _saSearchViewModel.searchSelectedSa.areaId,
+                            _saSearchViewModel.searchSelectedSa.name,
+                            now);
+                        initializedUserDB(context);
+                      } else if (response == "re_login") {
+                        reLogin(context);
+                      }
+                    } else {
+                      // 흡연을 취소한 경우
+                    }
+                  } else {
+                    // 로그인을 안 한 경우
+                    reLogin(context);
+                  }
+                },
               ),
             ),
           )
