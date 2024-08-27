@@ -45,7 +45,7 @@ class _SettingViewState extends State<SettingView> {
               isloginViewModel.isLogin,
               '기여도',
             ),
-            toolBax(context, '흡연데이터 초기화'),
+            resetStatisticsBtn(context, isloginViewModel),
             toolBax(context, '앱버전'),
           ],
         ),

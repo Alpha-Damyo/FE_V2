@@ -1,4 +1,7 @@
+import "package:damyo_app/database/smoke_data.dart";
+import "package:damyo_app/utils/initialized_db.dart";
 import "package:damyo_app/utils/re_login_dialog.dart";
+import "package:damyo_app/utils/reset_check_dialog.dart";
 import "package:damyo_app/view/setting/contribution/contribution_view.dart";
 import "package:damyo_app/view/setting/login/login_view.dart";
 import "package:damyo_app/view/setting/updateprofile/updateprofile_view.dart";
@@ -177,6 +180,44 @@ Widget contributionBtn(BuildContext context, bool isLogin, String name) {
             border: Border(bottom: BorderSide(width: 1.5, color: Colors.grey))),
         child: textFormat(
           text: name,
+          color: const Color(0xFF262B32),
+          fontSize: 16,
+        ),
+      ),
+    ),
+  );
+}
+
+Widget resetStatisticsBtn(
+  BuildContext context,
+  IsloginViewModel isloginViewModel,
+) {
+  SmokeDatabase userDB = SmokeDatabase();
+  return InkWell(
+    onTap: () async {
+      if (isloginViewModel.isLogin) {
+        // 로그인을 한 경우
+        if (await resetCheck(context) == true) {
+          // 초기화를 진행한 경우
+          await userDB.resetDatabase();
+          await initializedDB(context);
+        } else {
+          // 초기화 취소
+        }
+      } else {
+        // 로그인을 안 한 경우
+        reLogin(context);
+      }
+    },
+    child: Ink(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      width: double.infinity,
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 15),
+        decoration: const BoxDecoration(
+            border: Border(bottom: BorderSide(width: 1.5, color: Colors.grey))),
+        child: textFormat(
+          text: '흡연데이터 초기화',
           color: const Color(0xFF262B32),
           fontSize: 16,
         ),

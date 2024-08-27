@@ -54,6 +54,14 @@ class SmokeDatabase {
     }
   }
 
+  Future<void> resetDatabase() async {
+    String path = join(await getDatabasesPath(), 'smokeInfo_database.db');
+
+    await deleteDatabase(path);
+
+    _database = await _initDatabase();
+  }
+
   Future<void> insertSmokeInfo(
       String id, String name, DateTime dateInfo) async {
     String date = formatDate(dateInfo);
