@@ -58,16 +58,16 @@ Widget saDetailNameScoreBtns(
   bool? outdoor,
   bool isLogin,
 ) {
-  String tag = "";
+  List<String> tag = [];
   if (opened == true) {
-    tag += " #개방형 ";
+    tag.add("개방");
   } else if (closed == true) {
-    tag += " #폐쇄형 ";
+    tag.add("폐쇄");
   }
   if (indoor == true) {
-    tag += "#실내 ";
+    tag.add("실내");
   } else if (outdoor == true) {
-    tag += "#실외 ";
+    tag.add("실외");
   }
 
   SmokeDatabase userDB = SmokeDatabase();
@@ -98,7 +98,29 @@ Widget saDetailNameScoreBtns(
         ],
       ),
       const SizedBox(height: 10),
-      textFormat(text: tag),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          for (int i = 0; i < tag.length; i++)
+            Row(
+              children: [
+                Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                        width: 1.5,
+                        color:
+                            Theme.of(context).colorScheme.onSecondaryContainer),
+                  ),
+                  child: textFormat(text: tag[i]),
+                ),
+                if (i != tag.length - 1) const SizedBox(width: 10),
+              ],
+            ),
+        ],
+      ),
       const SizedBox(height: 20),
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,

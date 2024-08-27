@@ -178,18 +178,19 @@ class _FavoritesBottomSheetState extends State<FavoritesBottomsheet> {
             decoration: const InputDecoration(hintText: '이름'),
           ),
           actions: [
-            TextButton(
-              onPressed: () {
+            InkWell(
+              onTap: () {
                 Navigator.of(context).pop();
               },
-              child: textFormat(
-                text: '취소',
-                color: Theme.of(context).colorScheme.primary,
-                fontWeight: FontWeight.w500,
-              ),
+              child: Ink(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                  child: Text('취소',
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary))),
             ),
-            TextButton(
-              onPressed: () async {
+            InkWell(
+              onTap: () async {
                 if (_mapViewModel.favoritesList
                     .map((sublist) => sublist[0])
                     .toList()
@@ -201,11 +202,12 @@ class _FavoritesBottomSheetState extends State<FavoritesBottomsheet> {
                   Navigator.of(context).pop();
                 }
               },
-              child: textFormat(
-                text: '확인',
-                color: Theme.of(context).colorScheme.primary,
-                fontWeight: FontWeight.w500,
-              ),
+              child: Ink(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                  child: Text('확인',
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary))),
             ),
           ],
         );

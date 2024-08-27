@@ -1,5 +1,5 @@
 import 'package:damyo_app/style.dart';
-import 'package:damyo_app/utils/get_gal_permission.dart';
+import 'package:damyo_app/utils/get_permission.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';

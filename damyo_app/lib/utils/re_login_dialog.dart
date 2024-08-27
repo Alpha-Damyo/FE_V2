@@ -7,24 +7,25 @@ void reLogin(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Padding(
-          padding: const EdgeInsets.all(6.0),
-          child: textFormat(
-              text: "로그인 필요 서비스", fontSize: 18, fontWeight: FontWeight.w700),
-        ),
-        content: Padding(
-          padding: const EdgeInsets.all(6.0),
-          child: textFormat(text: "로그인을 진행해주세요."),
-        ),
+        title: textFormat(
+            text: "로그인 필요 서비스", fontSize: 20, fontWeight: FontWeight.w700),
+        content: textFormat(text: "로그인을 진행해주세요.", fontSize: 18),
         actions: [
-          TextButton(
-            onPressed: () {
+          InkWell(
+            onTap: () {
               Navigator.of(context).pop();
             },
-            child: const Text('취소'),
+            child: Ink(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                child: Text(
+                  '취소',
+                  style:
+                      TextStyle(color: Theme.of(context).colorScheme.primary),
+                )),
           ),
-          TextButton(
-            onPressed: () {
+          InkWell(
+            onTap: () {
               Navigator.of(context).pop();
               Future.delayed(Duration.zero, () {
                 Navigator.push(
@@ -33,7 +34,12 @@ void reLogin(BuildContext context) {
                 );
               });
             },
-            child: const Text('확인'),
+            child: Ink(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                child: Text('확인',
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.primary))),
           ),
         ],
       );

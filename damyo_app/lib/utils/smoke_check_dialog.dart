@@ -11,31 +11,33 @@ Future<bool?> smokingCheckBox(BuildContext context) {
           title: Padding(
             padding: const EdgeInsets.only(top: 6.0),
             child: textFormat(
-                text: '흡연 여부', fontSize: 18, fontWeight: FontWeight.w700),
+                text: '흡연 완료', fontSize: 20, fontWeight: FontWeight.w700),
           ),
           content: Padding(
             padding: const EdgeInsets.only(top: 6.0),
-            child: textFormat(text: '흡연을 진행하시겠습니까?'),
+            child: textFormat(text: '흡연 데이터를 추가합니다', fontSize: 18),
           ),
           actions: [
-            TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop(true);
-                },
-                child: textFormat(
-                  text: '확인',
-                  fontSize: 13,
-                  color: const Color(0xFF0099FC),
-                )),
-            TextButton(
-                onPressed: () {
+            InkWell(
+                onTap: () {
                   Navigator.of(context).pop(false);
                 },
-                child: textFormat(
-                  text: '취소',
-                  fontSize: 13,
-                  color: const Color(0xFF0099FC),
-                )),
+                child: Ink(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                    child: Text('취소',
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary)))),
+            InkWell(
+                onTap: () {
+                  Navigator.of(context).pop(true);
+                },
+                child: Ink(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                    child: Text('확인',
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.primary)))),
           ],
         );
       });

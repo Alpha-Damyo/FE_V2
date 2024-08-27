@@ -16,7 +16,6 @@ Widget calculate(
     Function(int) onChanged) {
   return SizedBox(
     width: double.infinity,
-    height: 300,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -106,12 +105,19 @@ Widget calculate(
                   onChanged(0);
                 },
               ),
+              const SizedBox(width: 15),
               if (selectedIndex == -1)
-                SizedBox(
-                  width: 100,
+                Expanded(
                   child: TextField(
                     controller: priceController,
+                    maxLength: 8,
+                    buildCounter: (context,
+                            {required currentLength,
+                            required isFocused,
+                            required maxLength}) =>
+                        null,
                     textAlign: TextAlign.right,
+                    keyboardType: TextInputType.number,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     onChanged: (value) {
                       if (!_isFieldEmpty(priceController)) {
@@ -137,7 +143,7 @@ Widget calculate(
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.only(left: 16, right: 16, bottom: 20),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
