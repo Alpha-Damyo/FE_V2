@@ -23,7 +23,11 @@ Widget imageSelector(BuildContext context, ImagePicker imagePicker,
                   title: textFormat(text: "카메라에서 선택", fontSize: 16),
                   onTap: () async {
                     if (await checkCameraPermission() == false) {
-                      await openAppSettings();
+                      if (await Permission.camera.isPermanentlyDenied) {
+                        await openAppSettings();
+                      } else {
+                        await getCameraPermission();
+                      }
                     } else {
                       getImage(
                           ImageSource.camera, imagePicker, image, setImage);
@@ -36,7 +40,11 @@ Widget imageSelector(BuildContext context, ImagePicker imagePicker,
                   title: textFormat(text: "갤러리에서 선택", fontSize: 16),
                   onTap: () async {
                     if (await checkPhotoPermission() == false) {
-                      await openAppSettings();
+                      if (await Permission.photos.isPermanentlyDenied) {
+                        await openAppSettings();
+                      } else {
+                        await getPhotoPermission();
+                      }
                     } else {
                       getImage(
                           ImageSource.gallery, imagePicker, image, setImage);
