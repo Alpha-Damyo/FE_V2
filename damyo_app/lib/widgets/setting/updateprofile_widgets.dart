@@ -72,15 +72,25 @@ Widget profileUpdateSelectBtn(ImagePicker imagePicker, Function setImg) {
     child: IconButton(
       onPressed: () async {
         if (await checkPhotoPermission() == false) {
-          if (await Permission.photos.isPermanentlyDenied) {
-            await openAppSettings();
-          } else {
-            await getPhotoPermission();
+          switch (await Permission.photos.status) {
+            case PermissionStatus.denied:
+              await getPhotoPermission();
+              break;
+            case PermissionStatus.permanentlyDenied:
+              await openAppSettings();
+              break;
+            default:
+              await openAppSettings();
+              break;
           }
         } else {
           XFile? imgfile = await getImage(imagePicker);
           setImg(imgfile);
         }
+        // print(await Permission.photos.status);
+        // await getPhotoPermission();
+        // XFile? imgfile = await getImage(imagePicker);
+        // setImg(imgfile);
       },
       icon: Image.asset(
         'assets/icons/setting/updateprofile/camera.png',

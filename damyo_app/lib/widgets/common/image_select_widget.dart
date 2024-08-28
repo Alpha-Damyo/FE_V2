@@ -22,34 +22,39 @@ Widget imageSelector(BuildContext context, ImagePicker imagePicker,
                   leading: const Icon(Icons.photo_camera),
                   title: textFormat(text: "카메라에서 선택", fontSize: 16),
                   onTap: () async {
-                    if (await checkCameraPermission() == false) {
-                      if (await Permission.camera.isPermanentlyDenied) {
-                        await openAppSettings();
-                      } else {
-                        await getCameraPermission();
-                      }
-                    } else {
-                      getImage(
+                    // if (await checkCameraPermission() == false) {
+                    //   if (await Permission.camera.isPermanentlyDenied) {
+                    //     await openAppSettings();
+                    //   } else {
+                    //     await getCameraPermission();
+                    //   }
+                    // } else {
+                    //   getImage(
+                    //       ImageSource.camera, imagePicker, image, setImage);
+                    //   Navigator.of(context).pop();
+                    // }
+                    getImage(
                           ImageSource.camera, imagePicker, image, setImage);
                       Navigator.of(context).pop();
-                    }
                   },
                 ),
                 ListTile(
                   leading: const Icon(Icons.photo_library),
                   title: textFormat(text: "갤러리에서 선택", fontSize: 16),
                   onTap: () async {
-                    if (await checkPhotoPermission() == false) {
-                      if (await Permission.photos.isPermanentlyDenied) {
-                        await openAppSettings();
-                      } else {
-                        await getPhotoPermission();
-                      }
-                    } else {
-                      getImage(
-                          ImageSource.gallery, imagePicker, image, setImage);
-                      Navigator.of(context).pop();
-                    }
+                    // if (await checkPhotoPermission() == false) {
+                    //   if (await Permission.photos.isPermanentlyDenied) {
+                    //     await openAppSettings();
+                    //   } else {
+                    //     await getPhotoPermission();
+                    //   }
+                    // } else {
+                    //   getImage(
+                    //       ImageSource.gallery, imagePicker, image, setImage);
+                    //   Navigator.of(context).pop();
+                    // }
+                    getImage(ImageSource.gallery, imagePicker, image, setImage);
+                    Navigator.of(context).pop();
                   },
                 ),
               ],

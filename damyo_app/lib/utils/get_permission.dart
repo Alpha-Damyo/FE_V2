@@ -3,6 +3,7 @@ import 'package:permission_handler/permission_handler.dart';
 // 갤러리 권한 요청
 Future<void> getPhotoPermission() async {
   await Permission.photos.request();
+  print(await Permission.photos.status);
 }
 
 // 갤러리 권한 조회
@@ -11,7 +12,6 @@ Future<bool> checkPhotoPermission() async {
   if (status == true) {
     return Future.value(true);
   } else {
-    
     return Future.value(false);
   }
 }
