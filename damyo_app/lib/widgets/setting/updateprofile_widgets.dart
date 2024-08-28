@@ -72,7 +72,11 @@ Widget profileUpdateSelectBtn(ImagePicker imagePicker, Function setImg) {
     child: IconButton(
       onPressed: () async {
         if (await checkPhotoPermission() == false) {
-          await openAppSettings();
+          if (await Permission.photos.isPermanentlyDenied) {
+            await openAppSettings();
+          } else {
+            await getPhotoPermission();
+          }
         } else {
           XFile? imgfile = await getImage(imagePicker);
           setImg(imgfile);
