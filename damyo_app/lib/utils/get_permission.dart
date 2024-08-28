@@ -2,7 +2,6 @@ import 'package:permission_handler/permission_handler.dart';
 
 // 갤러리 권한 요청
 Future<void> getPhotoPermission() async {
-  print('hre');
   await Permission.photos.request();
 }
 
