@@ -1,8 +1,10 @@
 import 'dart:io';
 
 import 'package:damyo_app/style.dart';
+import 'package:damyo_app/utils/get_permission.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 Widget imageSelector(BuildContext context, ImagePicker imagePicker,
     XFile? image, Function setImage) {
@@ -19,17 +21,27 @@ Widget imageSelector(BuildContext context, ImagePicker imagePicker,
                 ListTile(
                   leading: const Icon(Icons.photo_camera),
                   title: textFormat(text: "카메라에서 선택", fontSize: 16),
-                  onTap: () {
-                    getImage(ImageSource.camera, imagePicker, image, setImage);
-                    Navigator.of(context).pop();
+                  onTap: () async {
+                    if (await checkCameraPermission() == false) {
+                      await openAppSettings();
+                    } else {
+                      getImage(
+                          ImageSource.camera, imagePicker, image, setImage);
+                      Navigator.of(context).pop();
+                    }
                   },
                 ),
                 ListTile(
                   leading: const Icon(Icons.photo_library),
                   title: textFormat(text: "갤러리에서 선택", fontSize: 16),
-                  onTap: () {
-                    getImage(ImageSource.gallery, imagePicker, image, setImage);
-                    Navigator.of(context).pop();
+                  onTap: () async {
+                    if (await checkPhotoPermission() == false) {
+                      await openAppSettings();
+                    } else {
+                      getImage(
+                          ImageSource.gallery, imagePicker, image, setImage);
+                      Navigator.of(context).pop();
+                    }
                   },
                 ),
               ],

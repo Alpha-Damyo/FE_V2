@@ -1,6 +1,9 @@
 import 'package:damyo_app/style.dart';
+import 'package:damyo_app/utils/get_permission.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 Widget nameUpdateBox(
     BuildContext context, TextEditingController nameController) {
@@ -68,8 +71,12 @@ Widget profileUpdateSelectBtn(ImagePicker imagePicker, Function setImg) {
     left: 65,
     child: IconButton(
       onPressed: () async {
-        XFile? imgfile = await getImage(imagePicker);
-        setImg(imgfile);
+        if (await checkPhotoPermission() == false) {
+          await openAppSettings();
+        } else {
+          XFile? imgfile = await getImage(imagePicker);
+          setImg(imgfile);
+        }
       },
       icon: Image.asset(
         'assets/icons/setting/updateprofile/camera.png',
