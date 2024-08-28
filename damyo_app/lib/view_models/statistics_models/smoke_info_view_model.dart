@@ -96,17 +96,17 @@ class SmokeViewModel extends ChangeNotifier {
     _maxW = maxW;
     _maxM = maxM;
 
-    final dateInRangeD = await userDB.getSmokeInfoInWeeksRange(now, now);
+    final dateInRangeDay = await userDB.getSmokeInfoInWeeksRange(now, now);
     
     final startDateW = now.subtract(const Duration(days: 6));
-    final dateInRangeW = await userDB.getSmokeInfoInWeeksRange(startDateW, now);
+    final dateInRangeWeek = await userDB.getSmokeInfoInWeeksRange(startDateW, now);
 
     final startDateM = now.subtract(const Duration(days: 27));
-    final dateInRangeM = await userDB.getSmokeInfoInWeeksRange(startDateM, now);
+    final dateInRangeMonth = await userDB.getSmokeInfoInWeeksRange(startDateM, now);
     
-    _cntDay = dateInRangeD.first['count'];
-    _cntWeek = dateInRangeW.first['count'];
-    _cntMonth = dateInRangeM.first['count'];
+    _cntDay = dateInRangeDay.first['count'];
+    _cntWeek = dateInRangeWeek.first['count'];
+    _cntMonth = dateInRangeMonth.first['count'];
 
     _check = true;
 
