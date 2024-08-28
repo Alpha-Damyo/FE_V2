@@ -60,9 +60,9 @@ Widget saDetailNameScoreBtns(
 ) {
   List<String> tag = [];
   if (opened == true) {
-    tag.add("개방");
+    tag.add("개방형");
   } else if (closed == true) {
-    tag.add("폐쇄");
+    tag.add("폐쇄형");
   }
   if (indoor == true) {
     tag.add("실내");
