@@ -1,10 +1,8 @@
 import 'dart:io';
 
 import 'package:damyo_app/style.dart';
-import 'package:damyo_app/utils/get_permission.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 Widget imageSelector(BuildContext context, ImagePicker imagePicker,
     XFile? image, Function setImage) {
