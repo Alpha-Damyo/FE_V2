@@ -19,6 +19,7 @@ Future<bool> checkPhotoPermission() async {
 // 카메라 권한 요청
 Future<void> getCameraPermission() async {
   await Permission.camera.request();
+  print('check');
 }
 
 // 카메라 권한 조회
