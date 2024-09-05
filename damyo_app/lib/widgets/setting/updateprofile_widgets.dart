@@ -1,4 +1,5 @@
 import 'package:damyo_app/style.dart';
+import 'package:damyo_app/utils/get_permission.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -53,22 +54,27 @@ Widget nameUpdateBox(
 }
 
 // 이미지를 가져오는 함수
-Future<XFile?> getImage(ImagePicker imagePicker) async {
-  final XFile? pickedFile =
-      await imagePicker.pickImage(source: ImageSource.gallery);
-  if (pickedFile != null) {
-    return pickedFile;
+Future<XFile?> getImage(ImagePicker imagePicker, BuildContext context) async {
+  bool check = await getPhotoPermission(context);
+  if (check) {
+    final XFile? pickedFile =
+        await imagePicker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      return pickedFile;
+    }
+    return null;
   }
   return null;
 }
 
-Widget profileUpdateSelectBtn(ImagePicker imagePicker, Function setImg) {
+Widget profileUpdateSelectBtn(
+    ImagePicker imagePicker, Function setImg, BuildContext context) {
   return Positioned(
     top: 65,
     left: 65,
     child: IconButton(
       onPressed: () async {
-        XFile? imgfile = await getImage(imagePicker);
+        XFile? imgfile = await getImage(imagePicker, context);
         setImg(imgfile);
       },
       icon: Image.asset(
