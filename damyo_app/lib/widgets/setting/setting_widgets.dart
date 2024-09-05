@@ -10,6 +10,7 @@ import "package:damyo_app/view_models/login_models/token_view_model.dart";
 import "package:damyo_app/view_models/login_models/user_info_view_model.dart";
 import "package:flutter/material.dart";
 import "package:damyo_app/style.dart";
+import "package:permission_handler/permission_handler.dart";
 
 // 로그인 버튼
 Widget loginBtn(BuildContext context) {
@@ -229,7 +230,8 @@ Widget resetStatisticsBtn(
 // 설정 탭 박스
 Widget toolBax(BuildContext context, String name) {
   return InkWell(
-    onTap: () {},
+    onTap: ()async {
+    },
     child: Ink(
       padding: const EdgeInsets.symmetric(horizontal: 15),
       width: double.infinity,

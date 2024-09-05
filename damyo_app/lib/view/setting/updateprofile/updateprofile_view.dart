@@ -138,7 +138,7 @@ class _UpdateprofileViewState extends State<UpdateprofileView> {
                         _profileImage = null;
                       }
                     });
-                  }),
+                  }, context),
                 ],
               ),
               nameUpdateBox(context, _nameController),
