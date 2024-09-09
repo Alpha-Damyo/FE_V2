@@ -1,7 +1,7 @@
 import 'package:damyo_app/style.dart';
 import 'package:flutter/material.dart';
 
-Widget UserInfo(String name, int contributionScore, double contributionPecentage,
+Widget userInfo(String name, int contributionScore, double contributionPecentage,
     int? contributionGap, String? profileUrl) {
   return Container(
     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
@@ -47,84 +47,80 @@ Widget UserInfo(String name, int contributionScore, double contributionPecentage
           ),
         ),
         const SizedBox(height: 24),
-        Container(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  textFormat(
-                      text: '상위',
-                      color: const Color(0xFF0099FC),
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700),
-                  textFormat(
-                      text: ' $contributionPecentage%',
-                      color: const Color(0xFF0099FC),
-                      fontSize: 24,
-                      fontWeight: FontWeight.w700)
-                ],
-              ),
-              const SizedBox(height: 6),
-              (contributionGap != null)
-                  ? textFormat(
-                      text: '1등과 $contributionGap점 차이가 나요. 조금만 더 노력해보세요!',
-                      color: const Color(0xFF6E767F),
-                      fontWeight: FontWeight.w500)
-                  : textFormat(
-                      text: '사용자 정보를 불러오지 못했습니다.',
-                      color: const Color(0xFF6E767F),
-                      fontWeight: FontWeight.w500),
-            ],
-          ),
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                textFormat(
+                    text: '상위',
+                    color: const Color(0xFF0099FC),
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700),
+                textFormat(
+                    text: ' $contributionPecentage%',
+                    color: const Color(0xFF0099FC),
+                    fontSize: 24,
+                    fontWeight: FontWeight.w700)
+              ],
+            ),
+            const SizedBox(height: 6),
+            (contributionGap != null)
+                ? textFormat(
+                    text: '1등과 $contributionGap점 차이가 나요. 조금만 더 노력해보세요!',
+                    color: const Color(0xFF6E767F),
+                    fontWeight: FontWeight.w500)
+                : textFormat(
+                    text: '사용자 정보를 불러오지 못했습니다.',
+                    color: const Color(0xFF6E767F),
+                    fontWeight: FontWeight.w500),
+          ],
         ),
         const SizedBox(height: 24),
-        Container(
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                width: 300 * (1-(contributionPecentage * 0.01)),
-                height: 10,
-                decoration: ShapeDecoration(
-                  gradient: const LinearGradient(
-                    begin: Alignment(1.00, 0.00),
-                    end: Alignment(-1, 0),
-                    colors: [Color(0xFFBFE5FF), Color(0xFF0099FC)],
-                  ),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(3)),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              width: 300 * (1-(contributionPecentage * 0.01)),
+              height: 10,
+              decoration: ShapeDecoration(
+                gradient: const LinearGradient(
+                  begin: Alignment(1.00, 0.00),
+                  end: Alignment(-1, 0),
+                  colors: [Color(0xFFBFE5FF), Color(0xFF0099FC)],
+                ),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(3)),
+              ),
+            ),
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  image: (profileUrl != null)
+                      ? NetworkImage(profileUrl) as ImageProvider
+                      : const AssetImage(
+                          'assets/icons/setting/contribution/defalut.png'),
+                  fit: BoxFit.fill,
                 ),
               ),
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: (profileUrl != null)
-                        ? NetworkImage(profileUrl) as ImageProvider
-                        : const AssetImage(
-                            'assets/icons/setting/contribution/defalut.png'),
-                    fit: BoxFit.fill,
-                  ),
-                ),
+            ),
+            Container(
+              width: 340 * (contributionPecentage * 0.01),
+              height: 10,
+              decoration: ShapeDecoration(
+                color: const Color(0xFFEEF1F4),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(3)),
               ),
-              Container(
-                width: 340 * (contributionPecentage * 0.01),
-                height: 10,
-                decoration: ShapeDecoration(
-                  color: const Color(0xFFEEF1F4),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(3)),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ],
     ),

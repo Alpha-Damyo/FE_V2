@@ -1,5 +1,4 @@
 import 'package:damyo_app/models/smoking_area/sa_inform_model.dart';
-import 'package:damyo_app/models/user/user_info_model.dart';
 import 'package:damyo_app/services/naver_address_service.dart';
 import 'package:damyo_app/services/smoking_area_service.dart';
 import 'package:damyo_app/style.dart';

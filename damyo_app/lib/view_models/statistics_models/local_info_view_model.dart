@@ -7,24 +7,24 @@ import 'package:flutter/material.dart';
 class LocalInfoViewModel extends ChangeNotifier {
   LocalInfoViewModel();
 
-  List<dynamic>? _GuList = [];
+  List<dynamic>? _guList = [];
   List<dynamic>? _areaList = [];
   List<dynamic>? _areaInfo = [];
 
-  List<dynamic>? get GuList => _GuList;
+  List<dynamic>? get guList => _guList;
   List<dynamic>? get areaList => _areaList;
   List<dynamic>? get areaInfo => _areaInfo;
 
   Future<void> fetchLocalDB() async {
     List<SaBasicModel>? area = [];
 
-    statRegionModel? Region;
+    StatRegionModel? region;
 
-    Region = await getRegionStatics();
+    region = await getRegionStatics();
 
-    _areaList = Region.areaTop;
-    _GuList = [];
-    List<dynamic>? _gulist = Region.allRegion;
+    _areaList = region.areaTop;
+    _guList = [];
+    List<dynamic>? gulist = region.allRegion;
 
     if (_areaList != null) {
       for (int i = 0; i < _areaList!.length; i++) {
@@ -38,15 +38,14 @@ class LocalInfoViewModel extends ChangeNotifier {
       }
     }
 
-    if (_gulist != null) {
-      for (int i = 0; i < _gulist.length; i++) {
-        if (i >= 3) {
-          break;
-        }
-        _GuList?.add(_gulist[i]);
+    // null 체크를 api에서 받아올 때 진행
+    for (int i = 0; i < gulist.length; i++) {
+      if (i >= 3) {
+        break;
       }
+      _guList?.add(gulist[i]);
     }
-
+  
     _areaInfo = area;
 
     notifyListeners();

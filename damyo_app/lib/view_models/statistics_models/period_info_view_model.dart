@@ -12,7 +12,7 @@ class PeriodInfoViewModel extends ChangeNotifier {
   List<double>? get everyMonths => _everyMonths;
 
   Future<void> fetchPeriodEveryDB() async {
-    statDateModel dateModel;
+    StatDateModel dateModel;
 
     dateModel = await getDateStatics();
 

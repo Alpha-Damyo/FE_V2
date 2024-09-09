@@ -32,7 +32,7 @@ class _ContributionViewState extends State<ContributionView> {
                   scrollDirection: Axis.vertical,
                   child: Column(
                     children: [
-                      UserInfo(
+                      userInfo(
                           userInfoViewModel.userInfoModel.name,
                           userInfoViewModel.userInfoModel.contribution,
                           userInfoViewModel.userInfoModel.percentage,

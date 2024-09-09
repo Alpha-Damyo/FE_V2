@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 
 // 시간대별 평균 흡연량 그래프
-Widget timeAverInfo(
+Widget timeaverInfo(
     BuildContext context,
     bool timeCheck,
-    List<dynamic>? EveryList,
-    Map<String, dynamic>? UserList,
+    List<dynamic>? everyList,
+    Map<String, dynamic>? userList,
     Function(bool) onTimeCheck) {
   return SizedBox(
     width: double.infinity,
@@ -53,7 +53,7 @@ Widget timeAverInfo(
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: LineChart(
-              timeSmokeAver(timeCheck, EveryList, UserList),
+              timeSmokeAver(timeCheck, everyList, userList),
               duration: const Duration(milliseconds: 250),
             ),
           ),
@@ -64,24 +64,24 @@ Widget timeAverInfo(
 }
 
 LineChartData timeSmokeAver(
-    bool timeCheck, List<dynamic>? EveryList, Map<String, dynamic>? UserList) {
-  double EveryMax = 0, UserMax = 0;
+    bool timeCheck, List<dynamic>? everyList, Map<String, dynamic>? userList) {
+  double everyMax = 0, userMax = 0;
 
-  for (int i = 0; i < EveryList!.length; i++) {
-    if (EveryList[i] > EveryMax) {
-      EveryMax = EveryList[i];
+  for (int i = 0; i < everyList!.length; i++) {
+    if (everyList[i] > everyMax) {
+      everyMax = everyList[i];
     }
   }
 
-  if (UserList != null) {
+  if (userList != null) {
     for (int i = 0; i < 9; i++) {
-      if (UserList['${i * 3}'] != null && (UserList['${i * 3}']! > UserMax)) {
-        UserMax = UserList['${i * 3}']!;
+      if (userList['${i * 3}'] != null && (userList['${i * 3}']! > userMax)) {
+        userMax = userList['${i * 3}']!;
       }
     }
   }
 
-  int UptoMax(double val) {
+  int uptoMax(double val) {
     return ((val / 10).toInt() + 1) * 10;
   }
 
@@ -90,14 +90,14 @@ LineChartData timeSmokeAver(
     gridData: gridData(),
     titlesData: timetitlesData(),
     borderData: curveborderData(),
-    lineBarsData: lineBarsData(timeCheck, EveryList, UserList),
+    lineBarsData: lineBarsData(timeCheck, everyList, userList),
     minX: 0,
     maxX: 24,
-    maxY: (UserMax == 0 && EveryMax == 0)
+    maxY: (userMax == 0 && everyMax == 0)
         ? 40
-        : (UserMax > EveryMax)
-            ? UptoMax(UserMax) + 20
-            : UptoMax(EveryMax) + 20,
+        : (userMax > everyMax)
+            ? uptoMax(userMax) + 20
+            : uptoMax(everyMax) + 20,
     minY: 0,
   );
 }
@@ -129,10 +129,10 @@ FlTitlesData timetitlesData() {
 }
 
 List<LineChartBarData> lineBarsData(
-    bool timeCheck, List<dynamic>? EveryList, Map<String, dynamic>? UserList) {
+    bool timeCheck, List<dynamic>? everyList, Map<String, dynamic>? userList) {
   return [
-    lineChartBarDataEvery(timeCheck, EveryList),
-    lineChartBarDataUser(timeCheck, UserList),
+    lineChartBarDataEvery(timeCheck, everyList),
+    lineChartBarDataUser(timeCheck, userList),
   ];
 }
 
@@ -229,7 +229,7 @@ FlBorderData curveborderData() {
 }
 
 LineChartBarData lineChartBarDataUser(
-    bool timeCheck, Map<String, dynamic>? UserList) {
+    bool timeCheck, Map<String, dynamic>? userList) {
   return LineChartBarData(
       isCurved: true,
       preventCurveOverShooting: true,
@@ -249,8 +249,8 @@ LineChartBarData lineChartBarDataUser(
       dotData: const FlDotData(show: false),
       belowBarData: BarAreaData(show: false),
       spots: List.generate(9, (index) {
-        if (UserList?['${index * 3}'] != null) {
-          double? y = double.parse(UserList!['${index * 3}'].toStringAsFixed(1));
+        if (userList?['${index * 3}'] != null) {
+          double? y = double.parse(userList!['${index * 3}'].toStringAsFixed(1));
           return FlSpot(index * 3, y);
         } else {
           return FlSpot(index * 3, 0);
@@ -259,7 +259,7 @@ LineChartBarData lineChartBarDataUser(
 }
 
 LineChartBarData lineChartBarDataEvery(
-    bool timeCheck, List<dynamic>? EveryList) {
+    bool timeCheck, List<dynamic>? everyList) {
   return LineChartBarData(
       isCurved: true,
       preventCurveOverShooting: true,
@@ -278,7 +278,7 @@ LineChartBarData lineChartBarDataEvery(
       isStrokeCapRound: true,
       dotData: const FlDotData(show: false),
       belowBarData: BarAreaData(show: false),
-      spots: List.generate(EveryList!.length, (index) {
-        return FlSpot(index * 3, double.parse(EveryList[index].toStringAsFixed(1)));
+      spots: List.generate(everyList!.length, (index) {
+        return FlSpot(index * 3, double.parse(everyList[index].toStringAsFixed(1)));
       }));
 }

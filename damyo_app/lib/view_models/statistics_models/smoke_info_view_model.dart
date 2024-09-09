@@ -52,7 +52,7 @@ class SmokeViewModel extends ChangeNotifier {
     List<dynamic> smokeCountsW = List.filled(4, 0);
     List<dynamic> smokeCountsM = List.filled(6, 0);
 
-    final startDateD = now.subtract(Duration(days: 6));
+    final startDateD = now.subtract(const Duration(days: 6));
     final dataInRangeD =
         await userDB.getSmokeInfoInWeekDayRange(startDateD, now);
 

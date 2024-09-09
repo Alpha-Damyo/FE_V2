@@ -38,7 +38,7 @@ class _SaDetailViewState extends State<SaDetailView> {
           );
         } else {
           SaDetailModel saDetailModel = snapshot.data;
-          print(saDetailModel.address);
+          // print(saDetailModel.address);
           return Scaffold(
             backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
             appBar: AppBar(
