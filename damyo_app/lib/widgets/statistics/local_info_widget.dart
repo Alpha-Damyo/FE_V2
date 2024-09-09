@@ -57,15 +57,15 @@ Widget localInfo(BuildContext context, TabController tabController,
 }
 
 // 가장 인기있는 지역
-Widget _tapContentsGu(List<dynamic>? GuList) {
-  if (GuList == null || GuList.isEmpty) {
+Widget _tapContentsGu(List<dynamic>? guList) {
+  if (guList == null || guList.isEmpty) {
     return const Center(child: Text('지역 정보가 존재하지 않습니다.'));
   }
   return Column(
       children: List.generate(
-    GuList.length,
+    guList.length,
     (index) {
-      return Gu(GuList[index], index);
+      return gu(guList[index], index);
     },
   ));
 }
@@ -80,15 +80,15 @@ Widget _tapContentsSmokeArea(
       children: List.generate(
     areaList.length,
     (index) {
-      return Sa(areaList[index], areaInfo?[index], index, context);
+      return sa(areaList[index], areaInfo?[index], index, context);
     },
   ));
 }
 
 // 흡연 지역 정보
-Widget Gu(Map<String, dynamic> GuInfo, int rank) {
-  String key = GuInfo.keys.first;
-  dynamic value = GuInfo[key];
+Widget gu(Map<String, dynamic> guInfo, int rank) {
+  String key = guInfo.keys.first;
+  dynamic value = guInfo[key];
   return SizedBox(
     height: 55,
     child: Row(
@@ -136,10 +136,10 @@ Widget Gu(Map<String, dynamic> GuInfo, int rank) {
 }
 
 // 흡연 구역 정보
-Widget Sa(Map<String, dynamic> SaInfo, SaBasicModel SaModel, int rank,
+Widget sa(Map<String, dynamic> saInfo, SaBasicModel saModel, int rank,
     BuildContext context) {
-  String key = SaInfo.keys.first;
-  dynamic value = SaInfo[key];
+  String key = saInfo.keys.first;
+  dynamic value = saInfo[key];
 
   return Ink(
     height: 55,
@@ -148,7 +148,7 @@ Widget Sa(Map<String, dynamic> SaInfo, SaBasicModel SaModel, int rank,
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => SaDetailView(areaId: SaModel.areaId)));
+                builder: (context) => SaDetailView(areaId: saModel.areaId)));
       },
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -169,7 +169,7 @@ Widget Sa(Map<String, dynamic> SaInfo, SaBasicModel SaModel, int rank,
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              textFormat(text: SaModel.name, fontWeight: FontWeight.w600),
+              textFormat(text: saModel.name, fontWeight: FontWeight.w600),
               textFormat(
                   text: '$value회', fontSize: 12, fontWeight: FontWeight.w400),
             ],

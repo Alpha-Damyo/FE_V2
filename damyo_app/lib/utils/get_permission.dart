@@ -12,7 +12,7 @@ import 'package:permission_handler/permission_handler.dart';
 // 갤러리 권한 확인 및 요청
 Future<bool> getPhotoPermission(BuildContext context) async {
   PermissionStatus status = await Permission.photos.status;
-  print(status);
+  // print(status);
 
   switch (status.index) {
     // 최초 물음
@@ -35,10 +35,8 @@ Future<bool> getPhotoPermission(BuildContext context) async {
 
 // 카메라 권한 확인 및 요청
 Future<bool> getCameraPermission(BuildContext context) async {
-  // PermissionStatus status = await Permission.camera.request();
-
   PermissionStatus status = await Permission.camera.status;
-  print(status);
+  // print(status);
 
   switch (status.index) {
     // 최초 물음

@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 FlutterSecureStorage storage = const FlutterSecureStorage();
 
-Future<statDateModel> getDateStatics() async {
+Future<StatDateModel> getDateStatics() async {
   final baseUrl = dotenv.get('BASE_URL');
   String? token = await storage.read(key: 'accessToken');
 
@@ -22,13 +22,13 @@ Future<statDateModel> getDateStatics() async {
       jsonDecode(utf8.decode(response.bodyBytes));
 
   if (response.statusCode == 200) {
-    return statDateModel.fromJson(jsonMap);
+    return StatDateModel.fromJson(jsonMap);
   } else {
     throw jsonMap;
   }
 }
 
-Future<statRegionModel> getRegionStatics() async {
+Future<StatRegionModel> getRegionStatics() async {
   final baseUrl = dotenv.get('BASE_URL');
   String? token = await storage.read(key: 'accessToken');
 
@@ -43,7 +43,7 @@ Future<statRegionModel> getRegionStatics() async {
       jsonDecode(utf8.decode(response.bodyBytes));
 
   if (response.statusCode == 200) {
-    return statRegionModel.fromJson(jsonMap);
+    return StatRegionModel.fromJson(jsonMap);
   } else {
     throw jsonMap['code'];
   }

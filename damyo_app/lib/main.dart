@@ -12,8 +12,8 @@ import 'package:damyo_app/view_models/map_models/smoking_area/sa_inform_view_mod
 import 'package:damyo_app/view_models/map_models/smoking_area/sa_review_view_model.dart';
 import 'package:damyo_app/view_models/statistics_models/period_info_view_model.dart';
 import 'package:damyo_app/view_models/statistics_models/smoke_info_view_model.dart';
-import 'package:damyo_app/view_models/statistics_models/locaI_info_view_model.dart';
-import 'package:damyo_app/view_models/statistics_models/timeAver_info_view_model.dart';
+import 'package:damyo_app/view_models/statistics_models/local_info_view_model.dart';
+import 'package:damyo_app/view_models/statistics_models/timeaver_info_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';

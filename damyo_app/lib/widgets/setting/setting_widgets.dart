@@ -10,7 +10,6 @@ import "package:damyo_app/view_models/login_models/token_view_model.dart";
 import "package:damyo_app/view_models/login_models/user_info_view_model.dart";
 import "package:flutter/material.dart";
 import "package:damyo_app/style.dart";
-import "package:permission_handler/permission_handler.dart";
 
 // 로그인 버튼
 Widget loginBtn(BuildContext context) {

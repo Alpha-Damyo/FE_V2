@@ -51,11 +51,11 @@ class _HomeViewState extends State<HomeView> {
           BottomNavigationBarItem(
             icon: _bottomNavigationModel.curPage == 0
                 ? const Icon(
-                    DamyoIcon.map_fill_2,
+                    DamyoIcon.mapFill_2,
                     size: 18,
                   )
                 : const Icon(
-                    DamyoIcon.map_empty_2,
+                    DamyoIcon.mapEmpty_2,
                     size: 18,
                   ),
             label: "지도",
@@ -63,11 +63,11 @@ class _HomeViewState extends State<HomeView> {
           BottomNavigationBarItem(
             icon: _bottomNavigationModel.curPage == 1
                 ? const Icon(
-                    DamyoIcon.favorites_fill_3,
+                    DamyoIcon.favoritesFill_3,
                     size: 18,
                   )
                 : const Icon(
-                    DamyoIcon.favorites_empty_3,
+                    DamyoIcon.favoritesEmpty_3,
                     size: 18,
                   ),
             label: "즐겨찾기",
@@ -75,11 +75,11 @@ class _HomeViewState extends State<HomeView> {
           BottomNavigationBarItem(
             icon: _bottomNavigationModel.curPage == 2
                 ? const Icon(
-                    DamyoIcon.statistics_fill,
+                    DamyoIcon.statisticsFill,
                     size: 18,
                   )
                 : const Icon(
-                    DamyoIcon.statistics_empty,
+                    DamyoIcon.statisticsEmpty,
                     size: 18,
                   ),
             label: "통계",
@@ -87,11 +87,11 @@ class _HomeViewState extends State<HomeView> {
           BottomNavigationBarItem(
             icon: _bottomNavigationModel.curPage == 3
                 ? const Icon(
-                    DamyoIcon.setting_fill,
+                    DamyoIcon.settingFill,
                     size: 18,
                   )
                 : const Icon(
-                    DamyoIcon.setting_empty,
+                    DamyoIcon.settingEmpty,
                     size: 18,
                   ),
             label: "설정",
