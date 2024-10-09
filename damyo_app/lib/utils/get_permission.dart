@@ -14,19 +14,22 @@ import 'package:permission_handler/permission_handler.dart';
 // 갤러리 권한 확인 및 요청
 Future<bool> getPhotoPermission(BuildContext context) async {
   PermissionStatus status;
+  int checkVer;
   // print(status);
   if (Platform.isAndroid && int.parse(Platform.version.split('.').first) < 33) {
     // 안드로이드 13 미만
     status = await Permission.storage.status;
+    checkVer = 0;
   } else {
     // 안드로이드 13 이상 & IOS
     status = await Permission.photos.status;
+    checkVer = 1;
   }
 
   switch (status.index) {
     // 최초 물음
     case 0:
-      return requestPhotoPermission();
+      return requestPhotoPermission(checkVer);
     // 전체 허용 경우
     case 1:
       return true;
@@ -67,12 +70,24 @@ Future<bool> getCameraPermission(BuildContext context) async {
 }
 
 // 갤러리 권한 요청
-Future<bool> requestPhotoPermission() async {
-  if (await Permission.photos.request() == PermissionStatus.granted) {
-    return true;
-  } else {
-    return false;
+Future<bool> requestPhotoPermission(int checkVer) async {
+  if(checkVer == 0){
+    // 안드로이드 13 미만
+    if (await Permission.storage.request() == PermissionStatus.granted) {
+      return true;
+    } else {
+      return false;
+    }
   }
+  else{
+    // 안드로이드 13 이상 & IOS
+    if (await Permission.photos.request() == PermissionStatus.granted) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  
 }
 
 // 카메라 권한 요청
