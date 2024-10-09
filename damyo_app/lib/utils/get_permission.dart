@@ -12,6 +12,7 @@ import 'package:permission_handler/permission_handler.dart';
 // 갤러리 권한 확인 및 요청
 Future<bool> getPhotoPermission(BuildContext context) async {
   PermissionStatus status = await Permission.photos.status;
+  // PermissionStatus status1 = await Permission.
   // print(status);
 
   switch (status.index) {
