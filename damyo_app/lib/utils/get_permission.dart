@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:damyo_app/style.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -11,9 +13,15 @@ import 'package:permission_handler/permission_handler.dart';
 
 // 갤러리 권한 확인 및 요청
 Future<bool> getPhotoPermission(BuildContext context) async {
-  PermissionStatus status = await Permission.photos.status;
-  // PermissionStatus status1 = await Permission.
+  PermissionStatus status;
   // print(status);
+  if (Platform.isAndroid && int.parse(Platform.version.split('.').first) < 33) {
+    // 안드로이드 13 미만
+    status = await Permission.storage.status;
+  } else {
+    // 안드로이드 13 이상 & IOS
+    status = await Permission.photos.status;
+  }
 
   switch (status.index) {
     // 최초 물음
