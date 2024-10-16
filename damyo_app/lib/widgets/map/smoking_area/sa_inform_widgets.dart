@@ -26,7 +26,7 @@ Widget informName(BuildContext context, TextEditingController nameController,
   );
 }
 
-Widget informAddress(BuildContext context, double lat, double lng,
+Widget informAddress(BuildContext context, Future<String> addressFuture,
     TextEditingController descriptionController, Function setAddress) {
   return SizedBox(
     width: double.infinity,
@@ -38,7 +38,7 @@ Widget informAddress(BuildContext context, double lat, double lng,
         basicBox(
           context,
           FutureBuilder(
-            future: getNaverAddress(lat, lng),
+            future: addressFuture,
             builder: (
               BuildContext context,
               AsyncSnapshot snapshot,
