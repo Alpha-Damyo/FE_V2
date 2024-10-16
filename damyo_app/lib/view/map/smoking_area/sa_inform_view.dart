@@ -1,3 +1,4 @@
+import 'package:damyo_app/services/naver_address_service.dart';
 import 'package:damyo_app/style.dart';
 import 'package:damyo_app/view_models/login_models/is_login_view_model.dart';
 import 'package:damyo_app/view_models/login_models/token_view_model.dart';
@@ -26,6 +27,13 @@ class _SaInformViewState extends State<SaInformView> {
   late IsloginViewModel _isloginViewModel;
   late TokenViewModel _tokenViewModel;
   late MapViewModel _mapViewModel;
+  late Future<String> addressFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    addressFuture = getNaverAddress(_lat, _lng);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +73,7 @@ class _SaInformViewState extends State<SaInformView> {
                           _saInformModel.checkCanInform,
                         ),
                         const SizedBox(height: 20),
-                        informAddress(context, _lat, _lng,
+                        informAddress(context, addressFuture,
                             _saInformModel.descriptionController, (val) {
                           _saInformModel.setAddress(val);
                         }),
