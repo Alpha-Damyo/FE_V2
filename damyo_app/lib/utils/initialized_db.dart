@@ -9,17 +9,23 @@ import 'package:provider/provider.dart';
 Future<void> initializedDB(BuildContext context) async {
   SmokeDatabase userDB = SmokeDatabase();
 
+  if(!context.mounted) return;
+
   await Provider.of<LocalInfoViewModel>(context, listen: false).fetchLocalDB();
+  if(!context.mounted) return;
   await Provider.of<TimeaverInfoViewModel>(context, listen: false)
       .fetchTimeDB();
+  if(!context.mounted) return;
   await Provider.of<PeriodInfoViewModel>(context, listen: false)
       .fetchPeriodEveryDB();
+  if(!context.mounted) return;
   await Provider.of<SmokeViewModel>(context, listen: false)
       .fetchSmokeDB(userDB);
 }
 
 void initializedUserDB(BuildContext context) async {
   SmokeDatabase userDB = SmokeDatabase();
+  if(!context.mounted) return;
   await Provider.of<SmokeViewModel>(context, listen: false)
       .fetchSmokeDB(userDB);
 }
