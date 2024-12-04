@@ -71,23 +71,17 @@ Future<bool> getCameraPermission(BuildContext context) async {
 
 // 갤러리 권한 요청
 Future<bool> requestPhotoPermission(int checkVer) async {
-  if(checkVer == 0){
-    // 안드로이드 13 미만
-    if (await Permission.storage.request() == PermissionStatus.granted) {
-      return true;
-    } else {
-      return false;
-    }
+  // 안드로이드 13 이상 & IOS
+  if (await Permission.photos.request() == PermissionStatus.granted) {
+    return true;
   }
-  else{
-    // 안드로이드 13 이상 & IOS
-    if (await Permission.photos.request() == PermissionStatus.granted) {
-      return true;
-    } else {
-      return false;
-    }
+
+  // 안드로이드 13 미만
+  if (await Permission.storage.request() == PermissionStatus.granted) {
+    return true;
   }
-  
+
+  return false;
 }
 
 // 카메라 권한 요청

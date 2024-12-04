@@ -63,7 +63,7 @@ Future<XFile?> getImage(ImagePicker imagePicker, BuildContext context) async {
       return pickedFile;
     }
     return null;
-  }
+  } else {}
   return null;
 }
 

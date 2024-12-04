@@ -106,8 +106,6 @@ class MapViewModel extends ChangeNotifier {
         icon: iconImage,
       );
 
-      print("${_smokingAreas[i].latitude} ${_smokingAreas[i].longitude}");
-
       marker.setOnTapListener((overlay) {
         _smokingAreaCardInfo = _smokingAreas[i];
         _showSmokingAreaCard = true;
