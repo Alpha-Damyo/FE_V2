@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 // 흡연구역 대표 이미지
 Widget saDetailRepresentativeImage(
@@ -169,6 +170,7 @@ Widget saDetailNameScoreBtns(
                   // 흡연을 완료한 경우
                   String response = await smokeComplete(context, areaId);
                   if (response == "success") {
+                    Fluttertoast.showToast(msg: "흡연이 완료되었습니다");
                     await userDB.insertSmokeInfo(areaId, name, now);
                     initializedUserDB(context);
                   } else if (response == "re_login") {
