@@ -10,6 +10,8 @@ import "package:damyo_app/view_models/login_models/token_view_model.dart";
 import "package:damyo_app/view_models/login_models/user_info_view_model.dart";
 import "package:flutter/material.dart";
 import "package:damyo_app/style.dart";
+import 'package:fluttertoast/fluttertoast.dart';
+
 
 // 로그인 버튼
 Widget loginBtn(BuildContext context) {
@@ -142,6 +144,7 @@ Widget userProfile(
           onTap: () {
             tokenViewModel.deleteToken();
             isloginViewModel.logout();
+            Fluttertoast.showToast(msg: "로그아웃 되었습니다");
           },
           child: Ink(
             width: double.infinity,
@@ -201,6 +204,7 @@ Widget resetStatisticsBtn(
           // 초기화를 진행한 경우
           await userDB.resetDatabase();
           await initializedDB(context);
+          Fluttertoast.showToast(msg: "초기화가 완료되었습니다");
         } else {
           // 초기화 취소
         }

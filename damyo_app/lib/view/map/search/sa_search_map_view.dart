@@ -11,6 +11,7 @@ import 'package:damyo_app/widgets/map/search/sa_search_map_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_naver_map/flutter_naver_map.dart';
 import 'package:provider/provider.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class SaSearchMapView extends StatefulWidget {
   const SaSearchMapView({
@@ -76,6 +77,7 @@ class _SaSearchMapViewState extends State<SaSearchMapView> {
                       String response = await smokeComplete(
                           context,_saSearchViewModel.searchSelectedSa.areaId);
                       if (response == "success") {
+                        Fluttertoast.showToast(msg: "흡연이 완료되었습니다");
                         await userDB.insertSmokeInfo(
                             _saSearchViewModel.searchSelectedSa.areaId,
                             _saSearchViewModel.searchSelectedSa.name,
